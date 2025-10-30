@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moveo - Movement Made Simple</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6B9D;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --success: #48BB78;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links button {
+            margin-left: 1rem;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid var(--dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        /* Daily Exercise Card */
+        .daily-exercise {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .daily-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #FFA500);
+            color: var(--dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .category-card p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        /* Exercise Grid */
+        .exercises-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .exercise-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            position: relative;
+        }
+
+        .exercise-video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .exercise-info {
+            padding: 1.5rem;
+        }
+
+        .exercise-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .exercise-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .save-btn:hover {
+            background: #38a169;
+        }
+
+        .save-btn.saved {
+            background: var(--dark);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #718096;
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 1rem;
+            background: var(--light);
+            border: 2px dashed #CBD5E0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            border-color: var(--primary);
+            background: #EDF2F7;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Progress Tracking */
+        .progress-list {
+            margin-top: 2rem;
+        }
+
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #E2E8F0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+            }
+
+            .exercises-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">moveo</div>
+            <div class="nav-links">
+                <button class="btn-secondary" onclick="showSection('home')">Home</button>
+                <button class="btn-secondary" onclick="showSection('exercises')">Exercises</button>
+                <button class="btn-secondary" onclick="showSection('profile')" id="profileNavBtn" style="display: none;">My Profile</button>
+                <button class="btn-primary" onclick="openModal('authModal')" id="loginBtn">Get Started</button>
+                <button class="btn-secondary" onclick="logout()" id="logoutBtn" style="display: none;">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Home Section -->
+        <div id="homeSection">
+            <div class="hero">
+                <h1>Movement Made Simple</h1>
+                <p>Learning fitness through playful, inclusive animation</p>
+            </div>
+
+            <!-- Daily Exercise -->
+            <div class="daily-exercise">
+                <div class="daily-badge">✨ Exercise of the Day</div>
+                <div id="dailyExerciseContent">
+                    <h2>Loading today's exercise...</h2>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <h2 style="color: white; margin-bottom: 1rem;">Explore by Category</h2>
+            <div class="categories">
+                <div class="category-card" onclick="filterByCategory('strength')">
+                    <div class="category-icon">💪</div>
+                    <h3>Strength</h3>
+                    <p>Build muscle and power</p>
+                </div>
+                <div class="category-card" onclick="filterByCategory('cardio')">
+                    <div class="category-icon">❤️</div>
+                    <h3>Cardio</h3>
+                    <p>Get your heart pumping</p>
+                </div>
+                <div class="category-card" onclick="filterByCategory('flexibility')">
+                    <div class="category-icon">🧘</div>
+                    <h3>Flexibility</h3>
+                    <p>Stretch and flow</p>
+                </div>
+                <div class="category-card" onclick="filterByCategory('balance')">
+                    <div class="category-icon">⚖️</div>
+                    <h3>Balance</h3>
+                    <p>Find your center</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercises Section -->
+        <div id="exercisesSection" class="hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 2rem 0;">
+                <h2 style="color: white;">All Exercises</h2>
+                <div>
+                    <select id="categoryFilter" onchange="filterExercises()" style="padding: 0.5rem; border-radius: 8px; margin-right: 1rem;">
+                        <option value="all">All Categories</option>
+                        <option value="strength">Strength</option>
+                        <option value="cardio">Cardio</option>
+                        <option value="flexibility">Flexibility</option>
+                        <option value="balance">Balance</option>
+                    </select>
+                    <button class="btn-primary" onclick="openModal('uploadModal')" id="uploadBtn" style="display: none;">+ Upload Exercise</button>
+                </div>
+            </div>
+            <div class="exercises-grid" id="exercisesGrid"></div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profileSection" class="hidden">
+            <div class="profile-section">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profileAvatar">M</div>
+                    <div>
+                        <h2 id="profileName">User</h2>
+                        <p style="color: #718096;">Keep moving forward!</p>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="statSaved">0</div>
+                        <div>Saved Exercises</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statCompleted">0</div>
+                        <div>Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statStreak">0</div>
+                        <div>Day Streak</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">My Saved Exercises</h3>
+                <div id="savedExercises"></div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Progress Tracking</h3>
+                <div class="progress-list" id="progressList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('authModal')">×</button>
+            <div class="modal-header">
+                <h2 id="authTitle">Welcome to Moveo</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="authName" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="authEmail" placeholder="Enter your email">
+                </div>
+                <button class="btn-primary" onclick="handleAuth()" style="width: 100%; padding: 1rem; font-size: 1rem;">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('uploadModal')">×</button>
+            <div class="modal-header">
+                <h2>Upload New Exercise</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Exercise Name</label>
+                    <input type="text" id="exerciseName" placeholder="e.g., Push-ups">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="exerciseCategory">
+                        <option value="strength">Strength</option>
+                        <option value="cardio">Cardio</option>
+                        <option value="flexibility">Flexibility</option>
+                        <option value="balance">Balance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="exerciseDescription" rows="4" placeholder="Describe the exercise and its benefits..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Duration (minutes)</label>
+                    <input type="number" id="exerciseDuration" min="1" max="60" value="5">
+                </div>
+                <div class="form-group">
+                    <label>Difficulty</label>
+                    <select id="exerciseDifficulty">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Video Upload</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="exerciseVideo" accept="video/*" onchange="handleVideoSelect(event)">
+                        <label for="exerciseVideo" class="file-input-label">
+                            <span id="fileLabel">📹 Click to upload video or animation</span>
+                        </label>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="uploadExercise()" style="width: 100%; padding: 1rem; font-size: 1rem;">Upload Exercise</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercise Detail Modal -->
+    <div class="modal" id="exerciseModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('exerciseModal')">×</button>
+            <div id="exerciseDetail"></div>
+        </div>
+    </div>
+
+    <script>
+        // Data storage
+        let currentUser = null;
+        let exercises = [];
+        let savedExercises = [];
+        let completedExercises = [];
+        let selectedVideoFile = null;
+
+        // Initialize app
+        function init() {
+            loadData();
+            renderExercises();
+            setDailyExercise();
+        }
+
+        // Load data from memory
+        function loadData() {
+            // Sample exercises
+            exercises = [
+                {
+                    id: 1,
+                    name: "Animated Squats",
+                    category: "strength",
+                    description: "Learn proper squat form through our friendly character animation. Build leg strength safely!",
+                    duration: 10,
+                    difficulty: "beginner",
+                    videoUrl: null,
+                    icon: "🦵"
+                },
+                {
+                    id: 2,
+                    name: "Dancing Cardio",
+                    category: "cardio",
+                    description: "Get your heart rate up with fun, animated dance moves. No judgment, just movement!",
+                    duration: 15,
+                    difficulty: "beginner",
+                    videoUrl: null,
+                    icon: "💃"
+                },
+                {
+                    id: 3,
+                    name: "Gentle Yoga Flow",
+                    category: "flexibility",
+                    description: "Follow along with our animated guide through relaxing stretches and poses.",
+                    duration: 20,
+                    difficulty: "beginner",
+                    videoUrl: null,
+                    icon: "🧘"
+                },
+                {
+                    id: 4,
+                    name: "Balance Basics",
+                    category: "balance",
+                    description: "Improve stability and coordination with simple, animated balance exercises.",
+                    duration: 8,
+                    difficulty: "beginner",
+                    videoUrl: null,
+                    icon: "🕴️"
+                },
+                {
+                    id: 5,
+                    name: "Push-up Progression",
+                    category: "strength",
+                    description: "Master push-ups step by step with our animated breakdown of proper form.",
+                    duration: 12,
+                    difficulty: "intermediate",
+                    videoUrl: null,
+                    icon: "💪"
+                },
+                {
+                    id: 6,
+                    name: "Jump Rope Fun",
+                    category: "cardio",
+                    description: "Learn jump rope techniques through playful animation. Great for cardio!",
+                    duration: 10,
+                    difficulty: "intermediate",
+                    videoUrl: null,
+                    icon: "🪢"
+                }
+            ];
+        }
+
+        // Admin check
+        const ADMIN_EMAIL = 'admin@moveo.com'; // Change this to your email
+
+        function isAdmin() {
+            return currentUser && currentUser.email === ADMIN_EMAIL;
+        }
+
+        // Authentication
+        function handleAuth() {
+            const name = document.getElementById('authName').value.trim();
+            const email = document.getElementById('authEmail').value.trim();
+
+            if (!name || !email) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            currentUser = { name, email };
+            
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('logoutBtn').style.display = 'inline-block';
+            document.getElementById('profileNavBtn').style.display = 'inline-block';
+            
+            // Only show upload button for admin
+            if (isAdmin()) {
+                document.getElementById('uploadBtn').style.display = 'inline-block';
+                alert(`Welcome back, Admin ${name}!`);
+            } else {
+                alert(`Welcome, ${name}!`);
+            }
+            
+            closeModal('authModal');
+            updateProfile();
+        }
+
+        function logout() {
+            currentUser = null;
+            savedExercises = [];
+            completedExercises = [];
+            
+            document.getElementById('loginBtn').style.display = 'inline-block';
+            document.getElementById('logoutBtn').style.display = 'none';
+            document.getElementById('profileNavBtn').style.display = 'none';
+            document.getElementById('uploadBtn').style.display = 'none';
+            
+            showSection('home');
+        }
+
+        // Section navigation
+        function showSection(section) {
+            document.getElementById('homeSection').classList.add('hidden');
+            document.getElementById('exercisesSection').classList.add('hidden');
+            document.getElementById('profileSection').classList.add('hidden');
+
+            if (section === 'profile' && !currentUser) {
+                openModal('authModal');
+                return;
+            }
+
+            document.getElementById(section + 'Section').classList.remove('hidden');
+            
+            if (section === 'profile') {
+                updateProfile();
+            } else if (section === 'exercises') {
+                renderExercises();
+            }
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Video file handling
+        function handleVideoSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                selectedVideoFile = file;
+                document.getElementById('fileLabel').textContent = `✅ ${file.name}`;
+            }
+        }
+
+        // Upload exercise
+        function uploadExercise() {
+            if (!isAdmin()) {
+                alert('Only administrators can upload exercises');
+                return;
+            }
+
+            const name = document.getElementById('exerciseName').value.trim();
+            const category = document.getElementById('exerciseCategory').value;
+            const description = document.getElementById('exerciseDescription').value.trim();
+            const duration = parseInt(document.getElementById('exerciseDuration').value);
+            const difficulty = document.getElementById('exerciseDifficulty').value;
+
+            if (!name || !description) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const icons = {
+                strength: '💪',
+                cardio: '❤️',
+                flexibility: '🧘',
+                balance: '⚖️'
+            };
+
+            const newExercise = {
+                id: exercises.length + 1,
+                name,
+                category,
+                description,
+                duration,
+                difficulty,
+                videoUrl: selectedVideoFile ? URL.createObjectURL(selectedVideoFile) : null,
+                icon: icons[category],
+                uploadedBy: currentUser.name
+            };
+
+            exercises.push(newExercise);
+            
+            // Reset form
+            document.getElementById('exerciseName').value = '';
+            document.getElementById('exerciseDescription').value = '';
+            document.getElementById('exerciseDuration').value = '5';
+            document.getElementById('fileLabel').textContent = '📹 Click to upload video or animation';
+            selectedVideoFile = null;
+            
+            closeModal('uploadModal');
+            renderExercises();
+            alert('Exercise uploaded successfully!');
+        }
+
+        // Set daily exercise
+        function setDailyExercise() {
+            const today = new Date().toDateString();
+            const dayIndex = new Date().getDate() % exercises.length;
+            const dailyExercise = exercises[dayIndex];
+
+            const content = `
+                <h2>${dailyExercise.name}</h2>
+                <p>${dailyExercise.description}</p>
+                <div style="margin-top: 1rem;">
+                    <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px; margin-right: 1rem;">
+                        ⏱️ ${dailyExercise.duration} min
+                    </span>
+                    <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px; margin-right: 1rem;">
+                        📊 ${dailyExercise.difficulty}
+                    </span>
+                    <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
+                        ${getCategoryIcon(dailyExercise.category)} ${dailyExercise.category}
+                    </span>
+                </div>
+                <button class="btn-primary" onclick="viewExercise(${dailyExercise.id})" style="margin-top: 1rem;">Try It Now</button>
+            `;
+
+            document.getElementById('dailyExerciseContent').innerHTML = content;
+        }
+
+        // Render exercises
+        function renderExercises(filter = 'all') {
+            const grid = document.getElementById('exercisesGrid');
+            const filteredExercises = filter === 'all' 
+                ? exercises 
+                : exercises.filter(ex => ex.category === filter);
+
+            grid.innerHTML = filteredExercises.map(ex => {
+                const isSaved = savedExercises.includes(ex.id);
+                return `
+                    <div class="exercise-card" onclick="viewExercise(${ex.id})">
+                        ${ex.videoUrl ? 
+                            `<video class="exercise-video" src="${ex.videoUrl}" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>` :
+                            `<div class="exercise-thumbnail">${ex.icon}</div>`
+                        }
+                        <div class="exercise-info">
+                            <h3>${ex.name}</h3>
+                            <p>${ex.description.substring(0, 80)}...</p>
+                            <div class="exercise-meta">
+                                <span>⏱️ ${ex.duration} min</span>
+                                <span>📊 ${ex.difficulty}</span>
+                            </div>
+                            ${currentUser ? `
+                                <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="event.stopPropagation(); toggleSave(${ex.id})">
+                                    ${isSaved ? '✓ Saved' : '+ Save'}
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // View exercise details
+        function viewExercise(id) {
+            const exercise = exercises.find(ex => ex.id === id);
+            if (!exercise) return;
+
+            const isCompleted = completedExercises.includes(id);
+            const isSaved = savedExercises.includes(id);
+
+            const detail = `
+                <div class="modal-header">
+                    <h2>${exercise.name}</h2>
+                </div>
+                <div class="modal-body">
+                    ${exercise.videoUrl ? 
+                        `<video src="${exercise.videoUrl}" controls style="width: 100%; border-radius: 10px; margin-bottom: 1rem;"></video>` :
+                        `<div class="exercise-thumbnail" style="height: 300px; margin-bottom: 1rem;">${exercise.icon}</div>`
+                    }
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
+                            ${getCategoryIcon(exercise.category)} ${exercise.category}
+                        </span>
+                        <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
+                            ⏱️ ${exercise.duration} minutes
+                        </span>
+                        <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
+                            📊 ${exercise.difficulty}
+                        </span>
+                    </div>
+                    <p style="line-height: 1.6; margin-bottom: 1.5rem;">${exercise.description}</p>
+                    
+                    <h3 style="margin-bottom: 1rem;">How It Helps</h3>
+                    <p style="line-height: 1.6; margin-bottom: 1.5rem;">
+                        This exercise is designed to ${getExerciseBenefit(exercise.category)}. 
+                        Perfect for ${exercise.difficulty} level practitioners looking to improve their fitness journey.
+                    </p>
+
+                    ${exercise.uploadedBy ? `<p style="color: #718096; font-size: 0.9rem;">Uploaded by ${exercise.uploadedBy}</p>` : ''}
+                    
+                    ${currentUser ? `
+                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                            <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="toggleSave(${exercise.id}); viewExercise(${exercise.id})">
+                                ${isSaved ? '✓ Saved' : '+ Save Exercise'}
+                            </button>
+                            <button class="save-btn ${isCompleted ? 'saved' : ''}" onclick="toggleComplete(${exercise.id}); viewExercise(${exercise.id})">
+                                ${isCompleted ? '✓ Completed' : '✓ Mark Complete'}
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            document.getElementById('exerciseDetail').innerHTML = detail;
+            openModal('exerciseModal');
+        }
+
+        // Toggle save exercise
+        function toggleSave(id) {
+            if (!currentUser) {
+                alert('Please log in to save exercises');
+                return;
+            }
+
+            const index = savedExercises.indexOf(id);
+            if (index > -1) {
+                savedExercises.splice(index, 1);
+            } else {
+                savedExercises.push(id);
+            }
+            renderExercises();
+            updateProfile();
+        }
+
+        // Toggle complete exercise
+        function toggleComplete(id) {
+            if (!currentUser) {
+                alert('Please log in to track progress');
+                return;
+            }
+
+            const index = completedExercises.indexOf(id);
+            if (index > -1) {
+                completedExercises.splice(index, 1);
+            } else {
+                completedExercises.push(id);
+            }
+            updateProfile();
+        }
+
+        // Filter exercises
+        function filterExercises() {
+            const filter = document.getElementById('categoryFilter').value;
+            renderExercises(filter);
+        }
+
+        function filterByCategory(category) {
+            showSection('exercises');
+            document.getElementById('categoryFilter').value = category;
+            renderExercises(category);
+        }
+
+        // Update profile
+        function updateProfile() {
+            if (!currentUser) return;
+
+            document.getElementById('profileName').textContent = currentUser.name;
+            document.getElementById('profileAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            
+            // Update stats
+            document.getElementById('statSaved').textContent = savedExercises.length;
+            document.getElementById('statCompleted').textContent = completedExercises.length;
+            document.getElementById('statStreak').textContent = Math.min(completedExercises.length, 7);
+
+            // Render saved exercises
+            const savedContainer = document.getElementById('savedExercises');
+            if (savedExercises.length === 0) {
+                savedContainer.innerHTML = '<p style="color: #718096;">No saved exercises yet. Start exploring!</p>';
+            } else {
+                savedContainer.innerHTML = savedExercises.map(id => {
+                    const ex = exercises.find(e => e.id === id);
+                    if (!ex) return '';
+                    return `
+                        <div class="progress-item" style="cursor: pointer;" onclick="viewExercise(${ex.id})">
+                            <div>
+                                <strong>${ex.name}</strong>
+                                <p style="color: #718096; font-size: 0.9rem; margin-top: 0.25rem;">
+                                    ${ex.category} • ${ex.duration} min
+                                </p>
+                            </div>
+                            <button class="save-btn saved" onclick="event.stopPropagation(); toggleSave(${ex.id}); updateProfile()">Remove</button>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Render progress tracking
+            const progressContainer = document.getElementById('progressList');
+            if (completedExercises.length === 0) {
+                progressContainer.innerHTML = '<p style="color: #718096;">Complete exercises to track your progress!</p>';
+            } else {
+                const categoryProgress = {};
+                completedExercises.forEach(id => {
+                    const ex = exercises.find(e => e.id === id);
+                    if (ex) {
+                        categoryProgress[ex.category] = (categoryProgress[ex.category] || 0) + 1;
+                    }
+                });
+
+                progressContainer.innerHTML = Object.entries(categoryProgress).map(([cat, count]) => {
+                    const total = exercises.filter(ex => ex.category === cat).length;
+                    const percentage = (count / total) * 100;
+                    return `
+                        <div class="progress-item">
+                            <div style="flex: 1;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <strong>${getCategoryIcon(cat)} ${cat.charAt(0).toUpperCase() + cat.slice(1)}</strong>
+                                    <span style="color: #718096;">${count}/${total}</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${percentage}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Helper functions
+        function getCategoryIcon(category) {
+            const icons = {
+                strength: '💪',
+                cardio: '❤️',
+                flexibility: '🧘',
+                balance: '⚖️'
+            };
+            return icons[category] || '⭐';
+        }
+
+        function getExerciseBenefit(category) {
+            const benefits = {
+                strength: 'build muscle, increase power, and improve overall body composition',
+                cardio: 'improve cardiovascular health, boost endurance, and burn calories',
+                flexibility: 'increase range of motion, reduce injury risk, and promote relaxation',
+                balance: 'enhance stability, coordination, and functional movement patterns'
+            };
+            return benefits[category] || 'improve your overall fitness';
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
