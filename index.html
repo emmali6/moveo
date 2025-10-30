@@ -432,6 +432,23 @@
             transition: width 0.3s ease;
         }
 
+        .upload-progress {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 8px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -455,9 +472,46 @@
             }
         }
 
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Hidden class */
         .hidden {
             display: none !important;
+        }
+
+        /* Alert styles */
+        .alert {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 2000;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        .alert.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .alert.error {
+            border-left: 4px solid #F56565;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         /* Responsive */
@@ -562,7 +616,7 @@
                     <div class="profile-avatar" id="profileAvatar">M</div>
                     <div>
                         <h2 id="profileName">User</h2>
-                        <p style="color: #718096;">Keep moving forward!</p>
+                        <p style="color: #718096;" id="profileEmail"></p>
                     </div>
                 </div>
 
@@ -606,7 +660,12 @@
                     <label>Email</label>
                     <input type="email" id="authEmail" placeholder="Enter your email">
                 </div>
-                <button class="btn-primary" onclick="handleAuth()" style="width: 100%; padding: 1rem; font-size: 1rem;">Continue</button>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="authPassword" placeholder="Enter your password">
+                </div>
+                <button class="btn-primary" onclick="handleSignup()" style="width: 100%; padding: 1rem; font-size: 1rem; margin-bottom: 0.5rem;">Sign Up</button>
+                <button class="btn-secondary" onclick="handleLogin()" style="width: 100%; padding: 1rem; font-size: 1rem;">Login</button>
             </div>
         </div>
     </div>
@@ -621,7 +680,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>Exercise Name</label>
-                    <input type="text" id="exerciseName" placeholder="e.g., Push-ups">
+                    <input type="text" id="exerciseName" placeholder="e.g., Animated Push-ups">
                 </div>
                 <div class="form-group">
                     <label>Category</label>
@@ -657,7 +716,18 @@
                         </label>
                     </div>
                 </div>
-                <button class="btn-primary" onclick="uploadExercise()" style="width: 100%; padding: 1rem; font-size: 1rem;">Upload Exercise</button>
+                <div id="uploadProgressContainer" class="hidden">
+                    <div class="upload-progress">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Uploading...</span>
+                            <span id="uploadPercent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="uploadProgressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="uploadExercise()" id="uploadButton" style="width: 100%; padding: 1rem; font-size: 1rem;">Upload Exercise</button>
             </div>
         </div>
     </div>
@@ -670,134 +740,530 @@
         </div>
     </div>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
     <script>
-        // Data storage
+        // ⚠️ PASTE YOUR FIREBASE CONFIG HERE ⚠️
+        const firebaseConfig = {
+            apiKey: "AIzaSyCWhAeLsK-Th-Nh4L5wH6fy4udBvPdeQGk",
+            authDomain: "moveo-93e96.firebaseapp.com",
+            projectId: "moveo-93e96",
+            storageBucket: "moveo-93e96.firebasestorage.app",
+            messagingSenderId: "274730419909",
+            appId: "1:274730419909:web:dd114401312894f8ff12ac"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // Admin email - CHANGE THIS TO YOUR EMAIL
+        const ADMIN_EMAIL = 'emmaccli@yahoo.com';
+
+        // Global variables
         let currentUser = null;
         let exercises = [];
-        let savedExercises = [];
-        let completedExercises = [];
+        let userProfile = null;
         let selectedVideoFile = null;
 
         // Initialize app
         function init() {
-            loadData();
-            renderExercises();
-            setDailyExercise();
-        }
-
-        // Load data from memory
-        function loadData() {
-            // Sample exercises
-            exercises = [
-                {
-                    id: 1,
-                    name: "Animated Squats",
-                    category: "strength",
-                    description: "Learn proper squat form through our friendly character animation. Build leg strength safely!",
-                    duration: 10,
-                    difficulty: "beginner",
-                    videoUrl: null,
-                    icon: "🦵"
-                },
-                {
-                    id: 2,
-                    name: "Dancing Cardio",
-                    category: "cardio",
-                    description: "Get your heart rate up with fun, animated dance moves. No judgment, just movement!",
-                    duration: 15,
-                    difficulty: "beginner",
-                    videoUrl: null,
-                    icon: "💃"
-                },
-                {
-                    id: 3,
-                    name: "Gentle Yoga Flow",
-                    category: "flexibility",
-                    description: "Follow along with our animated guide through relaxing stretches and poses.",
-                    duration: 20,
-                    difficulty: "beginner",
-                    videoUrl: null,
-                    icon: "🧘"
-                },
-                {
-                    id: 4,
-                    name: "Balance Basics",
-                    category: "balance",
-                    description: "Improve stability and coordination with simple, animated balance exercises.",
-                    duration: 8,
-                    difficulty: "beginner",
-                    videoUrl: null,
-                    icon: "🕴️"
-                },
-                {
-                    id: 5,
-                    name: "Push-up Progression",
-                    category: "strength",
-                    description: "Master push-ups step by step with our animated breakdown of proper form.",
-                    duration: 12,
-                    difficulty: "intermediate",
-                    videoUrl: null,
-                    icon: "💪"
-                },
-                {
-                    id: 6,
-                    name: "Jump Rope Fun",
-                    category: "cardio",
-                    description: "Learn jump rope techniques through playful animation. Great for cardio!",
-                    duration: 10,
-                    difficulty: "intermediate",
-                    videoUrl: null,
-                    icon: "🪢"
+            // Listen for auth state changes
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    await loadUserProfile();
+                    updateUIForLoggedInUser();
+                    await loadExercises();
+                } else {
+                    currentUser = null;
+                    userProfile = null;
+                    updateUIForLoggedOutUser();
+                    await loadExercises();
                 }
-            ];
+            });
         }
 
-        // Admin check
-        const ADMIN_EMAIL = 'admin@moveo.com'; // Change this to your email
+        // Authentication functions
+        async function handleSignup() {
+            const name = document.getElementById('authName').value.trim();
+            const email = document.getElementById('authEmail').value.trim();
+            const password = document.getElementById('authPassword').value;
+
+            if (!name || !email || !password) {
+                showAlert('Please fill in all fields', 'error');
+                return;
+            }
+
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                // Create user profile in Firestore
+                await db.collection('users').doc(user.uid).set({
+                    name: name,
+                    email: email,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    savedExercises: [],
+                    completedExercises: [],
+                    streak: 0
+                });
+
+                closeModal('authModal');
+                showAlert(`Welcome, ${name}!`, 'success');
+            } catch (error) {
+                showAlert(error.message, 'error');
+            }
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('authEmail').value.trim();
+            const password = document.getElementById('authPassword').value;
+
+            if (!email || !password) {
+                showAlert('Please enter email and password', 'error');
+                return;
+            }
+
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                closeModal('authModal');
+                showAlert('Welcome back!', 'success');
+            } catch (error) {
+                showAlert(error.message, 'error');
+            }
+        }
+
+        async function logout() {
+            try {
+                await auth.signOut();
+                showSection('home');
+                showAlert('Logged out successfully', 'success');
+            } catch (error) {
+                showAlert(error.message, 'error');
+            }
+        }
+
+        // Load user profile
+        async function loadUserProfile() {
+            if (!currentUser) return;
+
+            try {
+                const doc = await db.collection('users').doc(currentUser.uid).get();
+                if (doc.exists) {
+                    userProfile = doc.data();
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+            }
+        }
+
+        // UI updates
+        function updateUIForLoggedInUser() {
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('logoutBtn').style.display = 'inline-block';
+            document.getElementById('profileNavBtn').style.display = 'inline-block';
+            
+            if (isAdmin()) {
+                document.getElementById('uploadBtn').style.display = 'inline-block';
+            }
+        }
+
+        function updateUIForLoggedOutUser() {
+            document.getElementById('loginBtn').style.display = 'inline-block';
+            document.getElementById('logoutBtn').style.display = 'none';
+            document.getElementById('profileNavBtn').style.display = 'none';
+            document.getElementById('uploadBtn').style.display = 'none';
+        }
 
         function isAdmin() {
             return currentUser && currentUser.email === ADMIN_EMAIL;
         }
 
-        // Authentication
-        function handleAuth() {
-            const name = document.getElementById('authName').value.trim();
-            const email = document.getElementById('authEmail').value.trim();
+        // Load exercises from Firebase
+        async function loadExercises() {
+            try {
+                const snapshot = await db.collection('exercises').orderBy('createdAt', 'desc').get();
+                exercises = [];
+                snapshot.forEach(doc => {
+                    exercises.push({ id: doc.id, ...doc.data() });
+                });
+                renderExercises();
+                setDailyExercise();
+            } catch (error) {
+                console.error('Error loading exercises:', error);
+            }
+        }
 
-            if (!name || !email) {
-                alert('Please fill in all fields');
+        // Upload exercise
+        async function uploadExercise() {
+            if (!isAdmin()) {
+                showAlert('Only administrators can upload exercises', 'error');
                 return;
             }
 
-            currentUser = { name, email };
-            
-            document.getElementById('loginBtn').style.display = 'none';
-            document.getElementById('logoutBtn').style.display = 'inline-block';
-            document.getElementById('profileNavBtn').style.display = 'inline-block';
-            
-            // Only show upload button for admin
-            if (isAdmin()) {
-                document.getElementById('uploadBtn').style.display = 'inline-block';
-                alert(`Welcome back, Admin ${name}!`);
-            } else {
-                alert(`Welcome, ${name}!`);
+            const name = document.getElementById('exerciseName').value.trim();
+            const category = document.getElementById('exerciseCategory').value;
+            const description = document.getElementById('exerciseDescription').value.trim();
+            const duration = parseInt(document.getElementById('exerciseDuration').value);
+            const difficulty = document.getElementById('exerciseDifficulty').value;
+
+            if (!name || !description) {
+                showAlert('Please fill in all required fields', 'error');
+                return;
             }
-            
-            closeModal('authModal');
-            updateProfile();
+
+            if (!selectedVideoFile) {
+                showAlert('Please select a video file', 'error');
+                return;
+            }
+
+            try {
+                document.getElementById('uploadButton').disabled = true;
+                document.getElementById('uploadProgressContainer').classList.remove('hidden');
+
+                // Upload video to Firebase Storage
+                const storageRef = storage.ref();
+                const videoRef = storageRef.child(`exercises/${Date.now()}_${selectedVideoFile.name}`);
+                const uploadTask = videoRef.put(selectedVideoFile);
+
+                // Monitor upload progress
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        document.getElementById('uploadProgressBar').style.width = progress + '%';
+                        document.getElementById('uploadPercent').textContent = Math.round(progress) + '%';
+                    },
+                    (error) => {
+                        showAlert('Upload failed: ' + error.message, 'error');
+                        document.getElementById('uploadButton').disabled = false;
+                        document.getElementById('uploadProgressContainer').classList.add('hidden');
+                    },
+                    async () => {
+                        // Upload completed, get download URL
+                        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+
+                        const icons = {
+                            strength: '💪',
+                            cardio: '❤️',
+                            flexibility: '🧘',
+                            balance: '⚖️'
+                        };
+
+                        // Save exercise to Firestore
+                        await db.collection('exercises').add({
+                            name,
+                            category,
+                            description,
+                            duration,
+                            difficulty,
+                            videoUrl: downloadURL,
+                            icon: icons[category],
+                            uploadedBy: currentUser.email,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+
+                        // Reset form
+                        document.getElementById('exerciseName').value = '';
+                        document.getElementById('exerciseDescription').value = '';
+                        document.getElementById('exerciseDuration').value = '5';
+                        document.getElementById('fileLabel').textContent = '📹 Click to upload video or animation';
+                        selectedVideoFile = null;
+                        document.getElementById('uploadButton').disabled = false;
+                        document.getElementById('uploadProgressContainer').classList.add('hidden');
+                        document.getElementById('uploadProgressBar').style.width = '0%';
+
+                        closeModal('uploadModal');
+                        showAlert('Exercise uploaded successfully!', 'success');
+                        await loadExercises();
+                    }
+                );
+            } catch (error) {
+                showAlert('Error uploading exercise: ' + error.message, 'error');
+                document.getElementById('uploadButton').disabled = false;
+                document.getElementById('uploadProgressContainer').classList.add('hidden');
+            }
         }
 
-        function logout() {
-            currentUser = null;
-            savedExercises = [];
-            completedExercises = [];
+        // Video file handling
+        function handleVideoSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                selectedVideoFile = file;
+                document.getElementById('fileLabel').textContent = `✅ ${file.name}`;
+            }
+        }
+
+        // Set daily exercise
+        function setDailyExercise() {
+            if (exercises.length === 0) {
+                document.getElementById('dailyExerciseContent').innerHTML = '<p>No exercises available yet. Check back soon!</p>';
+                return;
+            }
+
+            const dayIndex = new Date().getDate() % exercises.length;
+            const dailyExercise = exercises[dayIndex];
+
+            const content = `
+                <h2>${dailyExercise.name}</h2>
+                <p>${dailyExercise.description}</p>
+                <div style="margin-top: 1rem;">
+                    <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px; margin-right: 1rem;">
+                        ⏱️ ${dailyExercise.duration} min
+                    </span>
+                    <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px; margin-right: 1rem;">
+                        📊 ${dailyExercise.difficulty}
+                    </span>
+                    <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
+                        ${getCategoryIcon(dailyExercise.category)} ${dailyExercise.category}
+                    </span>
+                </div>
+                <button class="btn-primary" onclick="viewExercise('${dailyExercise.id}')" style="margin-top: 1rem;">Try It Now</button>
+            `;
+
+            document.getElementById('dailyExerciseContent').innerHTML = content;
+        }
+
+        // Render exercises
+        function renderExercises(filter = 'all') {
+            const grid = document.getElementById('exercisesGrid');
+            const filteredExercises = filter === 'all' 
+                ? exercises 
+                : exercises.filter(ex => ex.category === filter);
+
+            if (filteredExercises.length === 0) {
+                grid.innerHTML = '<p style="color: white; text-align: center; grid-column: 1/-1;">No exercises found in this category.</p>';
+                return;
+            }
+
+            grid.innerHTML = filteredExercises.map(ex => {
+                const isSaved = userProfile && userProfile.savedExercises && userProfile.savedExercises.includes(ex.id);
+                return `
+                    <div class="exercise-card" onclick="viewExercise('${ex.id}')">
+                        ${ex.videoUrl ? 
+                            `<video class="exercise-video" src="${ex.videoUrl}" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>` :
+                            `<div class="exercise-thumbnail">${ex.icon}</div>`
+                        }
+                        <div class="exercise-info">
+                            <h3>${ex.name}</h3>
+                            <p>${ex.description.substring(0, 80)}...</p>
+                            <div class="exercise-meta">
+                                <span>⏱️ ${ex.duration} min</span>
+                                <span>📊 ${ex.difficulty}</span>
+                            </div>
+                            ${currentUser ? `
+                                <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="event.stopPropagation(); toggleSave('${ex.id}')">
+                                    ${isSaved ? '✓ Saved' : '+ Save'}
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // View exercise details
+        function viewExercise(id) {
+            const exercise = exercises.find(ex => ex.id === id);
+            if (!exercise) return;
+
+            const isCompleted = userProfile && userProfile.completedExercises && userProfile.completedExercises.includes(id);
+            const isSaved = userProfile && userProfile.savedExercises && userProfile.savedExercises.includes(id);
+
+            const detail = `
+                <div class="modal-header">
+                    <h2>${exercise.name}</h2>
+                </div>
+                <div class="modal-body">
+                    ${exercise.videoUrl ? 
+                        `<video src="${exercise.videoUrl}" controls style="width: 100%; border-radius: 10px; margin-bottom: 1rem;"></video>` :
+                        `<div class="exercise-thumbnail" style="height: 300px; margin-bottom: 1rem;">${exercise.icon}</div>`
+                    }
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                        <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
+                            ${getCategoryIcon(exercise.category)} ${exercise.category}
+                        </span>
+                        <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
+                            ⏱️ ${exercise.duration} minutes
+                        </span>
+                        <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
+                            📊 ${exercise.difficulty}
+                        </span>
+                    </div>
+                    <p style="line-height: 1.6; margin-bottom: 1.5rem;">${exercise.description}</p>
+                    
+                    <h3 style="margin-bottom: 1rem;">How It Helps</h3>
+                    <p style="line-height: 1.6; margin-bottom: 1.5rem;">
+                        This exercise is designed to ${getExerciseBenefit(exercise.category)}. 
+                        Perfect for ${exercise.difficulty} level practitioners looking to improve their fitness journey.
+                    </p>
+                    
+                    ${currentUser ? `
+                        <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+                            <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="toggleSave('${exercise.id}'); viewExercise('${exercise.id}')">
+                                ${isSaved ? '✓ Saved' : '+ Save Exercise'}
+                            </button>
+                            <button class="save-btn ${isCompleted ? 'saved' : ''}" onclick="toggleComplete('${exercise.id}'); viewExercise('${exercise.id}')">
+                                ${isCompleted ? '✓ Completed' : '✓ Mark Complete'}
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            document.getElementById('exerciseDetail').innerHTML = detail;
+            openModal('exerciseModal');
+        }
+
+        // Toggle save exercise
+        async function toggleSave(id) {
+            if (!currentUser) {
+                showAlert('Please log in to save exercises', 'error');
+                return;
+            }
+
+            try {
+                const savedExercises = userProfile.savedExercises || [];
+                const index = savedExercises.indexOf(id);
+                
+                if (index > -1) {
+                    savedExercises.splice(index, 1);
+                } else {
+                    savedExercises.push(id);
+                }
+
+                await db.collection('users').doc(currentUser.uid).update({
+                    savedExercises: savedExercises
+                });
+
+                userProfile.savedExercises = savedExercises;
+                renderExercises();
+                updateProfile();
+            } catch (error) {
+                showAlert('Error updating saved exercises', 'error');
+            }
+        }
+
+        // Toggle complete exercise
+        async function toggleComplete(id) {
+            if (!currentUser) {
+                showAlert('Please log in to track progress', 'error');
+                return;
+            }
+
+            try {
+                const completedExercises = userProfile.completedExercises || [];
+                const index = completedExercises.indexOf(id);
+                
+                if (index > -1) {
+                    completedExercises.splice(index, 1);
+                } else {
+                    completedExercises.push(id);
+                }
+
+                const streak = Math.min(completedExercises.length, 30);
+
+                await db.collection('users').doc(currentUser.uid).update({
+                    completedExercises: completedExercises,
+                    streak: streak
+                });
+
+                userProfile.completedExercises = completedExercises;
+                userProfile.streak = streak;
+                updateProfile();
+            } catch (error) {
+                showAlert('Error updating progress', 'error');
+            }
+        }
+
+        // Filter exercises
+        function filterExercises() {
+            const filter = document.getElementById('categoryFilter').value;
+            renderExercises(filter);
+        }
+
+        function filterByCategory(category) {
+            showSection('exercises');
+            document.getElementById('categoryFilter').value = category;
+            renderExercises(category);
+        }
+
+        // Update profile display
+        function updateProfile() {
+            if (!currentUser || !userProfile) return;
+
+            document.getElementById('profileName').textContent = userProfile.name;
+            document.getElementById('profileEmail').textContent = userProfile.email;
+            document.getElementById('profileAvatar').textContent = userProfile.name.charAt(0).toUpperCase();
             
-            document.getElementById('loginBtn').style.display = 'inline-block';
-            document.getElementById('logoutBtn').style.display = 'none';
-            document.getElementById('profileNavBtn').style.display = 'none';
-            document.getElementById('uploadBtn').style.display = 'none';
-            
-            showSection('home');
+            // Update stats
+            const savedCount = userProfile.savedExercises ? userProfile.savedExercises.length : 0;
+            const completedCount = userProfile.completedExercises ? userProfile.completedExercises.length : 0;
+            const streak = userProfile.streak || 0;
+
+            document.getElementById('statSaved').textContent = savedCount;
+            document.getElementById('statCompleted').textContent = completedCount;
+            document.getElementById('statStreak').textContent = streak;
+
+            // Render saved exercises
+            const savedContainer = document.getElementById('savedExercises');
+            if (!userProfile.savedExercises || userProfile.savedExercises.length === 0) {
+                savedContainer.innerHTML = '<p style="color: #718096;">No saved exercises yet. Start exploring!</p>';
+            } else {
+                savedContainer.innerHTML = userProfile.savedExercises.map(id => {
+                    const ex = exercises.find(e => e.id === id);
+                    if (!ex) return '';
+                    return `
+                        <div class="progress-item" style="cursor: pointer;" onclick="viewExercise('${ex.id}')">
+                            <div>
+                                <strong>${ex.name}</strong>
+                                <p style="color: #718096; font-size: 0.9rem; margin-top: 0.25rem;">
+                                    ${ex.category} • ${ex.duration} min
+                                </p>
+                            </div>
+                            <button class="save-btn saved" onclick="event.stopPropagation(); toggleSave('${ex.id}')">Remove</button>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Render progress tracking
+            const progressContainer = document.getElementById('progressList');
+            if (!userProfile.completedExercises || userProfile.completedExercises.length === 0) {
+                progressContainer.innerHTML = '<p style="color: #718096;">Complete exercises to track your progress!</p>';
+            } else {
+                const categoryProgress = {};
+                userProfile.completedExercises.forEach(id => {
+                    const ex = exercises.find(e => e.id === id);
+                    if (ex) {
+                        categoryProgress[ex.category] = (categoryProgress[ex.category] || 0) + 1;
+                    }
+                });
+
+                progressContainer.innerHTML = Object.entries(categoryProgress).map(([cat, count]) => {
+                    const total = exercises.filter(ex => ex.category === cat).length;
+                    const percentage = total > 0 ? (count / total) * 100 : 0;
+                    return `
+                        <div class="progress-item">
+                            <div style="flex: 1;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <strong>${getCategoryIcon(cat)} ${cat.charAt(0).toUpperCase() + cat.slice(1)}</strong>
+                                    <span style="color: #718096;">${count}/${total}</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${percentage}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
         }
 
         // Section navigation
@@ -829,292 +1295,6 @@
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // Video file handling
-        function handleVideoSelect(event) {
-            const file = event.target.files[0];
-            if (file) {
-                selectedVideoFile = file;
-                document.getElementById('fileLabel').textContent = `✅ ${file.name}`;
-            }
-        }
-
-        // Upload exercise
-        function uploadExercise() {
-            if (!isAdmin()) {
-                alert('Only administrators can upload exercises');
-                return;
-            }
-
-            const name = document.getElementById('exerciseName').value.trim();
-            const category = document.getElementById('exerciseCategory').value;
-            const description = document.getElementById('exerciseDescription').value.trim();
-            const duration = parseInt(document.getElementById('exerciseDuration').value);
-            const difficulty = document.getElementById('exerciseDifficulty').value;
-
-            if (!name || !description) {
-                alert('Please fill in all required fields');
-                return;
-            }
-
-            const icons = {
-                strength: '💪',
-                cardio: '❤️',
-                flexibility: '🧘',
-                balance: '⚖️'
-            };
-
-            const newExercise = {
-                id: exercises.length + 1,
-                name,
-                category,
-                description,
-                duration,
-                difficulty,
-                videoUrl: selectedVideoFile ? URL.createObjectURL(selectedVideoFile) : null,
-                icon: icons[category],
-                uploadedBy: currentUser.name
-            };
-
-            exercises.push(newExercise);
-            
-            // Reset form
-            document.getElementById('exerciseName').value = '';
-            document.getElementById('exerciseDescription').value = '';
-            document.getElementById('exerciseDuration').value = '5';
-            document.getElementById('fileLabel').textContent = '📹 Click to upload video or animation';
-            selectedVideoFile = null;
-            
-            closeModal('uploadModal');
-            renderExercises();
-            alert('Exercise uploaded successfully!');
-        }
-
-        // Set daily exercise
-        function setDailyExercise() {
-            const today = new Date().toDateString();
-            const dayIndex = new Date().getDate() % exercises.length;
-            const dailyExercise = exercises[dayIndex];
-
-            const content = `
-                <h2>${dailyExercise.name}</h2>
-                <p>${dailyExercise.description}</p>
-                <div style="margin-top: 1rem;">
-                    <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px; margin-right: 1rem;">
-                        ⏱️ ${dailyExercise.duration} min
-                    </span>
-                    <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px; margin-right: 1rem;">
-                        📊 ${dailyExercise.difficulty}
-                    </span>
-                    <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
-                        ${getCategoryIcon(dailyExercise.category)} ${dailyExercise.category}
-                    </span>
-                </div>
-                <button class="btn-primary" onclick="viewExercise(${dailyExercise.id})" style="margin-top: 1rem;">Try It Now</button>
-            `;
-
-            document.getElementById('dailyExerciseContent').innerHTML = content;
-        }
-
-        // Render exercises
-        function renderExercises(filter = 'all') {
-            const grid = document.getElementById('exercisesGrid');
-            const filteredExercises = filter === 'all' 
-                ? exercises 
-                : exercises.filter(ex => ex.category === filter);
-
-            grid.innerHTML = filteredExercises.map(ex => {
-                const isSaved = savedExercises.includes(ex.id);
-                return `
-                    <div class="exercise-card" onclick="viewExercise(${ex.id})">
-                        ${ex.videoUrl ? 
-                            `<video class="exercise-video" src="${ex.videoUrl}" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>` :
-                            `<div class="exercise-thumbnail">${ex.icon}</div>`
-                        }
-                        <div class="exercise-info">
-                            <h3>${ex.name}</h3>
-                            <p>${ex.description.substring(0, 80)}...</p>
-                            <div class="exercise-meta">
-                                <span>⏱️ ${ex.duration} min</span>
-                                <span>📊 ${ex.difficulty}</span>
-                            </div>
-                            ${currentUser ? `
-                                <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="event.stopPropagation(); toggleSave(${ex.id})">
-                                    ${isSaved ? '✓ Saved' : '+ Save'}
-                                </button>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // View exercise details
-        function viewExercise(id) {
-            const exercise = exercises.find(ex => ex.id === id);
-            if (!exercise) return;
-
-            const isCompleted = completedExercises.includes(id);
-            const isSaved = savedExercises.includes(id);
-
-            const detail = `
-                <div class="modal-header">
-                    <h2>${exercise.name}</h2>
-                </div>
-                <div class="modal-body">
-                    ${exercise.videoUrl ? 
-                        `<video src="${exercise.videoUrl}" controls style="width: 100%; border-radius: 10px; margin-bottom: 1rem;"></video>` :
-                        `<div class="exercise-thumbnail" style="height: 300px; margin-bottom: 1rem;">${exercise.icon}</div>`
-                    }
-                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                        <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
-                            ${getCategoryIcon(exercise.category)} ${exercise.category}
-                        </span>
-                        <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
-                            ⏱️ ${exercise.duration} minutes
-                        </span>
-                        <span style="background: var(--light); padding: 0.5rem 1rem; border-radius: 8px;">
-                            📊 ${exercise.difficulty}
-                        </span>
-                    </div>
-                    <p style="line-height: 1.6; margin-bottom: 1.5rem;">${exercise.description}</p>
-                    
-                    <h3 style="margin-bottom: 1rem;">How It Helps</h3>
-                    <p style="line-height: 1.6; margin-bottom: 1.5rem;">
-                        This exercise is designed to ${getExerciseBenefit(exercise.category)}. 
-                        Perfect for ${exercise.difficulty} level practitioners looking to improve their fitness journey.
-                    </p>
-
-                    ${exercise.uploadedBy ? `<p style="color: #718096; font-size: 0.9rem;">Uploaded by ${exercise.uploadedBy}</p>` : ''}
-                    
-                    ${currentUser ? `
-                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                            <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="toggleSave(${exercise.id}); viewExercise(${exercise.id})">
-                                ${isSaved ? '✓ Saved' : '+ Save Exercise'}
-                            </button>
-                            <button class="save-btn ${isCompleted ? 'saved' : ''}" onclick="toggleComplete(${exercise.id}); viewExercise(${exercise.id})">
-                                ${isCompleted ? '✓ Completed' : '✓ Mark Complete'}
-                            </button>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-
-            document.getElementById('exerciseDetail').innerHTML = detail;
-            openModal('exerciseModal');
-        }
-
-        // Toggle save exercise
-        function toggleSave(id) {
-            if (!currentUser) {
-                alert('Please log in to save exercises');
-                return;
-            }
-
-            const index = savedExercises.indexOf(id);
-            if (index > -1) {
-                savedExercises.splice(index, 1);
-            } else {
-                savedExercises.push(id);
-            }
-            renderExercises();
-            updateProfile();
-        }
-
-        // Toggle complete exercise
-        function toggleComplete(id) {
-            if (!currentUser) {
-                alert('Please log in to track progress');
-                return;
-            }
-
-            const index = completedExercises.indexOf(id);
-            if (index > -1) {
-                completedExercises.splice(index, 1);
-            } else {
-                completedExercises.push(id);
-            }
-            updateProfile();
-        }
-
-        // Filter exercises
-        function filterExercises() {
-            const filter = document.getElementById('categoryFilter').value;
-            renderExercises(filter);
-        }
-
-        function filterByCategory(category) {
-            showSection('exercises');
-            document.getElementById('categoryFilter').value = category;
-            renderExercises(category);
-        }
-
-        // Update profile
-        function updateProfile() {
-            if (!currentUser) return;
-
-            document.getElementById('profileName').textContent = currentUser.name;
-            document.getElementById('profileAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-            
-            // Update stats
-            document.getElementById('statSaved').textContent = savedExercises.length;
-            document.getElementById('statCompleted').textContent = completedExercises.length;
-            document.getElementById('statStreak').textContent = Math.min(completedExercises.length, 7);
-
-            // Render saved exercises
-            const savedContainer = document.getElementById('savedExercises');
-            if (savedExercises.length === 0) {
-                savedContainer.innerHTML = '<p style="color: #718096;">No saved exercises yet. Start exploring!</p>';
-            } else {
-                savedContainer.innerHTML = savedExercises.map(id => {
-                    const ex = exercises.find(e => e.id === id);
-                    if (!ex) return '';
-                    return `
-                        <div class="progress-item" style="cursor: pointer;" onclick="viewExercise(${ex.id})">
-                            <div>
-                                <strong>${ex.name}</strong>
-                                <p style="color: #718096; font-size: 0.9rem; margin-top: 0.25rem;">
-                                    ${ex.category} • ${ex.duration} min
-                                </p>
-                            </div>
-                            <button class="save-btn saved" onclick="event.stopPropagation(); toggleSave(${ex.id}); updateProfile()">Remove</button>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            // Render progress tracking
-            const progressContainer = document.getElementById('progressList');
-            if (completedExercises.length === 0) {
-                progressContainer.innerHTML = '<p style="color: #718096;">Complete exercises to track your progress!</p>';
-            } else {
-                const categoryProgress = {};
-                completedExercises.forEach(id => {
-                    const ex = exercises.find(e => e.id === id);
-                    if (ex) {
-                        categoryProgress[ex.category] = (categoryProgress[ex.category] || 0) + 1;
-                    }
-                });
-
-                progressContainer.innerHTML = Object.entries(categoryProgress).map(([cat, count]) => {
-                    const total = exercises.filter(ex => ex.category === cat).length;
-                    const percentage = (count / total) * 100;
-                    return `
-                        <div class="progress-item">
-                            <div style="flex: 1;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                    <strong>${getCategoryIcon(cat)} ${cat.charAt(0).toUpperCase() + cat.slice(1)}</strong>
-                                    <span style="color: #718096;">${count}/${total}</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: ${percentage}%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-        }
-
         // Helper functions
         function getCategoryIcon(category) {
             const icons = {
@@ -1134,6 +1314,18 @@
                 balance: 'enhance stability, coordination, and functional movement patterns'
             };
             return benefits[category] || 'improve your overall fitness';
+        }
+
+        // Show alert notification
+        function showAlert(message, type = 'success') {
+            const alert = document.createElement('div');
+            alert.className = `alert ${type}`;
+            alert.textContent = message;
+            document.body.appendChild(alert);
+
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
         }
 
         // Initialize on load
