@@ -1,0 +1,258 @@
+[
+  {
+    "id": "bodyweight-squat",
+    "name": "Bodyweight Squat",
+    "description": "A foundational lower-body movement that teaches proper squat mechanics. Perfect for beginners to learn joint alignment and knee tracking before adding weight. This exercise builds strength in your legs and glutes while improving mobility.",
+    "difficulty": "beginner",
+    "muscleGroups": ["quadriceps", "glutes"],
+    "category": "strength",
+    "duration": 5,
+    "previewVideo": "assets/media/preview_squat.mp4",
+    "tips": [
+      "Keep your feet shoulder-width apart, toes slightly turned out",
+      "Lower down as if sitting in a chair, pushing hips back",
+      "Keep knees aligned with your toes - avoid letting them collapse inward",
+      "Maintain a neutral spine - don't round your back",
+      "Push through your heels to return to standing",
+      "Keep your chest up and core engaged throughout"
+    ],
+    "commonMistakes": [
+      "Knees collapsing inward (valgus collapse)",
+      "Rounding the lower back",
+      "Heels lifting off the ground",
+      "Knees tracking too far forward past toes"
+    ]
+  },
+  {
+    "id": "deadlift",
+    "name": "Deadlift",
+    "description": "A fundamental posterior chain exercise that teaches the hip hinge pattern. Essential for building glutes, hamstrings, and lower back strength. Perfect for learning proper spine alignment and posterior chain activation.",
+    "difficulty": "intermediate",
+    "muscleGroups": ["glutes", "hamstrings", "lower back"],
+    "category": "strength",
+    "duration": 8,
+    "previewVideo": "assets/media/preview_deadlift.mp4",
+    "tips": [
+      "Start with feet hip-width apart, bar close to shins",
+      "Hinge at the hips, pushing hips back while keeping chest up",
+      "Maintain a neutral spine throughout - no rounding",
+      "Keep the bar close to your body as you lift",
+      "Drive through your heels and squeeze glutes at the top",
+      "Lower with control, maintaining spine alignment"
+    ],
+    "commonMistakes": [
+      "Rounding the lower back (spinal flexion)",
+      "Lifting with rounded shoulders",
+      "Bar drifting away from body",
+      "Not engaging glutes and hamstrings properly"
+    ]
+  },
+  {
+    "id": "push-up",
+    "name": "Push-Up",
+    "description": "A classic upper-body push pattern that strengthens chest, triceps, and core. Can be easily modified for beginners (knee or wall push-ups) or progressed for advanced users. Great for learning proper body alignment and controlled movement.",
+    "difficulty": "beginner",
+    "muscleGroups": ["chest", "triceps", "core"],
+    "category": "strength",
+    "duration": 5,
+    "previewVideo": "assets/media/preview_pushup.mp4",
+    "tips": [
+      "Start in plank position with hands directly under shoulders",
+      "Keep your body in a straight line from head to heels",
+      "Lower your body until chest nearly touches the floor",
+      "Push back up to starting position with control",
+      "Engage your core throughout to maintain body alignment",
+      "For beginners: try knee push-ups or wall push-ups",
+      "For progression: elevate feet or add tempo variations"
+    ],
+    "commonMistakes": [
+      "Sagging hips or lifting hips too high",
+      "Hands too wide or too narrow",
+      "Not going through full range of motion",
+      "Head dropping forward"
+    ]
+  },
+  {
+    "id": "bicep-curl",
+    "name": "Bicep Curl",
+    "description": "A simple isolation movement perfect for beginners to understand controlled, focused motion. Teaches proper form for arm exercises and helps build bicep strength and muscle mind connection.",
+    "difficulty": "beginner",
+    "muscleGroups": ["biceps"],
+    "category": "strength",
+    "duration": 4,
+    "previewVideo": "assets/media/preview_bicepcurl.mp4",
+    "tips": [
+      "Stand tall with feet hip-width apart",
+      "Keep elbows close to your sides",
+      "Curl weight up with control, squeezing biceps at top",
+      "Lower slowly with control - don't let gravity do the work",
+      "Avoid swinging or using momentum",
+      "Keep your core engaged and shoulders relaxed"
+    ],
+    "commonMistakes": [
+      "Swinging the weight using momentum",
+      "Moving elbows away from body",
+      "Not controlling the negative (lowering) phase",
+      "Using too much weight causing form breakdown"
+    ]
+  },
+  {
+    "id": "plank",
+    "name": "Plank",
+    "description": "An isometric core stability exercise that builds strength throughout your entire body. Minimal motion allows focus on perfect alignment and posture. Great for teaching core engagement and body awareness.",
+    "difficulty": "beginner",
+    "muscleGroups": ["core", "shoulders"],
+    "category": "strength",
+    "duration": 3,
+    "previewVideo": "assets/media/preview_plank.mp4",
+    "tips": [
+      "Start in push-up position on forearms",
+      "Keep your body in a straight line from head to heels",
+      "Engage your core and glutes - imagine pulling belly button to spine",
+      "Keep shoulders directly over elbows",
+      "Hold for 20-60 seconds, breathing normally",
+      "Don't let hips sag or lift too high",
+      "Focus on maintaining perfect alignment"
+    ],
+    "commonMistakes": [
+      "Hips sagging toward the floor",
+      "Hips lifted too high (butt in air)",
+      "Head dropping or looking up",
+      "Not engaging core properly"
+    ]
+  },
+  {
+    "id": "lunge",
+    "name": "Lunge",
+    "description": "A single-leg stability exercise that improves balance, coordination, and leg strength. Great for addressing muscle imbalances and teaching proper front/back plane movement. Challenges each leg independently.",
+    "difficulty": "intermediate",
+    "muscleGroups": ["glutes", "quadriceps"],
+    "category": "strength",
+    "duration": 6,
+    "previewVideo": "assets/media/preview_lunge.mp4",
+    "tips": [
+      "Step forward with one leg into a split stance",
+      "Lower your hips until both knees are bent at 90 degrees",
+      "Keep front knee aligned with ankle, not past toes",
+      "Back knee should hover just above the ground",
+      "Keep torso upright, core engaged",
+      "Push through front heel to return to starting position",
+      "Alternate legs for balanced training"
+    ],
+    "commonMistakes": [
+      "Front knee collapsing inward",
+      "Front knee tracking too far forward",
+      "Leaning torso too far forward",
+      "Not maintaining balance and stability"
+    ]
+  },
+  {
+    "id": "glute-bridge",
+    "name": "Glute Bridge",
+    "description": "A beginner-friendly posterior chain exercise that's perfect for learning glute activation. Low intimidation factor makes it ideal for those new to strength training. Great for highlighting muscle activation and teaching hip extension.",
+    "difficulty": "beginner",
+    "muscleGroups": ["glutes"],
+    "category": "strength",
+    "duration": 4,
+    "previewVideo": "assets/media/preview_glutebridge.mp4",
+    "tips": [
+      "Lie on your back with knees bent, feet flat on floor",
+      "Place feet hip-width apart, close to glutes",
+      "Engage your glutes and lift hips up",
+      "Create a straight line from knees to shoulders",
+      "Squeeze glutes at the top, hold for 1-2 seconds",
+      "Lower with control",
+      "Focus on feeling glutes do the work, not lower back"
+    ],
+    "commonMistakes": [
+      "Overarching lower back instead of using glutes",
+      "Feet too far from glutes",
+      "Not fully engaging glutes",
+      "Rushing through the movement"
+    ]
+  },
+  {
+    "id": "overhead-shoulder-press",
+    "name": "Overhead Shoulder Press",
+    "description": "An upper-body compound movement that builds shoulder and tricep strength while challenging core stability. Excellent for teaching proper posture and overhead movement patterns. Great for functional strength.",
+    "difficulty": "intermediate",
+    "muscleGroups": ["shoulders", "triceps"],
+    "category": "strength",
+    "duration": 6,
+    "previewVideo": "assets/media/preview_shoulderpress.mp4",
+    "tips": [
+      "Start with weight at shoulder height, palms facing forward",
+      "Keep core engaged and maintain upright posture",
+      "Press weight overhead until arms are fully extended",
+      "Keep shoulders down, don't let them shrug up",
+      "Lower with control back to shoulder height",
+      "Maintain neutral spine - avoid arching back excessively",
+      "Breathe out on the press up"
+    ],
+    "commonMistakes": [
+      "Arching lower back excessively",
+      "Shrugging shoulders up",
+      "Not maintaining core stability",
+      "Pressing forward instead of straight up"
+    ]
+  },
+  {
+    "id": "pull-up",
+    "name": "Pull-Up / Assisted Pull-Up",
+    "description": "An upper-body pull pattern that builds back, lat, and arm strength. Shows the concept of progression - start with assisted variations and work toward full pull-ups. An aspirational skill that motivates users to build strength over time.",
+    "difficulty": "advanced",
+    "muscleGroups": ["lats", "back", "arms"],
+    "category": "strength",
+    "duration": 8,
+    "previewVideo": "assets/media/preview_pullup.mp4",
+    "tips": [
+      "Start with hands slightly wider than shoulder-width",
+      "Hang with arms fully extended, engage your core",
+      "Pull your body up until chin clears the bar",
+      "Lower with control - don't drop down",
+      "For beginners: use resistance bands or assisted pull-up machine",
+      "Focus on pulling with your back muscles, not just arms",
+      "Keep shoulders down and away from ears"
+    ],
+    "commonMistakes": [
+      "Swinging or using momentum (kipping)",
+      "Not going through full range of motion",
+      "Shrugging shoulders up",
+      "Not engaging back muscles properly"
+    ],
+    "progression": [
+      "Start with dead hangs to build grip strength",
+      "Use resistance bands for assistance",
+      "Try negative pull-ups (slow lowering)",
+      "Work toward full unassisted pull-ups"
+    ]
+  },
+  {
+    "id": "kettlebell-swing",
+    "name": "Kettlebell Swing",
+    "description": "A dynamic hinge movement that develops power, rhythm, and timing. Combines strength and cardiovascular benefits while teaching proper hip drive. Advanced movement that introduces explosive power patterns and smooth motion arcs.",
+    "difficulty": "advanced",
+    "muscleGroups": ["glutes", "hamstrings", "core"],
+    "category": "strength",
+    "duration": 10,
+    "previewVideo": "assets/media/preview_kettlebellswing.mp4",
+    "tips": [
+      "Start with feet slightly wider than hip-width",
+      "Hinge at hips, keeping back flat and chest up",
+      "Drive hips forward explosively to swing kettlebell up",
+      "Kettlebell should reach chest height, not overhead",
+      "Let gravity bring it back down between legs",
+      "Maintain rhythm and timing - smooth, not jerky",
+      "Keep core engaged throughout the movement",
+      "Focus on hip drive, not arm pull"
+    ],
+    "commonMistakes": [
+      "Squatting instead of hinging",
+      "Using arms to lift instead of hip drive",
+      "Swinging too high (overhead)",
+      "Rounding the back",
+      "Not maintaining rhythm and timing"
+    ],
+    "rhythm": "The swing should have a smooth, rhythmic flow - explosive up, controlled down"
+  }
+]
