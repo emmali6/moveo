@@ -11,15 +11,13 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <header role="banner">
-        <nav role="navigation" aria-label="Main navigation">
-            <div class="logo" aria-label="Moveo logo">
-                <a href="index.html" style="background: none; -webkit-text-fill-color: unset;">moveo</a>
-            </div>
-            <div class="nav-links">
-                <a href="index.html" class="btn-secondary">Home</a>
-                <a href="about.html" class="btn-secondary" aria-current="page">About</a>
-            </div>
+    <header role="banner" class="site-header">
+        <nav role="navigation" aria-label="Main navigation" class="nav-inner">
+            <a href="index.html" class="logo" aria-label="Moveo home">moveo</a>
+            <ul class="nav-links" role="list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link" aria-current="page">About</a></li>
+            </ul>
         </nav>
     </header>
 
@@ -67,18 +65,10 @@
         </section>
     </main>
 
-    <footer role="contentinfo" style="background: rgba(255, 255, 255, 0.95); padding: 2rem 1rem; margin-top: 4rem; text-align: center;">
+    <footer role="contentinfo" class="site-footer">
         <div class="container">
-            <p style="color: var(--text-secondary); margin-bottom: 1rem;">
-                Made with ❤️ to make fitness accessible to everyone
-            </p>
-            <nav aria-label="Footer navigation">
-                <a href="index.html" style="margin: 0 1rem;">Home</a>
-                <a href="about.html" style="margin: 0 1rem;">About</a>
-            </nav>
-            <p style="color: var(--text-secondary); margin-top: 1rem; font-size: 0.9rem;">
-                &copy; 2024 Moveo. All rights reserved.
-            </p>
+            <p class="footer-tagline">Made with ❤️ to make fitness accessible to everyone</p>
+            <p class="footer-copy">&copy; 2024 Moveo. All rights reserved.</p>
         </div>
     </footer>
 </body>

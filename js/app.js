@@ -11,8 +11,31 @@ let showMuscleHighlight = false;
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
+  if (document.body.dataset.page === 'exercise') {
+    initExercisePage();
+    return;
+  }
   initializeApp();
 });
+
+async function initExercisePage() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const container = document.getElementById('exercisePageContent');
+  if (!container) return;
+  if (!id) {
+    container.innerHTML = '<p class="no-exercises">No exercise selected.</p><a href="index.html" class="btn-secondary">← Back to Gallery</a>';
+    return;
+  }
+  await loadExercises();
+  const exercise = exercises.find(ex => ex.id === id);
+  if (!exercise) {
+    container.innerHTML = '<p class="no-exercises">Exercise not found.</p><a href="index.html" class="btn-secondary">← Back to Gallery</a>';
+    return;
+  }
+  loadBookmarks();
+  renderExerciseDetail(exercise, { containerId: 'exercisePageContent', backHref: 'index.html', baseUrl: getBaseUrl() });
+}
 
 async function initializeApp() {
   // Load exercises data
@@ -34,17 +57,26 @@ async function initializeApp() {
   announceToScreenReader('Moveo loaded. Use navigation to explore exercises.');
 }
 
+// Base URL for relative paths (works from file, local server, or subdirectory like GitHub Pages)
+function getBaseUrl() {
+  const href = window.location.href;
+  const lastSlash = href.lastIndexOf('/');
+  return lastSlash >= 0 ? href.slice(0, lastSlash + 1) : href + '/';
+}
+
 // Load exercises from JSON file
 async function loadExercises() {
+  const base = getBaseUrl();
+  const url = base + 'data/exercises.json';
   try {
-    const response = await fetch('data/exercises.json');
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Failed to load exercises');
     }
     exercises = await response.json();
   } catch (error) {
     console.error('Error loading exercises:', error);
-    showError('Failed to load exercises. Please refresh the page.');
+    showError('Failed to load exercises. Please refresh the page, or open the site from a local server (e.g. live server).');
   }
 }
 
@@ -83,7 +115,7 @@ function setupEventListeners() {
     workoutOfDayBtn.addEventListener('click', () => {
       const dailyExercise = getDailyExercise();
       if (dailyExercise) {
-        viewExercise(dailyExercise.id);
+        window.location.href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(dailyExercise.id);
       }
     });
   }
@@ -123,14 +155,16 @@ function renderExerciseGallery() {
   
   gallery.innerHTML = exercises.map(exercise => createExerciseCard(exercise)).join('');
   
-  // Add click handlers
+  // Add click handlers - navigate to exercise page
   gallery.querySelectorAll('.exercise-card').forEach((card, index) => {
     const exercise = exercises[index];
-    card.addEventListener('click', () => viewExercise(exercise.id));
+    const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
+    card.setAttribute('data-href', href);
+    card.addEventListener('click', () => { window.location.href = href; });
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        viewExercise(exercise.id);
+        window.location.href = href;
       }
     });
   });
@@ -322,14 +356,13 @@ function renderExerciseDetail(exercise) {
       </div>
     </div>
     
-    <button class="btn-secondary" onclick="backToGallery()" style="margin-top: 2rem;">
-      ← Back to Gallery
-    </button>
+    ${backMarkup}
   `;
   
-  // Setup video controls if video exists
+  // Setup video controls if video exists (preview paths relative to current page)
   const video = document.getElementById('exerciseVideo');
-  if (video) {
+  if (video && exercise.previewVideo) {
+    video.src = (options && options.baseUrl) ? options.baseUrl + exercise.previewVideo : exercise.previewVideo;
     video.playbackRate = animationSpeed;
     if (isPlaying) {
       video.play().catch(err => console.error('Video play error:', err));
@@ -472,6 +505,7 @@ function setDailyExercise() {
   
   if (!container || !dailyExercise) return;
   
+  const exerciseUrl = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(dailyExercise.id);
   container.innerHTML = `
     <h2>${dailyExercise.name}</h2>
     <p>${dailyExercise.description}</p>
@@ -480,9 +514,7 @@ function setDailyExercise() {
       <span class="difficulty-badge ${dailyExercise.difficulty}">${dailyExercise.difficulty}</span>
       <span>${getCategoryIcon(dailyExercise.category)} ${dailyExercise.category}</span>
     </div>
-    <button class="btn-primary" onclick="viewExercise('${dailyExercise.id}')">
-      Try It Now
-    </button>
+    <a href="${exerciseUrl}" class="btn-primary btn-link">Try It Now</a>
   `;
 }
 
