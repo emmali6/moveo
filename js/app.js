@@ -70,7 +70,7 @@ async function initExercisesPage() {
 
 async function initAccountPage() {
   loadBookmarks();
-  const currentUser = getCurrentUser();
+  const currentUser = await getCurrentUser();
   if (currentUser) {
     await loadExercises();
     showAccountDashboard(currentUser);
@@ -85,40 +85,31 @@ async function initAccountPage() {
   document.getElementById('signOutBtn')?.addEventListener('click', handleSignOut);
 }
 
-// Account auth (localStorage - demo only, not secure for production)
-const STORAGE_USERS = 'moveoUsers';
-const STORAGE_CURRENT_USER = 'moveoCurrentUser';
+// Supabase – account auth (script loaded on account.html)
+// Keys: Project URL and anon/public key from Supabase Dashboard → Project Settings → API
+const SUPABASE_URL = 'https://lydlimchauawqmjxprip.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
-function getStoredUsers() {
-  try {
-    const raw = localStorage.getItem(STORAGE_USERS);
-    return raw ? JSON.parse(raw) : {};
-  } catch (e) {
-    return {};
+function getSupabase() {
+  if (typeof window === 'undefined' || !window.supabase) return null;
+  if (!window._moveoSupabase) {
+    const { createClient } = window.supabase;
+    window._moveoSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
+  return window._moveoSupabase;
 }
 
-function setStoredUser(email, user) {
-  const users = getStoredUsers();
-  users[email] = user;
-  localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
-}
-
-function getCurrentUser() {
-  try {
-    const raw = localStorage.getItem(STORAGE_CURRENT_USER);
-    return raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    return null;
-  }
-}
-
-function setCurrentUser(user) {
-  if (user) {
-    localStorage.setItem(STORAGE_CURRENT_USER, JSON.stringify(user));
-  } else {
-    localStorage.removeItem(STORAGE_CURRENT_USER);
-  }
+async function getCurrentUser() {
+  const supabase = getSupabase();
+  if (!supabase) return null;
+  const { data: { session }, error } = await supabase.auth.getSession();
+  if (error || !session?.user) return null;
+  const u = session.user;
+  return {
+    id: u.id,
+    email: u.email,
+    name: u.user_metadata?.name || u.email?.split('@')[0] || 'User'
+  };
 }
 
 function showAuthForm() {
@@ -174,7 +165,7 @@ function setAuthMessage(msg, isError) {
   el.className = 'auth-message' + (isError ? ' error' : ' success');
 }
 
-function handleSignIn(e) {
+async function handleSignIn(e) {
   e.preventDefault();
   const email = document.getElementById('signInEmail')?.value?.trim();
   const password = document.getElementById('signInPassword')?.value;
@@ -182,19 +173,28 @@ function handleSignIn(e) {
     setAuthMessage('Please enter email and password.', true);
     return;
   }
-  const users = getStoredUsers();
-  const user = users[email];
-  if (!user || user.password !== password) {
-    setAuthMessage('Invalid email or password.', true);
+  const supabase = getSupabase();
+  if (!supabase) {
+    setAuthMessage('Auth is not available. Please refresh the page.', true);
     return;
   }
-  setCurrentUser({ email, name: user.name });
+  setAuthMessage('Signing in...');
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    setAuthMessage(error.message || 'Invalid email or password.', true);
+    return;
+  }
+  const user = data.user;
   setAuthMessage('');
   hideAuthForm();
-  showAccountDashboard({ email, name: user.name });
+  showAccountDashboard({
+    id: user.id,
+    email: user.email,
+    name: user.user_metadata?.name || user.email?.split('@')[0] || 'User'
+  });
 }
 
-function handleSignUp(e) {
+async function handleSignUp(e) {
   e.preventDefault();
   const name = document.getElementById('signUpName')?.value?.trim();
   const email = document.getElementById('signUpEmail')?.value?.trim();
@@ -207,20 +207,38 @@ function handleSignUp(e) {
     setAuthMessage('Password must be at least 6 characters.', true);
     return;
   }
-  const users = getStoredUsers();
-  if (users[email]) {
-    setAuthMessage('An account with this email already exists. Sign in instead.', true);
+  const supabase = getSupabase();
+  if (!supabase) {
+    setAuthMessage('Auth is not available. Please refresh the page.', true);
     return;
   }
-  setStoredUser(email, { name, password });
-  setCurrentUser({ email, name });
+  setAuthMessage('Creating account...');
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { data: { name } }
+  });
+  if (error) {
+    setAuthMessage(error.message || 'Could not create account.', true);
+    return;
+  }
+  if (data.user && !data.session) {
+    setAuthMessage('Check your email to confirm your account, then sign in.', false);
+    return;
+  }
+  const user = data.user;
   setAuthMessage('');
   hideAuthForm();
-  showAccountDashboard({ email, name });
+  showAccountDashboard({
+    id: user.id,
+    email: user.email,
+    name: user.user_metadata?.name || name || user.email?.split('@')[0] || 'User'
+  });
 }
 
-function handleSignOut() {
-  setCurrentUser(null);
+async function handleSignOut() {
+  const supabase = getSupabase();
+  if (supabase) await supabase.auth.signOut();
   showAuthForm();
   hideAccountDashboard();
 }
