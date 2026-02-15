@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Moveo - Sign in or create an account to save exercises.">
+    <meta name="theme-color" content="#1a1d28">
+    <title>Account - Moveo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="fitness-theme" data-page="account">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header role="banner" class="site-header">
+        <nav role="navigation" aria-label="Main navigation" class="nav-inner">
+            <a href="index.html" class="logo" aria-label="Moveo home">moveo</a>
+            <ul class="nav-links" role="list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="exercises.html" class="nav-link">Exercises</a></li>
+                <li><a href="account.html" class="nav-link" aria-current="page">Account</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Sign in / Sign up form (shown when not signed in) -->
+        <section id="accountAuthSection" class="section-light" aria-labelledby="auth-heading">
+            <div class="container account-form-container">
+                <h1 id="auth-heading" class="account-heading">Sign In or Sign Up</h1>
+                <p class="account-intro">Create an account to save your favorite exercises and access them from any device.</p>
+
+                <div class="auth-tabs" role="tablist" aria-label="Sign in or sign up">
+                    <button type="button" id="tabSignIn" class="auth-tab active" role="tab" aria-selected="true" aria-controls="panelSignIn">Sign In</button>
+                    <button type="button" id="tabSignUp" class="auth-tab" role="tab" aria-selected="false" aria-controls="panelSignUp">Sign Up</button>
+                </div>
+
+                <div id="panelSignIn" class="auth-panel" role="tabpanel" aria-labelledby="tabSignIn">
+                    <form id="signInForm" class="account-form" novalidate>
+                        <label for="signInEmail">Email</label>
+                        <input type="email" id="signInEmail" name="email" required autocomplete="email" aria-required="true">
+                        <label for="signInPassword">Password</label>
+                        <input type="password" id="signInPassword" name="password" required autocomplete="current-password" aria-required="true">
+                        <button type="submit" class="btn-primary">Sign In</button>
+                    </form>
+                </div>
+
+                <div id="panelSignUp" class="auth-panel hidden" role="tabpanel" aria-labelledby="tabSignUp" hidden>
+                    <form id="signUpForm" class="account-form" novalidate>
+                        <label for="signUpName">Name</label>
+                        <input type="text" id="signUpName" name="name" required autocomplete="name" aria-required="true">
+                        <label for="signUpEmail">Email</label>
+                        <input type="email" id="signUpEmail" name="email" required autocomplete="email" aria-required="true">
+                        <label for="signUpPassword">Password</label>
+                        <input type="password" id="signUpPassword" name="password" required autocomplete="new-password" aria-required="true" minlength="6">
+                        <button type="submit" class="btn-primary">Create Account</button>
+                    </form>
+                </div>
+
+                <p id="authMessage" class="auth-message" role="alert" aria-live="polite"></p>
+            </div>
+        </section>
+
+        <!-- Account dashboard (shown when signed in) -->
+        <section id="accountDashboardSection" class="section-light hidden" aria-labelledby="dashboard-heading">
+            <div class="container">
+                <h1 id="dashboard-heading" class="account-heading">My Account</h1>
+                <p class="account-welcome">Welcome back, <span id="accountUserName"></span>.</p>
+                <button type="button" id="signOutBtn" class="btn-secondary">Sign Out</button>
+
+                <h2 class="saved-exercises-heading">Saved Exercises</h2>
+                <p class="saved-exercises-intro">Exercises you've bookmarked. Click to open or remove from saved.</p>
+                <div id="savedExercisesList" class="saved-exercises-list" role="list">
+                    <!-- Filled by JS -->
+                </div>
+                <p id="noSavedExercises" class="no-saved-message hidden">You haven't saved any exercises yet. <a href="exercises.html">Browse exercises</a> and bookmark your favorites.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo" class="site-footer">
+        <div class="container">
+            <p class="footer-tagline">Made with ❤️ to make fitness accessible to everyone</p>
+            <p class="footer-copy">&copy; 2024 Moveo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -15,6 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initExercisePage();
     return;
   }
+  if (document.body.dataset.page === 'exercises') {
+    initExercisesPage();
+    return;
+  }
+  if (document.body.dataset.page === 'account') {
+    initAccountPage();
+    return;
+  }
   initializeApp();
 });
 
@@ -36,6 +44,229 @@ async function initExercisePage() {
   loadBookmarks();
   renderExerciseDetail(exercise, { containerId: 'exercisePageContent', backHref: 'index.html', baseUrl: getBaseUrl() });
 }
+
+async function initExercisesPage() {
+  await loadExercises();
+  loadBookmarks();
+  const grid = document.getElementById('exercisesPageGrid');
+  if (!grid) return;
+  if (exercises.length === 0) {
+    grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No exercises available.</p>';
+    return;
+  }
+  grid.innerHTML = exercises.map(ex => createExerciseCard(ex)).join('');
+  grid.querySelectorAll('.exercise-card').forEach((card, index) => {
+    const exercise = exercises[index];
+    const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
+    card.addEventListener('click', () => { window.location.href = href; });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.location.href = href;
+      }
+    });
+  });
+}
+
+async function initAccountPage() {
+  loadBookmarks();
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    await loadExercises();
+    showAccountDashboard(currentUser);
+    hideAuthForm();
+  } else {
+    showAuthForm();
+    hideAccountDashboard();
+  }
+  setupAuthTabs();
+  document.getElementById('signInForm')?.addEventListener('submit', handleSignIn);
+  document.getElementById('signUpForm')?.addEventListener('submit', handleSignUp);
+  document.getElementById('signOutBtn')?.addEventListener('click', handleSignOut);
+}
+
+// Account auth (localStorage - demo only, not secure for production)
+const STORAGE_USERS = 'moveoUsers';
+const STORAGE_CURRENT_USER = 'moveoCurrentUser';
+
+function getStoredUsers() {
+  try {
+    const raw = localStorage.getItem(STORAGE_USERS);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function setStoredUser(email, user) {
+  const users = getStoredUsers();
+  users[email] = user;
+  localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+}
+
+function getCurrentUser() {
+  try {
+    const raw = localStorage.getItem(STORAGE_CURRENT_USER);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function setCurrentUser(user) {
+  if (user) {
+    localStorage.setItem(STORAGE_CURRENT_USER, JSON.stringify(user));
+  } else {
+    localStorage.removeItem(STORAGE_CURRENT_USER);
+  }
+}
+
+function showAuthForm() {
+  document.getElementById('accountAuthSection')?.classList.remove('hidden');
+}
+
+function hideAuthForm() {
+  document.getElementById('accountAuthSection')?.classList.add('hidden');
+}
+
+function showAccountDashboard(user) {
+  document.getElementById('accountDashboardSection')?.classList.remove('hidden');
+  document.getElementById('accountUserName').textContent = user.name || user.email;
+  renderSavedExercisesList();
+}
+
+function hideAccountDashboard() {
+  document.getElementById('accountDashboardSection')?.classList.add('hidden');
+}
+
+function setupAuthTabs() {
+  const tabSignIn = document.getElementById('tabSignIn');
+  const tabSignUp = document.getElementById('tabSignUp');
+  const panelSignIn = document.getElementById('panelSignIn');
+  const panelSignUp = document.getElementById('panelSignUp');
+  if (!tabSignIn || !tabSignUp) return;
+  tabSignIn.addEventListener('click', () => {
+    tabSignIn.classList.add('active');
+    tabSignUp.classList.remove('active');
+    tabSignIn.setAttribute('aria-selected', 'true');
+    tabSignUp.setAttribute('aria-selected', 'false');
+    panelSignIn?.classList.remove('hidden');
+    panelSignUp?.classList.add('hidden');
+    panelSignIn?.removeAttribute('hidden');
+    panelSignUp?.setAttribute('hidden', '');
+  });
+  tabSignUp.addEventListener('click', () => {
+    tabSignUp.classList.add('active');
+    tabSignIn.classList.remove('active');
+    tabSignUp.setAttribute('aria-selected', 'true');
+    tabSignIn.setAttribute('aria-selected', 'false');
+    panelSignUp?.classList.remove('hidden');
+    panelSignIn?.classList.add('hidden');
+    panelSignUp?.removeAttribute('hidden');
+    panelSignIn?.setAttribute('hidden', '');
+  });
+}
+
+function setAuthMessage(msg, isError) {
+  const el = document.getElementById('authMessage');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'auth-message' + (isError ? ' error' : ' success');
+}
+
+function handleSignIn(e) {
+  e.preventDefault();
+  const email = document.getElementById('signInEmail')?.value?.trim();
+  const password = document.getElementById('signInPassword')?.value;
+  if (!email || !password) {
+    setAuthMessage('Please enter email and password.', true);
+    return;
+  }
+  const users = getStoredUsers();
+  const user = users[email];
+  if (!user || user.password !== password) {
+    setAuthMessage('Invalid email or password.', true);
+    return;
+  }
+  setCurrentUser({ email, name: user.name });
+  setAuthMessage('');
+  hideAuthForm();
+  showAccountDashboard({ email, name: user.name });
+}
+
+function handleSignUp(e) {
+  e.preventDefault();
+  const name = document.getElementById('signUpName')?.value?.trim();
+  const email = document.getElementById('signUpEmail')?.value?.trim();
+  const password = document.getElementById('signUpPassword')?.value;
+  if (!name || !email || !password) {
+    setAuthMessage('Please fill in all fields.', true);
+    return;
+  }
+  if (password.length < 6) {
+    setAuthMessage('Password must be at least 6 characters.', true);
+    return;
+  }
+  const users = getStoredUsers();
+  if (users[email]) {
+    setAuthMessage('An account with this email already exists. Sign in instead.', true);
+    return;
+  }
+  setStoredUser(email, { name, password });
+  setCurrentUser({ email, name });
+  setAuthMessage('');
+  hideAuthForm();
+  showAccountDashboard({ email, name });
+}
+
+function handleSignOut() {
+  setCurrentUser(null);
+  showAuthForm();
+  hideAccountDashboard();
+}
+
+function renderSavedExercisesList() {
+  const list = document.getElementById('savedExercisesList');
+  const noSaved = document.getElementById('noSavedExercises');
+  if (!list) return;
+  if (bookmarkedExercises.length === 0) {
+    list.innerHTML = '';
+    if (noSaved) {
+      noSaved.classList.remove('hidden');
+    }
+    return;
+  }
+  if (noSaved) noSaved.classList.add('hidden');
+  if (exercises.length === 0) {
+    list.innerHTML = '<p class="loading-message">Loading saved exercises...</p>';
+    loadExercises().then(() => renderSavedExercisesList());
+    return;
+  }
+  const base = getBaseUrl();
+  list.innerHTML = bookmarkedExercises.map(id => {
+    const ex = exercises.find(e => e.id === id);
+    if (!ex) return '';
+    return `
+      <article class="saved-exercise-item" role="listitem">
+        <a href="${base}exercise.html?id=${encodeURIComponent(ex.id)}" class="saved-exercise-link">
+          <span class="saved-exercise-name">${ex.name}</span>
+          <span class="saved-exercise-meta">${ex.difficulty} · ${ex.duration} min</span>
+        </a>
+        <button type="button" class="btn-remove-saved" aria-label="Remove ${ex.name} from saved" onclick="removeSavedOnAccountPage('${ex.id}')">Remove</button>
+      </article>
+    `;
+  }).filter(Boolean).join('');
+}
+
+function removeSavedOnAccountPage(exerciseId) {
+  const index = bookmarkedExercises.indexOf(exerciseId);
+  if (index > -1) {
+    bookmarkedExercises.splice(index, 1);
+    saveBookmarks();
+    renderSavedExercisesList();
+  }
+}
+window.removeSavedOnAccountPage = removeSavedOnAccountPage;
 
 async function initializeApp() {
   // Load exercises data

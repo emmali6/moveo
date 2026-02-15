@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Moveo - Exercise detail. Learn form, tips, and target muscles.">
+    <meta name="description" content="Moveo - Browse all exercises. Learn form, target muscles, and tips.">
     <meta name="theme-color" content="#1a1d28">
-    <title>Exercise - Moveo</title>
+    <title>Exercises - Moveo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="fitness-theme" data-page="exercise">
+<body class="fitness-theme" data-page="exercises">
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <header role="banner" class="site-header">
@@ -19,7 +19,7 @@
             <a href="index.html" class="logo" aria-label="Moveo home">moveo</a>
             <ul class="nav-links" role="list">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="exercises.html" class="nav-link">Exercises</a></li>
+                <li><a href="exercises.html" class="nav-link" aria-current="page">Exercises</a></li>
                 <li><a href="account.html" class="nav-link">Account</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
             </ul>
@@ -27,11 +27,18 @@
     </header>
 
     <main id="main-content" role="main">
-        <div class="container">
-            <div id="exercisePageContent" class="exercise-page-content">
-                <p class="loading-message">Loading exercise...</p>
+        <section class="section-dark gallery-section" aria-labelledby="exercises-heading">
+            <div class="container">
+                <p class="section-label section-label-light">Full Library</p>
+                <h1 id="exercises-heading" class="section-heading">All Exercises</h1>
+                <p class="section-intro">
+                    Browse every exercise. Click any card to learn proper form, target muscles, and form tips. Bookmark your favorites when signed in.
+                </p>
+                <div id="exercisesPageGrid" class="exercises-grid" role="list" aria-label="Exercise library">
+                    <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading exercises...</p>
+                </div>
             </div>
-        </div>
+        </section>
     </main>
 
     <footer role="contentinfo" class="site-footer">
