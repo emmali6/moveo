@@ -1,6 +1,27 @@
 // Moveo - Movement Made Simple
 // Main application JavaScript
 
+// Supabase – account auth (script loaded on account.html)
+// Replace with your project URL and anon/publishable key from Supabase Dashboard > Project Settings > API
+const SUPABASE_URL = 'https://lydlimchauawqmjxprip.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
+
+let supabaseClient = null;
+function getSupabase() {
+  if (supabaseClient) return supabaseClient;
+  if (typeof window.supabase === 'undefined') return null;
+  try {
+    const { createClient } = window.supabase;
+    if (createClient) {
+      supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      return supabaseClient;
+    }
+  } catch (e) {
+    console.error('Supabase init error:', e);
+  }
+  return null;
+}
+
 // State management
 let exercises = [];
 let bookmarkedExercises = [];
@@ -85,31 +106,20 @@ async function initAccountPage() {
   document.getElementById('signOutBtn')?.addEventListener('click', handleSignOut);
 }
 
-// Supabase – account auth (script loaded on account.html)
-// Keys: Project URL and anon/public key from Supabase Dashboard → Project Settings → API
-const SUPABASE_URL = 'https://lydlimchauawqmjxprip.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
-
-function getSupabase() {
-  if (typeof window === 'undefined' || !window.supabase) return null;
-  if (!window._moveoSupabase) {
-    const { createClient } = window.supabase;
-    window._moveoSupabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  }
-  return window._moveoSupabase;
-}
-
+// Account auth via Supabase
 async function getCurrentUser() {
-  const supabase = getSupabase();
-  if (!supabase) return null;
-  const { data: { session }, error } = await supabase.auth.getSession();
-  if (error || !session?.user) return null;
-  const u = session.user;
-  return {
-    id: u.id,
-    email: u.email,
-    name: u.user_metadata?.name || u.email?.split('@')[0] || 'User'
-  };
+  const sb = getSupabase();
+  if (!sb) return null;
+  try {
+    const { data: { session }, error } = await sb.auth.getSession();
+    if (error || !session?.user) return null;
+    const u = session.user;
+    const name = u.user_metadata?.full_name || u.user_metadata?.name || u.email?.split('@')[0] || 'User';
+    return { id: u.id, email: u.email, name };
+  } catch (e) {
+    console.error('getCurrentUser error:', e);
+    return null;
+  }
 }
 
 function showAuthForm() {
@@ -173,25 +183,23 @@ async function handleSignIn(e) {
     setAuthMessage('Please enter email and password.', true);
     return;
   }
-  const supabase = getSupabase();
-  if (!supabase) {
-    setAuthMessage('Auth is not available. Please refresh the page.', true);
+  const sb = getSupabase();
+  if (!sb) {
+    setAuthMessage('Sign-in is not available. Please refresh the page.', true);
     return;
   }
   setAuthMessage('Signing in...');
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
   if (error) {
     setAuthMessage(error.message || 'Invalid email or password.', true);
     return;
   }
   const user = data.user;
+  const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || 'User';
   setAuthMessage('');
   hideAuthForm();
-  showAccountDashboard({
-    id: user.id,
-    email: user.email,
-    name: user.user_metadata?.name || user.email?.split('@')[0] || 'User'
-  });
+  await loadExercises();
+  showAccountDashboard({ id: user.id, email: user.email, name });
 }
 
 async function handleSignUp(e) {
@@ -207,38 +215,43 @@ async function handleSignUp(e) {
     setAuthMessage('Password must be at least 6 characters.', true);
     return;
   }
-  const supabase = getSupabase();
-  if (!supabase) {
-    setAuthMessage('Auth is not available. Please refresh the page.', true);
+  const sb = getSupabase();
+  if (!sb) {
+    setAuthMessage('Sign-up is not available. Please refresh the page.', true);
     return;
   }
   setAuthMessage('Creating account...');
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await sb.auth.signUp({
     email,
     password,
-    options: { data: { name } }
+    options: { data: { full_name: name } }
   });
   if (error) {
     setAuthMessage(error.message || 'Could not create account.', true);
     return;
   }
-  if (data.user && !data.session) {
-    setAuthMessage('Check your email to confirm your account, then sign in.', false);
-    return;
-  }
   const user = data.user;
-  setAuthMessage('');
-  hideAuthForm();
-  showAccountDashboard({
-    id: user.id,
-    email: user.email,
-    name: user.user_metadata?.name || name || user.email?.split('@')[0] || 'User'
-  });
+  const displayName = user.user_metadata?.full_name || name;
+  if (data.session) {
+    setAuthMessage('');
+    hideAuthForm();
+    await loadExercises();
+    showAccountDashboard({ id: user.id, email: user.email, name: displayName });
+  } else {
+    setAuthMessage('Account created! Please check your email to confirm, then sign in.', false);
+    document.getElementById('tabSignIn')?.click();
+  }
 }
 
 async function handleSignOut() {
-  const supabase = getSupabase();
-  if (supabase) await supabase.auth.signOut();
+  const sb = getSupabase();
+  if (sb) {
+    try {
+      await sb.auth.signOut();
+    } catch (e) {
+      console.error('Sign out error:', e);
+    }
+  }
   showAuthForm();
   hideAccountDashboard();
 }
