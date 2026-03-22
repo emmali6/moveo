@@ -326,20 +326,106 @@ function getBaseUrl() {
   return lastSlash >= 0 ? href.slice(0, lastSlash + 1) : href + '/';
 }
 
-// Load exercises from JSON file
+// Normalize a Supabase exercises row to app shape (used when Supabase-only list is needed)
+function normalizeExerciseFromSupabase(row) {
+  const id = row.id != null ? String(row.id) : '';
+  const videoUrl = row.video_url || row.preview_video || row.previewVideo || null;
+  return {
+    id,
+    name: row.name || 'Exercise',
+    description: row.description || '',
+    duration: row.duration != null ? Number(row.duration) : 5,
+    difficulty: row.difficulty || 'beginner',
+    category: row.category || 'strength',
+    previewVideo: videoUrl,
+    muscleGroups: row.muscle_groups || row.muscleGroups || [],
+    tips: row.tips || [],
+    commonMistakes: row.common_mistakes || row.commonMistakes,
+    progression: row.progression,
+    rhythm: row.rhythm,
+  };
+}
+
+/** For matching "Push Up" / "Push-Up" to push-up */
+function nameKeyForMatch(str) {
+  return String(str || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '');
+}
+
+/**
+ * Overlay Supabase video URLs onto the local catalog so library exercises keep JSON ids (e.g. bodyweight-squat, push-up).
+ * Matches Supabase rows by: slug, exercise_id, id (string), or normalized exercise name.
+ */
+function mergeSupabaseVideosIntoExercises(localList, supabaseRows) {
+  if (!supabaseRows?.length) return localList;
+
+  const urlByKey = new Map();
+  supabaseRows.forEach((row) => {
+    const url = row.video_url || row.preview_video || row.previewVideo;
+    if (!url) return;
+
+    const keys = [
+      row.slug,
+      row.exercise_id,
+      row.exercise_key,
+      row.key,
+    ].filter((k) => k != null && String(k).trim() !== '');
+
+    keys.forEach((k) => urlByKey.set(String(k).toLowerCase(), url));
+
+    if (row.id != null) {
+      urlByKey.set(String(row.id).toLowerCase(), url);
+    }
+
+    const nk = nameKeyForMatch(row.name);
+    if (nk) urlByKey.set(`name:${nk}`, url);
+  });
+
+  return localList.map((ex) => {
+    let videoUrl =
+      urlByKey.get(String(ex.id).toLowerCase()) ||
+      urlByKey.get(`name:${nameKeyForMatch(ex.name)}`);
+
+    if (!videoUrl) return ex;
+
+    return { ...ex, previewVideo: videoUrl };
+  });
+}
+
+// Load exercises: local JSON catalog + Supabase videos merged in (same ids/names as site exercises)
 async function loadExercises() {
   const base = getBaseUrl();
-  const url = base + 'data/exercises.json';
+  const jsonUrl = base + 'data/exercises.json';
+  let localList = [];
+
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Failed to load exercises');
-    }
-    exercises = await response.json();
+    const response = await fetch(jsonUrl);
+    if (!response.ok) throw new Error('Failed to load exercises');
+    localList = await response.json();
   } catch (error) {
     console.error('Error loading exercises:', error);
     showError('Failed to load exercises. Please refresh the page, or open the site from a local server (e.g. live server).');
+    exercises = [];
+    return;
   }
+
+  const sb = getSupabase();
+  if (sb) {
+    try {
+      const { data: rows, error } = await sb.from('exercises').select('*').order('created_at', { ascending: false });
+      if (error) {
+        console.warn('Supabase exercises fetch failed:', error.message);
+      } else if (rows?.length) {
+        exercises = mergeSupabaseVideosIntoExercises(localList, rows);
+        return;
+      }
+    } catch (e) {
+      console.warn('Supabase exercises error:', e);
+    }
+  }
+
+  exercises = localList;
 }
 
 // Load bookmarks from localStorage
@@ -447,7 +533,7 @@ function createExerciseCard(exercise) {
       </div>
       <div class="exercise-info">
         <h3>${exercise.name}</h3>
-        <p>${exercise.description.substring(0, 100)}${exercise.description.length > 100 ? '...' : ''}</p>
+        <p>${(exercise.description || '').substring(0, 100)}${(exercise.description || '').length > 100 ? '...' : ''}</p>
         <div class="exercise-meta">
           <span>⏱️ ${exercise.duration} min</span>
           <span class="difficulty-badge ${exercise.difficulty}">${exercise.difficulty}</span>
@@ -624,7 +710,8 @@ function renderExerciseDetail(exercise) {
   // Setup video controls if video exists (preview paths relative to current page)
   const video = document.getElementById('exerciseVideo');
   if (video && exercise.previewVideo) {
-    video.src = (options && options.baseUrl) ? options.baseUrl + exercise.previewVideo : exercise.previewVideo;
+    const isAbsolute = /^https?:\/\//i.test(exercise.previewVideo);
+    video.src = isAbsolute ? exercise.previewVideo : (options?.baseUrl || '') + exercise.previewVideo;
     video.playbackRate = animationSpeed;
     if (isPlaying) {
       video.play().catch(err => console.error('Video play error:', err));
