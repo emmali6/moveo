@@ -23,8 +23,8 @@
             <ul class="nav-links" role="list">
                 <li><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
                 <li><a href="exercises.html" class="nav-link">Exercises</a></li>
-                <li><a href="account.html" class="nav-link">Account</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="account.html" class="nav-link">Account</a></li>
             </ul>
         </nav>
     </header>
@@ -38,6 +38,16 @@
                 <p class="hero-label">FUNCTIONAL MOVEMENT FOR EVERY BODY</p>
                 <h1 id="hero-heading">Movement Made Simple</h1>
                 <p class="hero-tagline">Learning fitness through playful, inclusive animation. No intimidation—just clear form and confidence.</p>
+
+                <div class="hero-blurb" role="region" aria-labelledby="why-moveo-heading">
+                    <h2 id="why-moveo-heading" class="hero-blurb-heading">Why Moveo?</h2>
+                    <p class="hero-blurb-text">
+                        Unlike crowded fitness apps or intimidating gym videos, Moveo is built for <strong>beginners and anyone who feels unsure about form</strong>.
+                        We use <strong>friendly animations</strong> instead of harsh live footage, so you can learn <strong>how and why</strong> each move works—without judgment.
+                        Short, clear cues, muscle highlights, and slow-motion controls help you train <strong>safely and confidently</strong>, whether you’re at home, in a dorm, or between meetings.
+                        Moveo is your low-pressure entry point to moving more—<strong>inclusive, visual, and made to feel doable</strong>.
+                    </p>
+                </div>
                 
                 <div class="action-buttons">
                     <button 
@@ -76,6 +86,11 @@
                 <p class="section-intro">
                     Click any exercise to learn proper form, target muscles, and form tips. Start with the basics and progress at your pace.
                 </p>
+                <div class="exercise-search-wrap">
+                    <label for="exerciseSearch" class="exercise-search-label">Search exercises</label>
+                    <input type="search" id="exerciseSearch" class="exercise-search-input" placeholder="Search by name, muscle, category, or difficulty…" autocomplete="off" aria-describedby="search-hint">
+                    <p id="search-hint" class="sr-only">Filters the list below as you type.</p>
+                </div>
                 <div id="exercisesGrid" class="exercises-grid" role="list" aria-label="Exercise gallery">
                 <!-- Exercises loaded by js/app.js -->
                 </div>

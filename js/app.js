@@ -69,24 +69,8 @@ async function initExercisePage() {
 async function initExercisesPage() {
   await loadExercises();
   loadBookmarks();
-  const grid = document.getElementById('exercisesPageGrid');
-  if (!grid) return;
-  if (exercises.length === 0) {
-    grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No exercises available.</p>';
-    return;
-  }
-  grid.innerHTML = exercises.map(ex => createExerciseCard(ex)).join('');
-  grid.querySelectorAll('.exercise-card').forEach((card, index) => {
-    const exercise = exercises[index];
-    const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
-    card.addEventListener('click', () => { window.location.href = href; });
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        window.location.href = href;
-      }
-    });
-  });
+  renderExercisesPageGrid();
+  setupExerciseSearch();
 }
 
 async function initAccountPage() {
@@ -308,6 +292,7 @@ async function initializeApp() {
   
   // Set up event listeners
   setupEventListeners();
+  setupExerciseSearch();
   
   // Set daily exercise
   setDailyExercise();
@@ -472,6 +457,59 @@ function setupEventListeners() {
   document.addEventListener('keydown', handleKeyboardNavigation);
 }
 
+/** Filter exercises by search box (name, description, category, difficulty, muscles) */
+function getFilteredExercises() {
+  const input = document.getElementById('exerciseSearch');
+  const q = (input?.value || '').trim().toLowerCase();
+  if (!q) return exercises;
+  const words = q.split(/\s+/).filter(Boolean);
+  return exercises.filter((ex) => {
+    const muscle = (ex.muscleGroups || []).join(' ');
+    const hay = [ex.name, ex.description, ex.category, ex.difficulty, muscle]
+      .join(' ')
+      .toLowerCase();
+    return words.every((w) => hay.includes(w));
+  });
+}
+
+function setupExerciseSearch() {
+  const input = document.getElementById('exerciseSearch');
+  if (!input || input.dataset.bound === 'true') return;
+  input.dataset.bound = 'true';
+  const refresh = () => {
+    if (document.getElementById('exercisesGrid')) renderExerciseGallery();
+    if (document.getElementById('exercisesPageGrid')) renderExercisesPageGrid();
+  };
+  input.addEventListener('input', refresh);
+  input.addEventListener('search', refresh);
+}
+
+function renderExercisesPageGrid() {
+  const grid = document.getElementById('exercisesPageGrid');
+  if (!grid) return;
+  const list = getFilteredExercises();
+  if (exercises.length === 0) {
+    grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No exercises available.</p>';
+    return;
+  }
+  if (list.length === 0) {
+    grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No exercises match your search. Try different words.</p>';
+    return;
+  }
+  grid.innerHTML = list.map((ex) => createExerciseCard(ex)).join('');
+  grid.querySelectorAll('.exercise-card').forEach((card, index) => {
+    const exercise = list[index];
+    const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
+    card.addEventListener('click', () => { window.location.href = href; });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.location.href = href;
+      }
+    });
+  });
+}
+
 // Handle keyboard navigation
 function handleKeyboardNavigation(event) {
   // Escape key closes modals/overlays
@@ -500,12 +538,18 @@ function renderExerciseGallery() {
     gallery.innerHTML = '<p class="no-exercises">No exercises available. Please check back soon!</p>';
     return;
   }
+
+  const list = getFilteredExercises();
+  if (list.length === 0) {
+    gallery.innerHTML = '<p class="no-exercises">No exercises match your search. Try different words.</p>';
+    return;
+  }
   
-  gallery.innerHTML = exercises.map(exercise => createExerciseCard(exercise)).join('');
+  gallery.innerHTML = list.map(exercise => createExerciseCard(exercise)).join('');
   
   // Add click handlers - navigate to exercise page
   gallery.querySelectorAll('.exercise-card').forEach((card, index) => {
-    const exercise = exercises[index];
+    const exercise = list[index];
     const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
     card.setAttribute('data-href', href);
     card.addEventListener('click', () => { window.location.href = href; });

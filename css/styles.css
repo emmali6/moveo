@@ -328,13 +328,48 @@ button:focus-visible {
 
 .hero-tagline {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   opacity: 0.9;
   max-width: 32em;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.5;
   animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+/* Why Moveo blurb */
+.hero-blurb {
+  max-width: 42em;
+  margin: 0 auto 2rem;
+  padding: 1.5rem 1.25rem;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(8px);
+  animation: fadeInUp 0.8s ease-out 0.35s backwards;
+}
+
+.hero-blurb-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.hero-blurb-text {
+  font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 0;
+}
+
+.hero-blurb-text strong {
+  color: white;
+  font-weight: 600;
 }
 
 .hero p {
@@ -415,6 +450,46 @@ button:focus-visible {
 
 .gallery-section .container {
   padding: 0 1rem;
+}
+
+/* Exercise search */
+.exercise-search-wrap {
+  margin-bottom: 1.75rem;
+  max-width: 28rem;
+}
+
+.exercise-search-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.5rem;
+}
+
+.exercise-search-input {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--dark);
+  transition: var(--transition);
+}
+
+.exercise-search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.exercise-search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 230, 109, 0.35);
 }
 
 /* Daily Exercise Card - fitness card style */
@@ -925,18 +1000,25 @@ button:focus-visible {
 
 .auth-tabs {
   display: flex;
-  gap: 0;
+  gap: 0.5rem;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid var(--light);
+  padding: 0.35rem;
+  background: #edf2f7;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
 }
 
 .auth-tab {
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
+  flex: 1;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   background: transparent;
-  border: none;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  margin-bottom: 0;
   cursor: pointer;
   color: var(--text-secondary);
   transition: var(--transition);
@@ -944,11 +1026,23 @@ button:focus-visible {
 
 .auth-tab:hover {
   color: var(--dark);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .auth-tab.active {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
+  color: white;
+  background: linear-gradient(135deg, var(--primary), #e85a8a);
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(255, 107, 157, 0.45);
+}
+
+.auth-tab.active:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.auth-tab:not(.active) {
+  border-bottom: none;
 }
 
 .auth-panel {

@@ -21,8 +21,8 @@
             <ul class="nav-links" role="list">
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="exercises.html" class="nav-link" aria-current="page">Exercises</a></li>
-                <li><a href="account.html" class="nav-link">Account</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="account.html" class="nav-link">Account</a></li>
             </ul>
         </nav>
     </header>
@@ -35,6 +35,11 @@
                 <p class="section-intro">
                     Browse every exercise. Click any card to learn proper form, target muscles, and form tips. Bookmark your favorites when signed in.
                 </p>
+                <div class="exercise-search-wrap">
+                    <label for="exerciseSearch" class="exercise-search-label">Search exercises</label>
+                    <input type="search" id="exerciseSearch" class="exercise-search-input" placeholder="Search by name, muscle, category, or difficulty…" autocomplete="off" aria-describedby="search-hint">
+                    <p id="search-hint" class="sr-only">Filters the list below as you type.</p>
+                </div>
                 <div id="exercisesPageGrid" class="exercises-grid" role="list" aria-label="Exercise library">
                     <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading exercises...</p>
                 </div>
