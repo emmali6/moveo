@@ -6,19 +6,72 @@
 const SUPABASE_URL = 'https://lydlimchauawqmjxprip.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
+const STORAGE_BUCKET = 'exercise-videos';
+
 let supabaseClient = null;
 function getSupabase() {
   if (supabaseClient) return supabaseClient;
-  if (typeof window.supabase === 'undefined') return null;
+  let createClient = null;
+  if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
+    createClient = window.supabase.createClient;
+  } else if (typeof window.createClient === 'function') {
+    createClient = window.createClient;
+  }
+  if (!createClient) {
+    console.warn('Moveo: Supabase JS not loaded. Add <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> before app.js');
+    return null;
+  }
   try {
-    const { createClient } = window.supabase;
-    if (createClient) {
-      supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      return supabaseClient;
-    }
+    supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    return supabaseClient;
   } catch (e) {
     console.error('Supabase init error:', e);
+    return null;
   }
+}
+
+/**
+ * Build a playable video URL from an exercises table row.
+ * Handles: full https URLs, storage object paths, and common column names.
+ */
+function resolveExerciseVideoUrl(sb, row) {
+  if (!row) return null;
+
+  const candidates = [
+    row.video_url,
+    row.preview_video,
+    row.previewVideo,
+    row.media_url,
+    row.videoUrl,
+    row.url,
+  ].filter(Boolean);
+
+  for (const c of candidates) {
+    const s = String(c).trim();
+    if (!s) continue;
+    if (/^https?:\/\//i.test(s)) return s;
+    if (sb) {
+      const path = s.replace(/^\/+/, '').replace(/^exercise-videos\/?/i, '');
+      const { data } = sb.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+      if (data?.publicUrl) return data.publicUrl;
+    }
+  }
+
+  const pathOnly =
+    row.storage_path ||
+    row.video_path ||
+    row.path ||
+    row.file_path ||
+    row.object_path;
+
+  if (pathOnly && sb) {
+    const path = String(pathOnly)
+      .replace(/^\/+/, '')
+      .replace(/^exercise-videos\/?/i, '');
+    const { data } = sb.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+    return data?.publicUrl || null;
+  }
+
   return null;
 }
 
@@ -342,13 +395,16 @@ function nameKeyForMatch(str) {
  * Overlay Supabase video URLs onto the local catalog so library exercises keep JSON ids (e.g. bodyweight-squat, push-up).
  * Matches Supabase rows by: slug, exercise_id, id (string), or normalized exercise name.
  */
-function mergeSupabaseVideosIntoExercises(localList, supabaseRows) {
+function mergeSupabaseVideosIntoExercises(localList, supabaseRows, sb) {
   if (!supabaseRows?.length) return localList;
 
   const urlByKey = new Map();
   supabaseRows.forEach((row) => {
-    const url = row.video_url || row.preview_video || row.previewVideo;
-    if (!url) return;
+    const url = resolveExerciseVideoUrl(sb, row);
+    if (!url) {
+      console.warn('Moveo: exercise row has no resolvable video URL:', row.name || row.id, row);
+      return;
+    }
 
     const keys = [
       row.slug,
@@ -368,8 +424,12 @@ function mergeSupabaseVideosIntoExercises(localList, supabaseRows) {
   });
 
   return localList.map((ex) => {
+    const supabaseIdKey =
+      ex.supabaseId != null ? String(ex.supabaseId).toLowerCase() : null;
+
     let videoUrl =
       urlByKey.get(String(ex.id).toLowerCase()) ||
+      (supabaseIdKey ? urlByKey.get(supabaseIdKey) : null) ||
       urlByKey.get(`name:${nameKeyForMatch(ex.name)}`);
 
     if (!videoUrl) return ex;
@@ -400,14 +460,20 @@ async function loadExercises() {
     try {
       const { data: rows, error } = await sb.from('exercises').select('*').order('created_at', { ascending: false });
       if (error) {
-        console.warn('Supabase exercises fetch failed:', error.message);
+        console.warn('Moveo: Supabase exercises table error (check RLS allows SELECT for anon):', error.message, error);
       } else if (rows?.length) {
-        exercises = mergeSupabaseVideosIntoExercises(localList, rows);
+        exercises = mergeSupabaseVideosIntoExercises(localList, rows, sb);
+        const withVideo = exercises.filter((e) => e.previewVideo && /^https?:\/\//i.test(e.previewVideo)).length;
+        console.info('Moveo: merged', rows.length, 'Supabase exercise row(s);', withVideo, 'exercise(s) now have https video URLs.');
         return;
+      } else {
+        console.warn('Moveo: Supabase exercises query returned 0 rows. Enable SELECT on public.exercises for the anon role, or add rows.');
       }
     } catch (e) {
-      console.warn('Supabase exercises error:', e);
+      console.warn('Moveo: Supabase exercises error:', e);
     }
+  } else {
+    console.warn('Moveo: Supabase client not initialized — videos from Storage will not load. Ensure @supabase/supabase-js loads before app.js.');
   }
 
   exercises = localList;
@@ -624,9 +690,19 @@ function viewExercise(exerciseId) {
 }
 
 // Render exercise detail
-function renderExerciseDetail(exercise) {
-  const detailContainer = document.getElementById('exerciseDetailContent');
+function renderExerciseDetail(exercise, options = {}) {
+  const containerId =
+    options.containerId ||
+    (document.getElementById('exerciseDetailContent')
+      ? 'exerciseDetailContent'
+      : 'exercisePageContent');
+  const detailContainer = document.getElementById(containerId);
   if (!detailContainer) return;
+
+  const baseUrl = options.baseUrl || getBaseUrl();
+  const backHref = options.backHref || 'index.html';
+  const backUrl = /^https?:\/\//i.test(backHref) ? backHref : baseUrl + backHref;
+  const backMarkup = `<a href="${backUrl}" class="btn-secondary btn-link">← Back to Gallery</a>`;
   
   const isBookmarked = bookmarkedExercises.includes(exercise.id);
   
@@ -702,6 +778,22 @@ function renderExerciseDetail(exercise) {
           <span>${getCategoryIcon(exercise.category)} ${exercise.category}</span>
         </div>
         
+        ${Array.isArray(exercise.modifications) && exercise.modifications.length ? `
+          <div class="mod-ampl-block">
+            <h3>Modifications</h3>
+            <ul class="mod-list">
+              ${exercise.modifications.map(m => `<li>${m}</li>`).join('')}
+            </ul>
+          </div>` : ''}
+        
+        ${Array.isArray(exercise.amplifications) && exercise.amplifications.length ? `
+          <div class="mod-ampl-block">
+            <h3>Amplifications</h3>
+            <ul class="mod-list">
+              ${exercise.amplifications.map(a => `<li>${a}</li>`).join('')}
+            </ul>
+          </div>` : ''}
+        
         <div class="muscle-groups">
           <h3>Target Muscles</h3>
           <div id="muscleTags">
@@ -755,7 +847,7 @@ function renderExerciseDetail(exercise) {
   const video = document.getElementById('exerciseVideo');
   if (video && exercise.previewVideo) {
     const isAbsolute = /^https?:\/\//i.test(exercise.previewVideo);
-    video.src = isAbsolute ? exercise.previewVideo : (options?.baseUrl || '') + exercise.previewVideo;
+    video.src = isAbsolute ? exercise.previewVideo : baseUrl + exercise.previewVideo;
     video.playbackRate = animationSpeed;
     if (isPlaying) {
       video.play().catch(err => console.error('Video play error:', err));

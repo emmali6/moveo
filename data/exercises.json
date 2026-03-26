@@ -97,28 +97,38 @@
     ]
   },
   {
-    "id": "plank",
-    "name": "Plank",
-    "description": "An isometric core stability exercise that builds strength throughout your entire body. Minimal motion allows focus on perfect alignment and posture. Great for teaching core engagement and body awareness.",
+    "id": "side-lying-leg-raise",
+    "name": "Side Lying Leg Raise",
+    "supabaseId": 4,
+    "description": "A beginner-friendly hip-strength exercise that targets the glutes and hip abductors. By moving the top leg while keeping your pelvis stable, you learn how to activate the muscles on the outside of your hips without compensating.",
     "difficulty": "beginner",
-    "muscleGroups": ["core", "shoulders"],
+    "muscleGroups": ["glutes", "hip abductors", "core"],
     "category": "strength",
-    "duration": 3,
-    "previewVideo": "assets/media/preview_plank.mp4",
+    "duration": 4,
     "tips": [
-      "Start in push-up position on forearms",
-      "Keep your body in a straight line from head to heels",
-      "Engage your core and glutes - imagine pulling belly button to spine",
-      "Keep shoulders directly over elbows",
-      "Hold for 20-60 seconds, breathing normally",
-      "Don't let hips sag or lift too high",
-      "Focus on maintaining perfect alignment"
+      "Lie on your side with your bottom leg slightly bent for support",
+      "Stack shoulders and hips (don’t rotate forward or backward)",
+      "Keep your pelvis steady as you lift the top leg a few inches",
+      "Point toes slightly forward (comfortable angle) and control the lift",
+      "Pause briefly at the top, then lower with control",
+      "Breathe steadily and keep your ribs down (avoid flaring)",
+      "Complete reps slowly on one side before switching"
     ],
     "commonMistakes": [
-      "Hips sagging toward the floor",
-      "Hips lifted too high (butt in air)",
-      "Head dropping or looking up",
-      "Not engaging core properly"
+      "Rolling your torso or letting your pelvis twist during the lift",
+      "Lifting too high and losing control (moving from your back instead of hips)",
+      "Allowing the bottom leg to collapse inward",
+      "Rushing reps and bouncing at the bottom"
+    ],
+    "modifications": [
+      "Reduce range of motion: lift only 2-3 inches",
+      "Keep the bottom leg bent and more supportive",
+      "Use a wall or pillow behind your back to help prevent torso rotation"
+    ],
+    "amplifications": [
+      "Lift higher with straightening the top leg slightly (only if pelvis stays stable)",
+      "Add ankle weight or a light resistance band around your ankles",
+      "Hold the top position for 1-2 seconds before lowering"
     ]
   },
   {
@@ -172,28 +182,38 @@
     ]
   },
   {
-    "id": "overhead-shoulder-press",
-    "name": "Overhead Shoulder Press",
-    "description": "An upper-body compound movement that builds shoulder and tricep strength while challenging core stability. Excellent for teaching proper posture and overhead movement patterns. Great for functional strength.",
+    "id": "bicycle-crunch",
+    "name": "Bicycle Crunch",
+    "supabaseId": 2,
+    "description": "A dynamic core movement that trains the rectus abdominis and obliques through alternating elbow-to-knee motion. It also reinforces coordinated control and breathing for safer trunk rotation.",
     "difficulty": "intermediate",
-    "muscleGroups": ["shoulders", "triceps"],
+    "muscleGroups": ["obliques", "core", "hip flexors"],
     "category": "strength",
-    "duration": 6,
-    "previewVideo": "assets/media/preview_shoulderpress.mp4",
+    "duration": 5,
     "tips": [
-      "Start with weight at shoulder height, palms facing forward",
-      "Keep core engaged and maintain upright posture",
-      "Press weight overhead until arms are fully extended",
-      "Keep shoulders down, don't let them shrug up",
-      "Lower with control back to shoulder height",
-      "Maintain neutral spine - avoid arching back excessively",
-      "Breathe out on the press up"
+      "Lie on your back with hands lightly supporting behind your head (don’t pull on your neck)",
+      "Lift shoulders off the floor and keep your ribs pulled down",
+      "Bring one elbow toward the opposite knee while extending the other leg",
+      "Keep your twist controlled: move from your trunk, not your neck",
+      "Breathe out as you crunch and slow down if your form breaks",
+      "Make reps smooth and consistent—no jerking",
+      "Move through a comfortable range first, then build range"
     ],
     "commonMistakes": [
-      "Arching lower back excessively",
-      "Shrugging shoulders up",
-      "Not maintaining core stability",
-      "Pressing forward instead of straight up"
+      "Pulling with your arms and yanking your head forward",
+      "Rushing reps so you lose control and coordination",
+      "Letting your lower back over-arch or your ribs flare",
+      "Twisting too far and losing the crunch focus"
+    ],
+    "modifications": [
+      "Start with smaller range: bring elbow toward knee without fully extending the legs",
+      "Keep both feet closer to the floor to reduce strain",
+      "Slow the tempo: 1 rep = 2 seconds up, 2 seconds down"
+    ],
+    "amplifications": [
+      "Extend legs farther to increase lever length (only if your ribs stay down)",
+      "Increase tempo slightly while maintaining smooth control",
+      "Pause briefly at the crunch peak for extra core engagement"
     ]
   },
   {
@@ -228,31 +248,38 @@
     ]
   },
   {
-    "id": "kettlebell-swing",
-    "name": "Kettlebell Swing",
-    "description": "A dynamic hinge movement that develops power, rhythm, and timing. Combines strength and cardiovascular benefits while teaching proper hip drive. Advanced movement that introduces explosive power patterns and smooth motion arcs.",
-    "difficulty": "advanced",
-    "muscleGroups": ["glutes", "hamstrings", "core"],
+    "id": "crunch",
+    "name": "Crunch",
+    "supabaseId": 1,
+    "description": "A foundational ab exercise that teaches controlled spinal flexion and core engagement. Crunches help beginners understand how to lift the ribcage with tension in the core, building a safer base for more advanced ab movements.",
+    "difficulty": "beginner",
+    "muscleGroups": ["rectus abdominis", "core"],
     "category": "strength",
-    "duration": 10,
-    "previewVideo": "assets/media/preview_kettlebellswing.mp4",
+    "duration": 4,
     "tips": [
-      "Start with feet slightly wider than hip-width",
-      "Hinge at hips, keeping back flat and chest up",
-      "Drive hips forward explosively to swing kettlebell up",
-      "Kettlebell should reach chest height, not overhead",
-      "Let gravity bring it back down between legs",
-      "Maintain rhythm and timing - smooth, not jerky",
-      "Keep core engaged throughout the movement",
-      "Focus on hip drive, not arm pull"
+      "Lie on your back with knees bent and feet flat on the floor",
+      "Keep your hands lightly on your head or crossed over your chest",
+      "Exhale and lift your shoulders off the floor slightly (don’t pull hard on your neck)",
+      "Think “chest up” instead of yanking yourself forward",
+      "Pause briefly at the top with control",
+      "Inhale as you lower back down to the start position",
+      "Keep the movement small and precise at first"
     ],
     "commonMistakes": [
-      "Squatting instead of hinging",
-      "Using arms to lift instead of hip drive",
-      "Swinging too high (overhead)",
-      "Rounding the back",
-      "Not maintaining rhythm and timing"
+      "Pulling your neck with your hands",
+      "Using momentum instead of controlled crunches",
+      "Lifting too high and turning it into a sit-up",
+      "Rushing reps and losing core tension"
     ],
-    "rhythm": "The swing should have a smooth, rhythmic flow - explosive up, controlled down"
+    "modifications": [
+      "Reduce range: lift shoulders only a few inches",
+      "Keep feet closer to your body for easier control",
+      "Slow down: 2 seconds up, 2 seconds down"
+    ],
+    "amplifications": [
+      "Pause at the top for 1-2 seconds before lowering",
+      "Increase range slightly while keeping ribs tucked",
+      "Add light resistance (e.g., hold a light plate or dumbbell at chest level) if form stays clean"
+    ]
   }
 ]
