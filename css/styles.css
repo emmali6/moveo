@@ -503,6 +503,26 @@ button:focus-visible {
   animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
+.daily-exercise-link {
+  color: var(--dark);
+  text-decoration: none;
+}
+
+.daily-exercise-link:hover,
+.daily-exercise-link:focus {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--primary);
+}
+
+.daily-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
 .daily-badge,
 .section-label.section-label-dark {
   display: inline-block;

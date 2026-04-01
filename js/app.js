@@ -994,14 +994,17 @@ function setDailyExercise() {
   
   const exerciseUrl = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(dailyExercise.id);
   container.innerHTML = `
-    <h2>${dailyExercise.name}</h2>
+    <h2><a class="daily-exercise-link" href="${exerciseUrl}">${dailyExercise.name}</a></h2>
     <p>${dailyExercise.description}</p>
     <div class="exercise-meta">
       <span>⏱️ ${dailyExercise.duration} min</span>
       <span class="difficulty-badge ${dailyExercise.difficulty}">${dailyExercise.difficulty}</span>
       <span>${getCategoryIcon(dailyExercise.category)} ${dailyExercise.category}</span>
     </div>
-    <a href="${exerciseUrl}" class="btn-primary btn-link">Try It Now</a>
+    <div class="daily-actions">
+      <a href="${exerciseUrl}" class="btn-primary btn-link">Try It Now</a>
+      <a href="${exerciseUrl}" class="btn-secondary btn-link">View details</a>
+    </div>
   `;
 }
 
