@@ -7,6 +7,8 @@ const SUPABASE_URL = 'https://lydlimchauawqmjxprip.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
+// Bump this when the local exercise catalog changes (helps GitHub Pages caching).
+const EXERCISE_CATALOG_VERSION = '2026-04-01';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -441,7 +443,7 @@ function mergeSupabaseVideosIntoExercises(localList, supabaseRows, sb) {
 // Load exercises: local JSON catalog + Supabase videos merged in (same ids/names as site exercises)
 async function loadExercises() {
   const base = getBaseUrl();
-  const jsonUrl = base + 'data/exercises.json';
+  const jsonUrl = base + 'data/exercises.json?v=' + encodeURIComponent(EXERCISE_CATALOG_VERSION);
   let localList = [];
 
   try {
