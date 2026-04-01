@@ -625,9 +625,11 @@ button:focus-visible {
   color: #22543D;
 }
 
+/* Stronger contrast on light backgrounds (was very pale yellow) */
 .difficulty-badge.intermediate {
-  background: #FEF5E7;
-  color: #744210;
+  background: #ED8936;
+  color: #1a1d28;
+  border: 1px solid #C05621;
 }
 
 .difficulty-badge.advanced {
@@ -825,9 +827,9 @@ button:focus-visible {
   animation: pulse 1s infinite;
 }
 
-/* Bookmark Button */
+/* Bookmark — distinct from beginner badge (mint green); use brand pink */
 .bookmark-btn {
-  background: var(--success);
+  background: var(--primary);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -835,15 +837,24 @@ button:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  border: 2px solid transparent;
 }
 
 .bookmark-btn:hover,
 .bookmark-btn:focus {
-  background: #38a169;
+  background: #e85a8a;
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .bookmark-btn.bookmarked {
   background: var(--dark);
+  color: white;
+}
+
+.bookmark-btn.bookmarked:hover,
+.bookmark-btn.bookmarked:focus {
+  background: var(--dark-soft);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .bookmark-btn svg {
