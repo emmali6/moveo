@@ -632,9 +632,11 @@ button:focus-visible {
   border: 1px solid #C05621;
 }
 
+/* Deep indigo — distinct from bookmark (primary pink) and intermediate orange */
 .difficulty-badge.advanced {
-  background: #FED7D7;
-  color: #742A2A;
+  background: #4c51bf;
+  color: #f7fafc;
+  border: 1px solid #434190;
 }
 
 /* Exercise Detail Page */
