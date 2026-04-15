@@ -914,10 +914,15 @@ function toggleMuscleHighlight() {
   showMuscleHighlight = !showMuscleHighlight;
   const btn = document.getElementById('highlightMusclesBtn');
   const muscleTags = document.querySelectorAll('.muscle-highlight');
+  const muscleGroups = document.querySelector('.muscle-groups');
   
   if (btn) {
     btn.classList.toggle('active', showMuscleHighlight);
     btn.setAttribute('aria-label', `Muscle highlight ${showMuscleHighlight ? 'on' : 'off'}`);
+  }
+
+  if (muscleGroups) {
+    muscleGroups.classList.toggle('muscle-focus', showMuscleHighlight);
   }
   
   muscleTags.forEach(tag => {

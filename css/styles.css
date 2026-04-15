@@ -841,12 +841,35 @@ button:focus-visible {
   font-size: 0.85rem;
   margin: 0.25rem;
   font-weight: 600;
+  transition: var(--transition);
 }
 
 .muscle-highlight.active {
   background: var(--primary);
   color: white;
   animation: pulse 1s infinite;
+}
+
+/* Option A: “Highlight muscles” = focus the chips + panel */
+.muscle-groups.muscle-focus {
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 2px solid rgba(255, 107, 157, 0.35);
+  background: rgba(255, 230, 109, 0.15);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.muscle-groups.muscle-focus .muscle-highlight {
+  opacity: 0.45;
+  filter: grayscale(0.25);
+  transform: translateY(0);
+}
+
+.muscle-groups.muscle-focus .muscle-highlight.active {
+  opacity: 1;
+  filter: none;
+  box-shadow: 0 10px 22px rgba(255, 107, 157, 0.25);
+  transform: translateY(-1px);
 }
 
 /* Bookmark — distinct from beginner badge (mint green); use brand pink */
