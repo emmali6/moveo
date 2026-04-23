@@ -1,0 +1,44 @@
+[
+  {
+    "id": "yoga-calisthenics-45",
+    "name": "Yoga + Calisthenics (45 min)",
+    "minutes": 45,
+    "goals": ["mobility", "strength", "endurance"],
+    "equipment": ["none"],
+    "constraints": ["apartment/no jumping"],
+    "description": "A balanced session: mobility flow to warm up, then simple bodyweight strength and core.",
+    "blocks": [
+      { "title": "Warm-up (10 min)", "items": ["bodyweight-squat", "side-lying-leg-raise"] },
+      { "title": "Strength (25 min)", "items": ["push-up", "lunge", "glute-bridge"] },
+      { "title": "Core finisher (10 min)", "items": ["crunch", "bicycle-crunch"] }
+    ]
+  },
+  {
+    "id": "calisthenics-basics-30",
+    "name": "Calisthenics Basics (30 min)",
+    "minutes": 30,
+    "goals": ["strength", "endurance"],
+    "equipment": ["none"],
+    "constraints": ["apartment/no jumping"],
+    "description": "Beginner-friendly full-body calisthenics with simple progressions.",
+    "blocks": [
+      { "title": "Warm-up (5 min)", "items": ["glute-bridge"] },
+      { "title": "Main work (20 min)", "items": ["push-up", "bodyweight-squat", "lunge"] },
+      { "title": "Core (5 min)", "items": ["crunch"] }
+    ]
+  },
+  {
+    "id": "mobility-rehab-20",
+    "name": "Mobility + Rehab (20 min)",
+    "minutes": 20,
+    "goals": ["mobility", "rehab"],
+    "equipment": ["none"],
+    "constraints": ["knee-friendly", "low-back friendly", "apartment/no jumping"],
+    "description": "Low-intensity routine focused on control, stability, and joint-friendly movement.",
+    "blocks": [
+      { "title": "Activation (10 min)", "items": ["side-lying-leg-raise", "glute-bridge"] },
+      { "title": "Core control (10 min)", "items": ["crunch"] }
+    ]
+  }
+]
+

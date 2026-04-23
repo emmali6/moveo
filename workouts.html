@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Moveo - Build workouts and try prebuilt routines.">
+    <meta name="theme-color" content="#1a1d28">
+    <title>Workouts - Moveo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=workouts-builder-202604">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="fitness-theme" data-page="workouts">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header role="banner" class="site-header">
+        <nav role="navigation" aria-label="Main navigation" class="nav-inner">
+            <a href="index.html" class="logo" aria-label="Moveo home">moveo</a>
+            <ul class="nav-links" role="list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="exercises.html" class="nav-link">Exercises</a></li>
+                <li><a href="workouts.html" class="nav-link" aria-current="page">Workouts</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="account.html" class="nav-link">Account</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <section class="section-dark gallery-section" aria-labelledby="workouts-heading">
+            <div class="container">
+                <p class="section-label section-label-light">Build a Session</p>
+                <h1 id="workouts-heading" class="section-heading">Workouts</h1>
+                <p class="section-intro">Tap “Add to workout” from any exercise, then reorder here (drag and drop). Save a routine you can reuse.</p>
+
+                <div class="workouts-layout">
+                    <div class="workout-builder" aria-label="Workout builder">
+                        <h2 class="workout-subheading">Your workout</h2>
+                        <p class="workout-help">Drag to reorder. Remove items you don’t want. Your workout is saved automatically.</p>
+                        <div id="workoutList" class="workout-list" role="list" aria-label="Workout exercises"></div>
+                        <div class="workout-actions">
+                            <button type="button" class="btn-secondary btn-link" id="clearWorkoutBtn">Clear workout</button>
+                        </div>
+                    </div>
+
+                    <div class="workout-presets" aria-label="Prebuilt routines">
+                        <h2 class="workout-subheading">Prebuilt routines</h2>
+                        <div class="preset-filters">
+                            <label class="filter-label" for="routineMinutes">Time</label>
+                            <select id="routineMinutes" class="filter-select">
+                                <option value="">Any</option>
+                                <option value="20">20 min</option>
+                                <option value="30">30 min</option>
+                                <option value="45">45 min</option>
+                            </select>
+                        </div>
+                        <div id="routineGrid" class="routine-grid" role="list" aria-label="Routine list">
+                            <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading routines...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo" class="site-footer">
+        <div class="container">
+            <p class="footer-tagline">Made with ❤️ to make fitness accessible to everyone</p>
+            <p class="footer-copy">&copy; 2024 Moveo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js?v=filters-202604"></script>
+</body>
+</html>
+

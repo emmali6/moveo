@@ -97,12 +97,180 @@ document.addEventListener('DOMContentLoaded', () => {
     initExercisesPage();
     return;
   }
+  if (document.body.dataset.page === 'workouts') {
+    initWorkoutsPage();
+    return;
+  }
   if (document.body.dataset.page === 'account') {
     initAccountPage();
     return;
   }
   initializeApp();
 });
+
+const WORKOUT_STORAGE_KEY = 'moveoWorkoutBuilder';
+
+function loadWorkoutBuilder() {
+  const raw = localStorage.getItem(WORKOUT_STORAGE_KEY);
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveWorkoutBuilder(ids) {
+  localStorage.setItem(WORKOUT_STORAGE_KEY, JSON.stringify(ids || []));
+}
+
+function addToWorkout(exerciseId) {
+  const ids = loadWorkoutBuilder();
+  ids.push(exerciseId);
+  saveWorkoutBuilder(ids);
+  showError('Added to workout');
+}
+window.addToWorkout = addToWorkout;
+
+function removeFromWorkoutAt(index) {
+  const ids = loadWorkoutBuilder();
+  ids.splice(index, 1);
+  saveWorkoutBuilder(ids);
+}
+
+async function initWorkoutsPage() {
+  await loadExercises();
+  renderWorkoutBuilderList();
+  await loadRoutines();
+  setupRoutineFilters();
+  document.getElementById('clearWorkoutBtn')?.addEventListener('click', () => {
+    saveWorkoutBuilder([]);
+    renderWorkoutBuilderList();
+  });
+}
+
+async function loadRoutines() {
+  const base = getBaseUrl();
+  const url = base + 'data/routines.json?v=2026-04-23';
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Failed routines');
+    window.moveoRoutines = await res.json();
+  } catch (e) {
+    console.warn('Moveo: routines load error', e);
+    window.moveoRoutines = [];
+  }
+  renderRoutineGrid();
+}
+
+function setupRoutineFilters() {
+  const sel = document.getElementById('routineMinutes');
+  if (!sel || sel.dataset.bound === 'true') return;
+  sel.dataset.bound = 'true';
+  sel.addEventListener('change', renderRoutineGrid);
+}
+
+function renderRoutineGrid() {
+  const grid = document.getElementById('routineGrid');
+  if (!grid) return;
+  const routines = Array.isArray(window.moveoRoutines) ? window.moveoRoutines : [];
+  const minutes = document.getElementById('routineMinutes')?.value || '';
+  const filtered = minutes ? routines.filter((r) => String(r.minutes) === String(minutes)) : routines;
+  if (!filtered.length) {
+    grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No routines match yet.</p>';
+    return;
+  }
+  grid.innerHTML = filtered.map((r) => {
+    const blocks = (r.blocks || []).map((b) => `${b.title}: ${(b.items || []).length} move(s)`).join(' · ');
+    return `
+      <article class="routine-card" role="listitem">
+        <h3>${r.name}</h3>
+        <p>${r.description || ''}</p>
+        <p class="routine-meta">${r.minutes} min · ${(r.goals || []).join(' / ')}</p>
+        <p class="routine-meta">${blocks}</p>
+        <button type="button" class="btn-secondary btn-link routine-load" onclick="loadRoutineToWorkout('${r.id}')">Load into builder</button>
+      </article>
+    `;
+  }).join('');
+}
+
+function loadRoutineToWorkout(routineId) {
+  const routines = Array.isArray(window.moveoRoutines) ? window.moveoRoutines : [];
+  const r = routines.find((x) => x.id === routineId);
+  if (!r) return;
+  const ids = [];
+  (r.blocks || []).forEach((b) => (b.items || []).forEach((id) => ids.push(id)));
+  saveWorkoutBuilder(ids);
+  renderWorkoutBuilderList();
+  announceToScreenReader('Routine loaded into workout builder');
+}
+window.loadRoutineToWorkout = loadRoutineToWorkout;
+
+function renderWorkoutBuilderList() {
+  const list = document.getElementById('workoutList');
+  if (!list) return;
+  const ids = loadWorkoutBuilder();
+  if (!ids.length) {
+    list.innerHTML = '<p class="loading-message">No exercises yet. Add from the Exercises tab.</p>';
+    return;
+  }
+  list.innerHTML = ids.map((id, idx) => {
+    const ex = exercises.find((e) => e.id === id);
+    const name = ex?.name || id;
+    const meta = ex ? `${ex.difficulty} · ${ex.category}` : '';
+    return `
+      <div class="workout-item" role="listitem" draggable="true" data-index="${idx}">
+        <div class="workout-item-main">
+          <div class="workout-item-name">${name}</div>
+          <div class="workout-item-meta">${meta}</div>
+        </div>
+        <div class="workout-item-actions">
+          <a class="btn-secondary btn-link" href="${getBaseUrl()}exercise.html?id=${encodeURIComponent(id)}">Open</a>
+          <button type="button" class="btn-secondary btn-link" onclick="removeWorkoutIndex(${idx})">Remove</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  setupWorkoutDragAndDrop(list);
+}
+
+function removeWorkoutIndex(idx) {
+  removeFromWorkoutAt(idx);
+  renderWorkoutBuilderList();
+}
+window.removeWorkoutIndex = removeWorkoutIndex;
+
+function setupWorkoutDragAndDrop(container) {
+  const items = container.querySelectorAll('.workout-item');
+  items.forEach((el) => {
+    el.addEventListener('dragstart', (e) => {
+      e.dataTransfer?.setData('text/plain', String(el.dataset.index));
+      el.classList.add('dragging');
+    });
+    el.addEventListener('dragend', () => {
+      el.classList.remove('dragging');
+    });
+    el.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      el.classList.add('dragover');
+    });
+    el.addEventListener('dragleave', () => el.classList.remove('dragover'));
+    el.addEventListener('drop', (e) => {
+      e.preventDefault();
+      el.classList.remove('dragover');
+      const from = Number(e.dataTransfer?.getData('text/plain'));
+      const to = Number(el.dataset.index);
+      if (Number.isNaN(from) || Number.isNaN(to) || from === to) return;
+      const ids = loadWorkoutBuilder();
+      const [moved] = ids.splice(from, 1);
+      ids.splice(to, 0, moved);
+      saveWorkoutBuilder(ids);
+      renderWorkoutBuilderList();
+    });
+  });
+}
 
 async function initExercisePage() {
   const params = new URLSearchParams(window.location.search);
@@ -798,6 +966,12 @@ function createExerciseCard(exercise) {
           <span class="difficulty-badge ${exercise.difficulty}">${exercise.difficulty}</span>
           <span>${getCategoryIcon(exercise.category)} ${exercise.category}</span>
         </div>
+        <button
+          class="btn-secondary btn-link"
+          onclick="event.stopPropagation(); addToWorkout('${exercise.id}')"
+          aria-label="Add ${exercise.name} to workout">
+          Add to workout
+        </button>
         <button 
           class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" 
           onclick="event.stopPropagation(); toggleBookmark('${exercise.id}')"
@@ -926,6 +1100,13 @@ function renderExerciseDetail(exercise, options = {}) {
           <span class="difficulty-badge ${exercise.difficulty}">${exercise.difficulty}</span>
           <span>${getCategoryIcon(exercise.category)} ${exercise.category}</span>
         </div>
+
+        <button
+          class="btn-secondary btn-link"
+          onclick="addToWorkout('${exercise.id}')"
+          aria-label="Add ${exercise.name} to workout">
+          Add to workout
+        </button>
         
         ${Array.isArray(exercise.modifications) && exercise.modifications.length ? `
           <div class="mod-ampl-block">
