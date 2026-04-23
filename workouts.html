@@ -39,9 +39,43 @@
                     <div class="workout-builder" aria-label="Workout builder">
                         <h2 class="workout-subheading">Your workout</h2>
                         <p class="workout-help">Drag to reorder. Remove items you don’t want. Your workout is saved automatically.</p>
+                        <div class="workout-controls" role="group" aria-label="Workout settings">
+                            <div class="filter-field">
+                                <label for="workoutGoal" class="filter-label">Goal</label>
+                                <select id="workoutGoal" class="filter-select">
+                                    <option value="strength">Strength</option>
+                                    <option value="hypertrophy">Hypertrophy</option>
+                                    <option value="endurance">Endurance</option>
+                                </select>
+                            </div>
+                            <div class="workout-estimate" aria-live="polite">
+                                <span class="filter-label">Estimated time</span>
+                                <div id="workoutEstimate" class="workout-estimate-value">—</div>
+                            </div>
+                        </div>
                         <div id="workoutList" class="workout-list" role="list" aria-label="Workout exercises"></div>
                         <div class="workout-actions">
+                            <button type="button" class="btn-primary btn-link" id="startWorkoutBtn">Start workout</button>
                             <button type="button" class="btn-secondary btn-link" id="clearWorkoutBtn">Clear workout</button>
+                        </div>
+                        <div id="workoutRunner" class="workout-runner hidden" aria-label="Workout runner">
+                            <div class="runner-top">
+                                <h3 class="workout-subheading">Session</h3>
+                                <div class="runner-timer" aria-live="polite">
+                                    <span class="runner-label">Elapsed</span>
+                                    <span id="runnerElapsed" class="runner-value">00:00</span>
+                                </div>
+                                <div class="runner-timer" aria-live="polite">
+                                    <span class="runner-label">Rest</span>
+                                    <span id="runnerRest" class="runner-value">—</span>
+                                </div>
+                            </div>
+                            <div class="runner-actions">
+                                <button type="button" class="btn-primary btn-link" id="runnerStartPauseBtn">Start</button>
+                                <button type="button" class="btn-secondary btn-link" id="runnerNextSetBtn">Complete set → Rest</button>
+                                <button type="button" class="btn-secondary btn-link" id="runnerEndBtn">End session</button>
+                            </div>
+                            <div id="runnerExerciseList" class="runner-exercise-list" role="list" aria-label="Set and rep tracker"></div>
                         </div>
                     </div>
 
@@ -72,7 +106,7 @@
         </div>
     </footer>
 
-    <script src="js/app.js?v=filters-202604"></script>
+    <script src="js/app.js?v=workout-runner-202604"></script>
 </body>
 </html>
 

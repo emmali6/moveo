@@ -144,10 +144,213 @@ async function initWorkoutsPage() {
   renderWorkoutBuilderList();
   await loadRoutines();
   setupRoutineFilters();
+  setupWorkoutGoalAndEstimate();
   document.getElementById('clearWorkoutBtn')?.addEventListener('click', () => {
     saveWorkoutBuilder([]);
     renderWorkoutBuilderList();
   });
+
+  document.getElementById('startWorkoutBtn')?.addEventListener('click', () => {
+    startWorkoutSession();
+  });
+}
+
+function setupWorkoutGoalAndEstimate() {
+  const sel = document.getElementById('workoutGoal');
+  if (sel && sel.dataset.bound !== 'true') {
+    sel.dataset.bound = 'true';
+    sel.addEventListener('change', () => updateWorkoutEstimate());
+  }
+  updateWorkoutEstimate();
+}
+
+function getWorkoutGoal() {
+  const v = document.getElementById('workoutGoal')?.value;
+  return (v || 'strength').toLowerCase();
+}
+
+function formatMMSS(totalSeconds) {
+  const s = Math.max(0, Math.floor(totalSeconds));
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return `${String(m).padStart(2, '0')}:${String(r).padStart(2, '0')}`;
+}
+
+function estimateExerciseSeconds(ex, goal) {
+  // Heuristic defaults (keeps it simple + beginner-friendly).
+  const presets = {
+    strength: { sets: 4, reps: 5, rest: 150 },
+    hypertrophy: { sets: 3, reps: 10, rest: 75 },
+    endurance: { sets: 3, reps: 15, rest: 45 },
+  };
+  const p = presets[goal] || presets.strength;
+  const repSeconds = 4; // controlled tempo
+  const setWork = p.reps * repSeconds;
+  const totalWork = p.sets * setWork;
+  const totalRest = (p.sets - 1) * p.rest;
+  const transition = 30;
+  return totalWork + totalRest + transition;
+}
+
+function updateWorkoutEstimate() {
+  const el = document.getElementById('workoutEstimate');
+  if (!el) return;
+  const ids = loadWorkoutBuilder();
+  if (!ids.length) {
+    el.textContent = '—';
+    return;
+  }
+  const goal = getWorkoutGoal();
+  const seconds = ids
+    .map((id) => exercises.find((e) => e.id === id))
+    .filter(Boolean)
+    .reduce((sum, ex) => sum + estimateExerciseSeconds(ex, goal), 0);
+  el.textContent = `${Math.max(1, Math.round(seconds / 60))} min`;
+}
+
+let runnerState = null;
+
+function startWorkoutSession() {
+  const runner = document.getElementById('workoutRunner');
+  const listEl = document.getElementById('runnerExerciseList');
+  if (!runner || !listEl) return;
+  const ids = loadWorkoutBuilder();
+  if (!ids.length) {
+    showError('Add exercises to your workout first.');
+    return;
+  }
+
+  const goal = getWorkoutGoal();
+  const presets = {
+    strength: { sets: 4, reps: 5, rest: 150 },
+    hypertrophy: { sets: 3, reps: 10, rest: 75 },
+    endurance: { sets: 3, reps: 15, rest: 45 },
+  };
+  const p = presets[goal] || presets.strength;
+
+  runnerState = {
+    goal,
+    startedAt: null,
+    elapsedSeconds: 0,
+    ticking: false,
+    restRemaining: 0,
+    restInterval: null,
+    tickInterval: null,
+    activeExerciseIndex: 0,
+    exercises: ids.map((id) => {
+      const ex = exercises.find((e) => e.id === id) || { id, name: id };
+      return {
+        id,
+        name: ex.name || id,
+        sets: p.sets,
+        reps: p.reps,
+        rest: p.rest,
+        completedSets: 0,
+      };
+    }),
+  };
+
+  runner.classList.remove('hidden');
+  renderRunnerExercises();
+  bindRunnerControls();
+  updateRunnerUI();
+  announceToScreenReader('Workout started');
+}
+
+function bindRunnerControls() {
+  const btn = document.getElementById('runnerStartPauseBtn');
+  const next = document.getElementById('runnerNextSetBtn');
+  const end = document.getElementById('runnerEndBtn');
+  if (btn && btn.dataset.bound !== 'true') {
+    btn.dataset.bound = 'true';
+    btn.addEventListener('click', () => toggleRunnerStartPause());
+  }
+  if (next && next.dataset.bound !== 'true') {
+    next.dataset.bound = 'true';
+    next.addEventListener('click', () => completeSetAndRest());
+  }
+  if (end && end.dataset.bound !== 'true') {
+    end.dataset.bound = 'true';
+    end.addEventListener('click', () => endRunnerSession());
+  }
+}
+
+function toggleRunnerStartPause() {
+  if (!runnerState) return;
+  runnerState.ticking = !runnerState.ticking;
+  const btn = document.getElementById('runnerStartPauseBtn');
+  if (btn) btn.textContent = runnerState.ticking ? 'Pause' : 'Start';
+
+  if (runnerState.ticking) {
+    runnerState.tickInterval = runnerState.tickInterval || setInterval(() => {
+      runnerState.elapsedSeconds += 1;
+      if (runnerState.restRemaining > 0) {
+        runnerState.restRemaining -= 1;
+      }
+      updateRunnerUI();
+    }, 1000);
+  } else {
+    if (runnerState.tickInterval) {
+      clearInterval(runnerState.tickInterval);
+      runnerState.tickInterval = null;
+    }
+  }
+  updateRunnerUI();
+}
+
+function completeSetAndRest() {
+  if (!runnerState) return;
+  const ex = runnerState.exercises[runnerState.activeExerciseIndex];
+  if (!ex) return;
+  if (ex.completedSets < ex.sets) ex.completedSets += 1;
+  runnerState.restRemaining = ex.completedSets >= ex.sets ? 0 : ex.rest;
+
+  // If exercise finished, move to next exercise (after rest)
+  if (ex.completedSets >= ex.sets) {
+    runnerState.activeExerciseIndex = Math.min(runnerState.activeExerciseIndex + 1, runnerState.exercises.length - 1);
+  }
+  renderRunnerExercises();
+  updateRunnerUI();
+}
+
+function endRunnerSession() {
+  if (!runnerState) return;
+  if (runnerState.tickInterval) clearInterval(runnerState.tickInterval);
+  runnerState = null;
+  document.getElementById('workoutRunner')?.classList.add('hidden');
+  document.getElementById('runnerElapsed').textContent = '00:00';
+  document.getElementById('runnerRest').textContent = '—';
+  announceToScreenReader('Workout ended');
+}
+
+function updateRunnerUI() {
+  if (!runnerState) return;
+  const elapsed = document.getElementById('runnerElapsed');
+  const rest = document.getElementById('runnerRest');
+  if (elapsed) elapsed.textContent = formatMMSS(runnerState.elapsedSeconds);
+  if (rest) rest.textContent = runnerState.restRemaining > 0 ? formatMMSS(runnerState.restRemaining) : '—';
+}
+
+function renderRunnerExercises() {
+  if (!runnerState) return;
+  const listEl = document.getElementById('runnerExerciseList');
+  if (!listEl) return;
+  listEl.innerHTML = runnerState.exercises.map((ex, idx) => {
+    const pills = Array.from({ length: ex.sets }).map((_, i) => {
+      const done = i < ex.completedSets;
+      return `<span class="set-pill ${done ? 'done' : ''}">Set ${i + 1}</span>`;
+    }).join('');
+    const active = idx === runnerState.activeExerciseIndex ? ' style="border-left: 4px solid var(--primary);"' : '';
+    return `
+      <div class="runner-ex" role="listitem"${active}>
+        <div class="runner-ex-top">
+          <div class="runner-ex-name">${ex.name}</div>
+          <div class="runner-ex-prescription">${ex.sets} × ${ex.reps} · rest ${Math.round(ex.rest / 60)}m</div>
+        </div>
+        <div class="runner-ex-sets">${pills}</div>
+      </div>
+    `;
+  }).join('');
 }
 
 async function loadRoutines() {
@@ -234,6 +437,7 @@ function renderWorkoutBuilderList() {
   }).join('');
 
   setupWorkoutDragAndDrop(list);
+  updateWorkoutEstimate();
 }
 
 function removeWorkoutIndex(idx) {
