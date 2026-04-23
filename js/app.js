@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
-const EXERCISE_CATALOG_VERSION = '2026-04-23';
+const EXERCISE_CATALOG_VERSION = '2026-04-23-2';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -1243,9 +1243,10 @@ function setDailyExercise() {
 function getCategoryIcon(category) {
   const icons = {
     strength: '💪',
-    cardio: '❤️',
-    flexibility: '🧘',
-    balance: '⚖️'
+    hypertrophy: '🏋️',
+    endurance: '❤️',
+    mobility: '🧘',
+    rehab: '🩹'
   };
   return icons[category] || '⭐';
 }
