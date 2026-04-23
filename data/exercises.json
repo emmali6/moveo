@@ -13,6 +13,16 @@
     "constraints": ["knee-friendly", "apartment/no jumping"],
     "whatYouShouldFeel": ["Quads and glutes doing the work (not your knees).", "Core supporting you so your torso feels steady."],
     "breathingTips": ["Inhale on the way down.", "Exhale as you stand up and drive through your heels."],
+    "setsReps": {
+      "strength": "3–5 sets × 3–6 reps (rest 2–3 min)",
+      "hypertrophy": "3–4 sets × 8–12 reps (rest 60–90 sec)",
+      "endurance": "2–4 sets × 12–20 reps (rest 30–60 sec)"
+    },
+    "workoutRole": ["main lift", "accessory"],
+    "pairingSuggestions": [
+      "Superset with Glute Bridge for a lower-body combo",
+      "Combine into a short routine: Squat → Push-Up → Crunch (2–3 rounds)"
+    ],
     "limitedMobilityAlternatives": [
       "Box squat to a chair/bench (sit back, tap, stand)",
       "Supported squat holding a countertop or sturdy object",
@@ -49,6 +59,16 @@
     "constraints": ["low-back friendly"],
     "whatYouShouldFeel": ["Hamstrings and glutes loading during the hinge.", "Back feels braced and long (not pinchy in the low back)."],
     "breathingTips": ["Inhale and brace before you lift.", "Exhale gently as you stand tall, then reset your breath between reps."],
+    "setsReps": {
+      "strength": "3–5 sets × 3–5 reps (rest 2–3 min)",
+      "hypertrophy": "3–4 sets × 6–10 reps (rest 90 sec)",
+      "endurance": "2–3 sets × 10–15 reps (rest 45–60 sec)"
+    },
+    "workoutRole": ["main lift"],
+    "pairingSuggestions": [
+      "Pair with Side Lying Leg Raise for hip stability",
+      "Finish with a short core set: Bicycle Crunch (2 sets)"
+    ],
     "noEquipmentAlternatives": [
       "Hip hinge drill (hands on hips, push hips back, stand tall)",
       "Good mornings (bodyweight hinge with neutral spine)",
@@ -90,6 +110,16 @@
     "constraints": ["apartment/no jumping", "wrist-safe"],
     "whatYouShouldFeel": ["Chest and triceps pushing (not your shoulders shrugging up).", "Core staying tight so your body moves as one piece."],
     "breathingTips": ["Inhale as you lower.", "Exhale as you press up."],
+    "setsReps": {
+      "strength": "4–6 sets × 4–8 reps (rest 90–120 sec)",
+      "hypertrophy": "3–4 sets × 8–15 reps (rest 60–90 sec)",
+      "endurance": "2–4 sets × 12–25 reps (rest 30–60 sec)"
+    },
+    "workoutRole": ["main lift", "accessory", "finisher"],
+    "pairingSuggestions": [
+      "Superset with Bicycle Crunch (push + core)",
+      "Combine into a routine: Push-Up → Lunge → Glute Bridge (2–4 rounds)"
+    ],
     "limitedMobilityAlternatives": [
       "Wall push-up (standing)",
       "Incline push-up (hands on counter/bench)",
@@ -127,6 +157,16 @@
     "constraints": ["apartment/no jumping"],
     "whatYouShouldFeel": ["Biceps working through the curl (not your shoulders).", "Elbows stay close to your sides."],
     "breathingTips": ["Exhale as you curl up.", "Inhale as you lower slowly."],
+    "setsReps": {
+      "strength": "3–5 sets × 5–8 reps (rest 90 sec)",
+      "hypertrophy": "3–4 sets × 10–15 reps (rest 60 sec)",
+      "endurance": "2–3 sets × 15–25 reps (rest 30–45 sec)"
+    },
+    "workoutRole": ["accessory", "finisher"],
+    "pairingSuggestions": [
+      "Superset with Push-Up for an upper-body combo",
+      "Add as a finisher: 2 sets of slow curls after your main work"
+    ],
     "noEquipmentAlternatives": [
       "Towel curl isometric: stand on a towel and pull up against it",
       "Backpack curl (load with books) if available",
@@ -169,6 +209,16 @@
     "constraints": ["knee-friendly", "apartment/no jumping"],
     "whatYouShouldFeel": ["Outer hip/glute working on the top side (not your low back).", "Pelvis staying stacked and steady."],
     "breathingTips": ["Inhale to set up.", "Exhale gently as you lift; inhale as you lower with control."],
+    "setsReps": {
+      "strength": "3–4 sets × 10–15 reps (rest 45–60 sec)",
+      "hypertrophy": "3–4 sets × 12–20 reps (rest 45–60 sec)",
+      "endurance": "2–3 sets × 15–25 reps (rest 30–45 sec)"
+    },
+    "workoutRole": ["warm-up", "accessory", "rehab"],
+    "pairingSuggestions": [
+      "Pair with Glute Bridge for glute activation",
+      "Use as a warm-up before Squats or Lunges (1–2 sets)"
+    ],
     "limitedMobilityAlternatives": [
       "Clamshells (bent knees) with a small range of motion",
       "Standing hip abduction holding a counter for support",
@@ -215,6 +265,16 @@
     "constraints": ["knee-friendly", "apartment/no jumping"],
     "whatYouShouldFeel": ["Front leg glute and quad working (not your front knee collapsing inward).", "Core helping you stay tall and balanced."],
     "breathingTips": ["Inhale as you lower.", "Exhale as you push back up."],
+    "setsReps": {
+      "strength": "3–5 sets × 5–8 reps/side (rest 90 sec)",
+      "hypertrophy": "3–4 sets × 8–12 reps/side (rest 60–90 sec)",
+      "endurance": "2–3 sets × 12–20 reps/side (rest 30–60 sec)"
+    },
+    "workoutRole": ["main lift", "accessory"],
+    "pairingSuggestions": [
+      "Superset with Push-Up for a full-body pair",
+      "Combine into a routine: Lunge → Bicycle Crunch (3 rounds)"
+    ],
     "limitedMobilityAlternatives": [
       "Static split squat with support (hold a wall/counter)",
       "Reverse lunge with a small step (reduce depth)",
@@ -252,6 +312,16 @@
     "constraints": ["knee-friendly", "low-back friendly", "apartment/no jumping"],
     "whatYouShouldFeel": ["Glutes squeezing at the top (not your low back taking over).", "Hamstrings helping, but glutes leading."],
     "breathingTips": ["Inhale at the bottom.", "Exhale as you lift and squeeze at the top."],
+    "setsReps": {
+      "strength": "4–5 sets × 6–10 reps (rest 90 sec)",
+      "hypertrophy": "3–4 sets × 10–15 reps (rest 60 sec)",
+      "endurance": "2–3 sets × 15–25 reps (rest 30–45 sec)"
+    },
+    "workoutRole": ["warm-up", "accessory", "rehab"],
+    "pairingSuggestions": [
+      "Pair with Side Lying Leg Raise for glute + hip stability",
+      "Use as activation before Squats or Lunges (1–2 sets)"
+    ],
     "limitedMobilityAlternatives": [
       "Reduce range: lift only a few inches and focus on glute squeeze",
       "Elevate shoulders on a couch/bench to make setup easier",
@@ -290,6 +360,16 @@
     "constraints": ["apartment/no jumping", "wrist-safe", "knee-friendly"],
     "whatYouShouldFeel": ["Abs and obliques doing the twist (not your neck pulling).", "Core stays controlled while legs move."],
     "breathingTips": ["Exhale on each crunch/twist.", "Inhale briefly as you switch sides—keep it smooth."],
+    "setsReps": {
+      "strength": "3–4 sets × 8–12 reps/side (rest 60 sec)",
+      "hypertrophy": "3–4 sets × 12–20 reps/side (rest 45–60 sec)",
+      "endurance": "2–4 sets × 20–40 seconds (rest 30 sec)"
+    },
+    "workoutRole": ["accessory", "finisher"],
+    "pairingSuggestions": [
+      "Superset with Push-Up (upper body + core)",
+      "Finish a routine with: Bicycle Crunch → Crunch (2 rounds)"
+    ],
     "limitedMobilityAlternatives": [
       "Heel taps (keep feet on the floor, smaller range)",
       "Dead bug (slow, controlled) if comfortable",
@@ -336,6 +416,16 @@
     "constraints": ["wrist-safe"],
     "whatYouShouldFeel": ["Upper back/lats pulling you up (not just your biceps).", "Shoulders stay down away from your ears."],
     "breathingTips": ["Inhale at the bottom hang.", "Exhale as you pull up; inhale as you lower with control."],
+    "setsReps": {
+      "strength": "4–6 sets × 2–5 reps (rest 2–3 min)",
+      "hypertrophy": "3–5 sets × 5–10 reps (rest 90 sec)",
+      "endurance": "2–4 sets × 8–15 reps (rest 60 sec)"
+    },
+    "workoutRole": ["main lift", "accessory"],
+    "pairingSuggestions": [
+      "Pair with Push-Up for push/pull balance",
+      "Combine into a routine: Pull-Up → Lunge → Crunch (2–3 rounds)"
+    ],
     "noEquipmentAlternatives": [
       "Doorway row using a sturdy towel/strap (only if safe and stable)",
       "Prone Y-T-W raises (bodyweight upper-back work)",
@@ -385,6 +475,16 @@
     "constraints": ["apartment/no jumping", "wrist-safe", "knee-friendly"],
     "whatYouShouldFeel": ["Front abs working (not your neck).", "Ribs gently pulling down as you crunch."],
     "breathingTips": ["Exhale as you crunch up.", "Inhale as you lower with control."],
+    "setsReps": {
+      "strength": "3–4 sets × 8–12 reps (rest 60 sec)",
+      "hypertrophy": "3–4 sets × 12–20 reps (rest 45–60 sec)",
+      "endurance": "2–4 sets × 20–40 seconds (rest 30 sec)"
+    },
+    "workoutRole": ["accessory", "finisher"],
+    "pairingSuggestions": [
+      "Superset with Push-Up (push + core)",
+      "Combine into a routine: Squat → Push-Up → Crunch (2–3 rounds)"
+    ],
     "limitedMobilityAlternatives": [
       "Hands-on-thighs crunch (slide hands up thighs with a smaller lift)",
       "Partial crunch range (just lift shoulder blades slightly)",

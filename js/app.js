@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
-const EXERCISE_CATALOG_VERSION = '2026-04-23-4';
+const EXERCISE_CATALOG_VERSION = '2026-04-23-5';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -983,6 +983,30 @@ function renderExerciseDetail(exercise, options = {}) {
               ${exercise.limitedMobilityAlternatives.map((c) => `<li>${c}</li>`).join('')}
             </ul>
           </div>` : ''}
+
+        ${exercise.setsReps ? `
+          <div class="cue-block">
+            <h3>Suggested sets & reps</h3>
+            <ul class="cue-list">
+              ${exercise.setsReps.strength ? `<li><strong>Strength:</strong> ${exercise.setsReps.strength}</li>` : ''}
+              ${exercise.setsReps.hypertrophy ? `<li><strong>Hypertrophy:</strong> ${exercise.setsReps.hypertrophy}</li>` : ''}
+              ${exercise.setsReps.endurance ? `<li><strong>Endurance:</strong> ${exercise.setsReps.endurance}</li>` : ''}
+            </ul>
+          </div>` : ''}
+
+        ${Array.isArray(exercise.workoutRole) && exercise.workoutRole.length ? `
+          <div class="cue-block">
+            <h3>Where it fits in a workout</h3>
+            <p class="cue-inline">${exercise.workoutRole.join(' · ')}</p>
+          </div>` : ''}
+
+        ${Array.isArray(exercise.pairingSuggestions) && exercise.pairingSuggestions.length ? `
+          <div class="cue-block">
+            <h3>Pairing ideas</h3>
+            <ul class="cue-list">
+              ${exercise.pairingSuggestions.map((c) => `<li>${c}</li>`).join('')}
+            </ul>
+          </div>` : ''}
         
         <button 
           class="btn-primary" 
@@ -993,8 +1017,6 @@ function renderExerciseDetail(exercise, options = {}) {
         </button>
       </div>
 
-      ${renderSmartSuggestions(exercise)}
-      
       <div id="tipsOverlay" class="tips-overlay hidden" role="region" aria-labelledby="tipsHeading">
         <h3 id="tipsHeading">Form Tips</h3>
         <ul class="tips-list">
@@ -1021,6 +1043,8 @@ function renderExerciseDetail(exercise, options = {}) {
           </div>
         ` : ''}
       </div>
+
+      ${renderSmartSuggestions(exercise)}
     </div>
     
     ${backMarkup}

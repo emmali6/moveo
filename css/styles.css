@@ -935,6 +935,12 @@ button:focus-visible {
   padding: 0.35rem 0;
 }
 
+.cue-inline {
+  margin: 0;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
 /* Suggestions */
 .suggestions {
   margin-top: 2rem;
