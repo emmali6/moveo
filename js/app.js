@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
-const EXERCISE_CATALOG_VERSION = '2026-04-23-5';
+const EXERCISE_CATALOG_VERSION = '2026-04-23-6';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -1042,7 +1042,9 @@ function mergeSupabaseVideosIntoExercises(localList, supabaseRows, sb) {
 async function loadExercises() {
   const base = getBaseUrl();
   const jsonUrl = base + 'data/exercises.json?v=' + encodeURIComponent(EXERCISE_CATALOG_VERSION);
+  const extraUrl = base + 'data/exercises_extra.json?v=' + encodeURIComponent(EXERCISE_CATALOG_VERSION);
   let localList = [];
+  let extraList = [];
 
   try {
     const response = await fetch(jsonUrl);
@@ -1055,6 +1057,28 @@ async function loadExercises() {
     return;
   }
 
+  // Optional: load extra exercise names dataset (placeholders until enriched)
+  try {
+    const res2 = await fetch(extraUrl);
+    if (res2.ok) {
+      extraList = await res2.json();
+    }
+  } catch (e) {
+    console.warn('Moveo: extra exercises list not loaded:', e);
+  }
+
+  // Merge: curated list first, then extras that aren't duplicates
+  const seen = new Set(localList.map((e) => String(e.id).toLowerCase()));
+  const mergedLocal = localList.concat(
+    (Array.isArray(extraList) ? extraList : []).filter((e) => {
+      const id = String(e?.id || '').toLowerCase();
+      if (!id) return false;
+      if (seen.has(id)) return false;
+      seen.add(id);
+      return true;
+    })
+  );
+
   const sb = getSupabase();
   if (sb) {
     try {
@@ -1062,7 +1086,7 @@ async function loadExercises() {
       if (error) {
         console.warn('Moveo: Supabase exercises table error (check RLS allows SELECT for anon):', error.message, error);
       } else if (rows?.length) {
-        exercises = mergeSupabaseVideosIntoExercises(localList, rows, sb);
+        exercises = mergeSupabaseVideosIntoExercises(mergedLocal, rows, sb);
         const withVideo = exercises.filter((e) => e.previewVideo && /^https?:\/\//i.test(e.previewVideo)).length;
         console.info('Moveo: merged', rows.length, 'Supabase exercise row(s);', withVideo, 'exercise(s) now have https video URLs.');
         return;
@@ -1076,7 +1100,7 @@ async function loadExercises() {
     console.warn('Moveo: Supabase client not initialized — videos from Storage will not load. Ensure @supabase/supabase-js loads before app.js.');
   }
 
-  exercises = localList;
+  exercises = mergedLocal;
 }
 
 // Load bookmarks from localStorage
