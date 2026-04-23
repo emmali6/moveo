@@ -1153,7 +1153,7 @@ function getFilteredExercises() {
   const q = (input?.value || '').trim().toLowerCase();
   const filters = getActiveFilters();
   const words = q.split(/\s+/).filter(Boolean);
-  return exercises.filter((ex) => {
+  const filtered = exercises.filter((ex) => {
     if (!matchesFilters(ex, filters)) return false;
     if (!words.length) return true;
     const muscle = [
@@ -1170,6 +1170,15 @@ function getFilteredExercises() {
       .join(' ')
       .toLowerCase();
     return words.every((w) => hay.includes(w));
+  });
+
+  // Always sort alphabetically for easier browsing (especially for beginners).
+  return filtered.slice().sort((a, b) => {
+    const an = String(a?.name || '').toLowerCase();
+    const bn = String(b?.name || '').toLowerCase();
+    const byName = an.localeCompare(bn);
+    if (byName) return byName;
+    return String(a?.id || '').localeCompare(String(b?.id || ''));
   });
 }
 
