@@ -110,6 +110,52 @@ function estimateMinutesFromGoal(goal) {
   return 5;
 }
 
+function titleCaseList(arr, max = 2) {
+  const cleaned = (arr || [])
+    .map((x) => String(x).trim())
+    .filter(Boolean)
+    .slice(0, max);
+  return cleaned;
+}
+
+function prettyEquipment(equipment) {
+  const eq = (equipment || []).map((x) => String(x).toLowerCase());
+  if (!eq.length || (eq.length === 1 && eq[0] === 'none')) return 'bodyweight';
+  if (eq.includes('dumbbells')) return 'dumbbells';
+  if (eq.includes('resistance bands')) return 'resistance bands';
+  if (eq.includes('gym machines')) return 'gym equipment';
+  return 'equipment';
+}
+
+function generateMoveoDescription({ name, difficulty, category, mechanic, force, primaryMuscles, equipment }) {
+  const diff = String(difficulty || 'beginner');
+  const cat = String(category || 'strength');
+  const mech = String(mechanic || '').toLowerCase();
+  const f = String(force || '').toLowerCase();
+
+  const primes = titleCaseList(primaryMuscles, 2);
+  const musclesText = primes.length ? primes.join(' and ') : 'key muscles';
+  const eqText = prettyEquipment(equipment);
+
+  const mechText = mech ? (mech === 'compound' ? 'compound' : mech) : 'controlled';
+  const forceText =
+    f === 'push' ? 'push pattern' :
+    f === 'pull' ? 'pull pattern' :
+    '';
+
+  const intent =
+    cat === 'mobility' ? 'improves mobility and control' :
+    cat === 'rehab' ? 'builds stability with joint-friendly control' :
+    cat === 'endurance' ? 'builds muscular endurance with clean reps' :
+    cat === 'hypertrophy' ? 'supports muscle growth with controlled tempo' :
+    'builds strength with repeatable form';
+
+  const pattern = forceText ? `a ${forceText}` : `${mechText} movement`;
+  const patternSentence = forceText ? `This is a ${forceText}` : `This is a ${mechText} movement`;
+
+  return `A ${diff}-friendly ${cat} move that targets ${musclesText}. ${patternSentence} that uses ${eqText} and ${intent}.`;
+}
+
 function main() {
   const outPath = path.join(__dirname, '..', 'data', 'exercises_extra.json');
 
@@ -143,11 +189,20 @@ function main() {
           const category = pickCategoryFromGoals(goals);
           const programming = defaultProgramming();
           const mainGoal = category || 'strength';
+          const description = generateMoveoDescription({
+            name,
+            difficulty,
+            category,
+            mechanic: it.mechanic,
+            force: it.force,
+            primaryMuscles: primary,
+            equipment,
+          });
 
           extras.push({
             id,
             name,
-            description: `Imported exercise. Use the steps below as a starting point and adjust for your form.`,
+            description,
             difficulty,
             muscleGroups: primary.length ? primary : secondary,
             primaryMuscles: primary,
