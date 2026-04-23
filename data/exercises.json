@@ -11,6 +11,8 @@
     "goals": ["strength", "hypertrophy", "mobility"],
     "equipment": ["none"],
     "constraints": ["knee-friendly", "apartment/no jumping"],
+    "whatYouShouldFeel": ["Quads and glutes doing the work (not your knees).", "Core supporting you so your torso feels steady."],
+    "breathingTips": ["Inhale on the way down.", "Exhale as you stand up and drive through your heels."],
     "duration": 5,
     "previewVideo": "assets/media/preview_squat.mp4",
     "tips": [
@@ -40,6 +42,8 @@
     "goals": ["strength", "hypertrophy"],
     "equipment": ["gym machines"],
     "constraints": ["low-back friendly"],
+    "whatYouShouldFeel": ["Hamstrings and glutes loading during the hinge.", "Back feels braced and long (not pinchy in the low back)."],
+    "breathingTips": ["Inhale and brace before you lift.", "Exhale gently as you stand tall, then reset your breath between reps."],
     "duration": 8,
     "previewVideo": "assets/media/preview_deadlift.mp4",
     "tips": [
@@ -69,6 +73,8 @@
     "goals": ["strength", "hypertrophy", "endurance"],
     "equipment": ["none"],
     "constraints": ["apartment/no jumping", "wrist-safe"],
+    "whatYouShouldFeel": ["Chest and triceps pushing (not your shoulders shrugging up).", "Core staying tight so your body moves as one piece."],
+    "breathingTips": ["Inhale as you lower.", "Exhale as you press up."],
     "duration": 5,
     "previewVideo": "assets/media/preview_pushup.mp4",
     "tips": [
@@ -99,6 +105,8 @@
     "goals": ["hypertrophy", "strength"],
     "equipment": ["dumbbells", "resistance bands"],
     "constraints": ["apartment/no jumping"],
+    "whatYouShouldFeel": ["Biceps working through the curl (not your shoulders).", "Elbows stay close to your sides."],
+    "breathingTips": ["Exhale as you curl up.", "Inhale as you lower slowly."],
     "duration": 4,
     "previewVideo": "assets/media/preview_bicepcurl.mp4",
     "tips": [
@@ -129,6 +137,8 @@
     "goals": ["rehab", "mobility", "strength"],
     "equipment": ["none", "resistance bands"],
     "constraints": ["knee-friendly", "apartment/no jumping"],
+    "whatYouShouldFeel": ["Outer hip/glute working on the top side (not your low back).", "Pelvis staying stacked and steady."],
+    "breathingTips": ["Inhale to set up.", "Exhale gently as you lift; inhale as you lower with control."],
     "duration": 4,
     "tips": [
       "Lie on your side with your bottom leg slightly bent for support",
@@ -168,6 +178,8 @@
     "goals": ["strength", "hypertrophy", "mobility"],
     "equipment": ["none", "dumbbells"],
     "constraints": ["knee-friendly", "apartment/no jumping"],
+    "whatYouShouldFeel": ["Front leg glute and quad working (not your front knee collapsing inward).", "Core helping you stay tall and balanced."],
+    "breathingTips": ["Inhale as you lower.", "Exhale as you push back up."],
     "duration": 6,
     "previewVideo": "assets/media/preview_lunge.mp4",
     "tips": [
@@ -198,6 +210,8 @@
     "goals": ["rehab", "strength", "hypertrophy"],
     "equipment": ["none", "resistance bands"],
     "constraints": ["knee-friendly", "low-back friendly", "apartment/no jumping"],
+    "whatYouShouldFeel": ["Glutes squeezing at the top (not your low back taking over).", "Hamstrings helping, but glutes leading."],
+    "breathingTips": ["Inhale at the bottom.", "Exhale as you lift and squeeze at the top."],
     "duration": 4,
     "previewVideo": "assets/media/preview_glutebridge.mp4",
     "tips": [
@@ -229,6 +243,8 @@
     "goals": ["strength", "endurance"],
     "equipment": ["none"],
     "constraints": ["apartment/no jumping", "wrist-safe", "knee-friendly"],
+    "whatYouShouldFeel": ["Abs and obliques doing the twist (not your neck pulling).", "Core stays controlled while legs move."],
+    "breathingTips": ["Exhale on each crunch/twist.", "Inhale briefly as you switch sides—keep it smooth."],
     "duration": 5,
     "tips": [
       "Lie on your back with hands lightly supporting behind your head (don’t pull on your neck)",
@@ -268,6 +284,8 @@
     "goals": ["strength", "hypertrophy"],
     "equipment": ["gym machines", "resistance bands"],
     "constraints": ["wrist-safe"],
+    "whatYouShouldFeel": ["Upper back/lats pulling you up (not just your biceps).", "Shoulders stay down away from your ears."],
+    "breathingTips": ["Inhale at the bottom hang.", "Exhale as you pull up; inhale as you lower with control."],
     "duration": 8,
     "previewVideo": "assets/media/preview_pullup.mp4",
     "tips": [
@@ -305,6 +323,8 @@
     "goals": ["strength", "endurance"],
     "equipment": ["none"],
     "constraints": ["apartment/no jumping", "wrist-safe", "knee-friendly"],
+    "whatYouShouldFeel": ["Front abs working (not your neck).", "Ribs gently pulling down as you crunch."],
+    "breathingTips": ["Exhale as you crunch up.", "Inhale as you lower with control."],
     "duration": 4,
     "tips": [
       "Lie on your back with knees bent and feet flat on the floor",

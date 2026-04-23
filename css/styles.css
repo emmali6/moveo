@@ -583,6 +583,23 @@ button:focus-visible {
   margin: 0.5rem 0 2rem;
 }
 
+/* Make Show more buttons visible on dark sections */
+.pagination-row .btn-secondary.btn-link {
+  background: var(--accent);
+  color: var(--dark);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  padding: 0.85rem 1.5rem;
+  font-weight: 800;
+}
+
+.pagination-row .btn-secondary.btn-link:hover,
+.pagination-row .btn-secondary.btn-link:focus {
+  background: #ffd84d;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
 /* Daily Exercise Card - fitness card style */
 .daily-exercise {
   background: white;
@@ -892,6 +909,30 @@ button:focus-visible {
 .mod-list li {
   padding: 0.35rem 0;
   color: var(--text-primary);
+}
+
+/* Simple coaching cues */
+.cue-block {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+}
+
+.cue-block h3 {
+  margin-bottom: 0.75rem;
+  color: var(--dark);
+  font-size: 1.1rem;
+}
+
+.cue-list {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.cue-list li {
+  padding: 0.35rem 0;
 }
 
 /* Suggestions */

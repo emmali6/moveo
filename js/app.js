@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
-const EXERCISE_CATALOG_VERSION = '2026-04-23-2';
+const EXERCISE_CATALOG_VERSION = '2026-04-23-3';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -951,6 +951,22 @@ function renderExerciseDetail(exercise, options = {}) {
             ).join('')}
           </div>
         </div>
+
+        ${Array.isArray(exercise.whatYouShouldFeel) && exercise.whatYouShouldFeel.length ? `
+          <div class="cue-block">
+            <h3>What you should feel</h3>
+            <ul class="cue-list">
+              ${exercise.whatYouShouldFeel.map((c) => `<li>${c}</li>`).join('')}
+            </ul>
+          </div>` : ''}
+
+        ${Array.isArray(exercise.breathingTips) && exercise.breathingTips.length ? `
+          <div class="cue-block">
+            <h3>Breathing</h3>
+            <ul class="cue-list">
+              ${exercise.breathingTips.map((c) => `<li>${c}</li>`).join('')}
+            </ul>
+          </div>` : ''}
         
         <button 
           class="btn-primary" 
