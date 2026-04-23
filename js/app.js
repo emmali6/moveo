@@ -145,6 +145,7 @@ async function initWorkoutsPage() {
   await loadRoutines();
   setupRoutineFilters();
   setupWorkoutGoalAndEstimate();
+  setupSaveWorkoutToAccount();
   document.getElementById('clearWorkoutBtn')?.addEventListener('click', () => {
     saveWorkoutBuilder([]);
     renderWorkoutBuilderList();
@@ -152,6 +153,53 @@ async function initWorkoutsPage() {
 
   document.getElementById('startWorkoutBtn')?.addEventListener('click', () => {
     startWorkoutSession();
+  });
+}
+
+function setWorkoutSaveMessage(msg, isError) {
+  const el = document.getElementById('workoutSaveMsg');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.style.color = isError ? 'rgba(245, 101, 101, 0.95)' : 'rgba(255, 255, 255, 0.85)';
+}
+
+function setupSaveWorkoutToAccount() {
+  const btn = document.getElementById('saveWorkoutToAccountBtn');
+  if (!btn || btn.dataset.bound === 'true') return;
+  btn.dataset.bound = 'true';
+  btn.addEventListener('click', async () => {
+    setWorkoutSaveMessage('');
+    const user = await getCurrentUser();
+    if (!user) {
+      setWorkoutSaveMessage('Sign in to save workouts to your account.', true);
+      return;
+    }
+    const sb = getSupabase();
+    if (!sb) {
+      setWorkoutSaveMessage('Supabase unavailable. Please refresh.', true);
+      return;
+    }
+    const ids = loadWorkoutBuilder();
+    if (!ids.length) {
+      setWorkoutSaveMessage('Add at least one exercise first.', true);
+      return;
+    }
+    const goal = getWorkoutGoal();
+    const name = `Workout · ${goal}`;
+    setWorkoutSaveMessage('Saving…');
+    const payload = {
+      user_id: user.id,
+      name,
+      goal,
+      exercise_ids: ids,
+    };
+    const { error } = await sb.from('user_workouts').insert(payload);
+    if (error) {
+      console.warn('Moveo: save workout error:', error);
+      setWorkoutSaveMessage('Could not save workout. Check Supabase table/policies for user_workouts.', true);
+      return;
+    }
+    setWorkoutSaveMessage('Saved to your account.');
   });
 }
 
@@ -315,6 +363,48 @@ function completeSetAndRest() {
 
 function endRunnerSession() {
   if (!runnerState) return;
+  const summary = {
+    title: 'Workout session',
+    goal: runnerState.goal,
+    duration_seconds: runnerState.elapsedSeconds,
+    ended_at: new Date().toISOString(),
+    exercises: runnerState.exercises.map((e) => ({
+      id: e.id,
+      name: e.name,
+      sets: e.sets,
+      reps: e.reps,
+      completed_sets: e.completedSets,
+    })),
+  };
+
+  // Always keep a local history for non-signed-in users.
+  try {
+    const key = 'moveoWorkoutHistory';
+    const raw = localStorage.getItem(key);
+    const arr = raw ? JSON.parse(raw) : [];
+    const next = Array.isArray(arr) ? arr : [];
+    next.unshift(summary);
+    localStorage.setItem(key, JSON.stringify(next.slice(0, 50)));
+  } catch {}
+
+  // If signed in, also log to Supabase.
+  getCurrentUser().then((user) => {
+    const sb = getSupabase();
+    if (!user || !sb) return;
+    sb.from('user_workout_sessions')
+      .insert({
+        user_id: user.id,
+        title: summary.title,
+        goal: summary.goal,
+        duration_seconds: summary.duration_seconds,
+        ended_at: summary.ended_at,
+        exercises: summary.exercises,
+      })
+      .then(({ error }) => {
+        if (error) console.warn('Moveo: workout session log error:', error);
+      });
+  });
+
   if (runnerState.tickInterval) clearInterval(runnerState.tickInterval);
   runnerState = null;
   document.getElementById('workoutRunner')?.classList.add('hidden');
@@ -548,6 +638,7 @@ function showAccountDashboard(user) {
   document.getElementById('accountDashboardSection')?.classList.remove('hidden');
   document.getElementById('accountUserName').textContent = user.name || user.email;
   renderSavedExercisesList();
+  loadAccountWorkoutsAndHistory(user);
 }
 
 function hideAccountDashboard() {
@@ -712,6 +803,91 @@ function removeSavedOnAccountPage(exerciseId) {
   }
 }
 window.removeSavedOnAccountPage = removeSavedOnAccountPage;
+
+async function loadAccountWorkoutsAndHistory(user) {
+  await loadSavedWorkoutsList(user);
+  await loadWorkoutHistory(user);
+}
+
+async function loadSavedWorkoutsList(user) {
+  const list = document.getElementById('savedWorkoutsList');
+  const empty = document.getElementById('noSavedWorkouts');
+  if (!list) return;
+  const sb = getSupabase();
+  if (!sb) {
+    list.innerHTML = '<p class="loading-message">Sign-in required to load saved workouts.</p>';
+    return;
+  }
+  const { data, error } = await sb
+    .from('user_workouts')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false });
+  if (error) {
+    list.innerHTML = '<p class="loading-message">Saved workouts unavailable. (Check Supabase table/policies for user_workouts.)</p>';
+    console.warn('Moveo: user_workouts error:', error);
+    return;
+  }
+  if (!data?.length) {
+    list.innerHTML = '';
+    empty?.classList.remove('hidden');
+    return;
+  }
+  empty?.classList.add('hidden');
+  const base = getBaseUrl();
+  list.innerHTML = data.map((w) => {
+    const ids = w.exercise_ids || (w.workout?.exercise_ids) || [];
+    const count = Array.isArray(ids) ? ids.length : 0;
+    return `
+      <article class="saved-exercise-item" role="listitem">
+        <div>
+          <div class="saved-exercise-name">${w.name || 'Workout'}</div>
+          <div class="saved-exercise-meta">${count} exercise(s) · ${w.goal || 'mixed'}</div>
+        </div>
+        <div class="workout-item-actions">
+          <a class="btn-secondary btn-link" href="${base}workouts.html">Open builder</a>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+async function loadWorkoutHistory(user) {
+  const list = document.getElementById('workoutHistoryList');
+  const empty = document.getElementById('noWorkoutHistory');
+  if (!list) return;
+  const sb = getSupabase();
+  if (!sb) return;
+  const { data, error } = await sb
+    .from('user_workout_sessions')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('ended_at', { ascending: false })
+    .limit(20);
+  if (error) {
+    list.innerHTML = '<p class="loading-message">Workout history unavailable. (Check Supabase table/policies for user_workout_sessions.)</p>';
+    console.warn('Moveo: user_workout_sessions error:', error);
+    return;
+  }
+  if (!data?.length) {
+    list.innerHTML = '';
+    empty?.classList.remove('hidden');
+    return;
+  }
+  empty?.classList.add('hidden');
+  list.innerHTML = data.map((s) => {
+    const mins = s.duration_seconds ? Math.round(s.duration_seconds / 60) : null;
+    const when = s.ended_at ? new Date(s.ended_at).toLocaleDateString() : '';
+    return `
+      <article class="saved-exercise-item" role="listitem">
+        <div>
+          <div class="saved-exercise-name">${s.title || 'Workout session'}</div>
+          <div class="saved-exercise-meta">${when}${mins ? ` · ${mins} min` : ''} · ${s.goal || 'mixed'}</div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
 
 async function initializeApp() {
   // Load exercises data

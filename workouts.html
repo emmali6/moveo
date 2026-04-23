@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=workout-runner-buttons-202604">
+    <link rel="stylesheet" href="css/styles.css?v=account-workouts-sync-202604">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme" data-page="workouts">
@@ -56,8 +56,10 @@
                         <div id="workoutList" class="workout-list" role="list" aria-label="Workout exercises"></div>
                         <div class="workout-actions">
                             <button type="button" class="btn-primary btn-link" id="startWorkoutBtn">Start workout</button>
+                            <button type="button" class="btn-secondary btn-link" id="saveWorkoutToAccountBtn">Save to account</button>
                             <button type="button" class="btn-secondary btn-link" id="clearWorkoutBtn">Clear workout</button>
                         </div>
+                        <p id="workoutSaveMsg" class="workout-help" aria-live="polite"></p>
                         <div id="workoutRunner" class="workout-runner hidden" aria-label="Workout runner">
                             <div class="runner-top">
                                 <h3 class="workout-subheading">Session</h3>
