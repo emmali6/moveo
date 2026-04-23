@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
-const EXERCISE_CATALOG_VERSION = '2026-04-23-3';
+const EXERCISE_CATALOG_VERSION = '2026-04-23-4';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -967,6 +967,22 @@ function renderExerciseDetail(exercise, options = {}) {
               ${exercise.breathingTips.map((c) => `<li>${c}</li>`).join('')}
             </ul>
           </div>` : ''}
+
+        ${shouldShowNoEquipmentAlternatives(exercise) ? `
+          <div class="cue-block">
+            <h3>No equipment alternatives</h3>
+            <ul class="cue-list">
+              ${(exercise.noEquipmentAlternatives || []).map((c) => `<li>${c}</li>`).join('')}
+            </ul>
+          </div>` : ''}
+
+        ${Array.isArray(exercise.limitedMobilityAlternatives) && exercise.limitedMobilityAlternatives.length ? `
+          <div class="cue-block">
+            <h3>Limited mobility alternatives</h3>
+            <ul class="cue-list">
+              ${exercise.limitedMobilityAlternatives.map((c) => `<li>${c}</li>`).join('')}
+            </ul>
+          </div>` : ''}
         
         <button 
           class="btn-primary" 
@@ -1020,6 +1036,13 @@ function renderExerciseDetail(exercise, options = {}) {
       video.play().catch(err => console.error('Video play error:', err));
     }
   }
+}
+
+function shouldShowNoEquipmentAlternatives(ex) {
+  const eq = (ex?.equipment || []).map((x) => String(x).toLowerCase());
+  const alreadyNoEquipment = eq.length === 1 && eq[0] === 'none';
+  if (alreadyNoEquipment) return false;
+  return Array.isArray(ex?.noEquipmentAlternatives) && ex.noEquipmentAlternatives.length > 0;
 }
 
 function difficultyRank(d) {

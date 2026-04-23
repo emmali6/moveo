@@ -13,6 +13,11 @@
     "constraints": ["knee-friendly", "apartment/no jumping"],
     "whatYouShouldFeel": ["Quads and glutes doing the work (not your knees).", "Core supporting you so your torso feels steady."],
     "breathingTips": ["Inhale on the way down.", "Exhale as you stand up and drive through your heels."],
+    "limitedMobilityAlternatives": [
+      "Box squat to a chair/bench (sit back, tap, stand)",
+      "Supported squat holding a countertop or sturdy object",
+      "Reduce range of motion (quarter squat) and build gradually"
+    ],
     "duration": 5,
     "previewVideo": "assets/media/preview_squat.mp4",
     "tips": [
@@ -44,6 +49,16 @@
     "constraints": ["low-back friendly"],
     "whatYouShouldFeel": ["Hamstrings and glutes loading during the hinge.", "Back feels braced and long (not pinchy in the low back)."],
     "breathingTips": ["Inhale and brace before you lift.", "Exhale gently as you stand tall, then reset your breath between reps."],
+    "noEquipmentAlternatives": [
+      "Hip hinge drill (hands on hips, push hips back, stand tall)",
+      "Good mornings (bodyweight hinge with neutral spine)",
+      "Glute bridge or single-leg glute bridge"
+    ],
+    "limitedMobilityAlternatives": [
+      "Romanian deadlift with a shorter range of motion (stop at mid-shin)",
+      "Elevate the weights/handles so you don’t have to reach as low",
+      "Use a support (rack/counter) for balance while you hinge"
+    ],
     "duration": 8,
     "previewVideo": "assets/media/preview_deadlift.mp4",
     "tips": [
@@ -75,6 +90,11 @@
     "constraints": ["apartment/no jumping", "wrist-safe"],
     "whatYouShouldFeel": ["Chest and triceps pushing (not your shoulders shrugging up).", "Core staying tight so your body moves as one piece."],
     "breathingTips": ["Inhale as you lower.", "Exhale as you press up."],
+    "limitedMobilityAlternatives": [
+      "Wall push-up (standing)",
+      "Incline push-up (hands on counter/bench)",
+      "Knee push-up (shorter lever)"
+    ],
     "duration": 5,
     "previewVideo": "assets/media/preview_pushup.mp4",
     "tips": [
@@ -107,6 +127,16 @@
     "constraints": ["apartment/no jumping"],
     "whatYouShouldFeel": ["Biceps working through the curl (not your shoulders).", "Elbows stay close to your sides."],
     "breathingTips": ["Exhale as you curl up.", "Inhale as you lower slowly."],
+    "noEquipmentAlternatives": [
+      "Towel curl isometric: stand on a towel and pull up against it",
+      "Backpack curl (load with books) if available",
+      "Slow tempo curls with very light objects (focus on control)"
+    ],
+    "limitedMobilityAlternatives": [
+      "Seated curls with back support",
+      "Partial range curls (top half only) and build range over time",
+      "One arm at a time with the other hand supporting the elbow"
+    ],
     "duration": 4,
     "previewVideo": "assets/media/preview_bicepcurl.mp4",
     "tips": [
@@ -139,6 +169,11 @@
     "constraints": ["knee-friendly", "apartment/no jumping"],
     "whatYouShouldFeel": ["Outer hip/glute working on the top side (not your low back).", "Pelvis staying stacked and steady."],
     "breathingTips": ["Inhale to set up.", "Exhale gently as you lift; inhale as you lower with control."],
+    "limitedMobilityAlternatives": [
+      "Clamshells (bent knees) with a small range of motion",
+      "Standing hip abduction holding a counter for support",
+      "Shorter holds at the top instead of full reps"
+    ],
     "duration": 4,
     "tips": [
       "Lie on your side with your bottom leg slightly bent for support",
@@ -180,6 +215,11 @@
     "constraints": ["knee-friendly", "apartment/no jumping"],
     "whatYouShouldFeel": ["Front leg glute and quad working (not your front knee collapsing inward).", "Core helping you stay tall and balanced."],
     "breathingTips": ["Inhale as you lower.", "Exhale as you push back up."],
+    "limitedMobilityAlternatives": [
+      "Static split squat with support (hold a wall/counter)",
+      "Reverse lunge with a small step (reduce depth)",
+      "Step-back taps (tap the toe back instead of full lunge)"
+    ],
     "duration": 6,
     "previewVideo": "assets/media/preview_lunge.mp4",
     "tips": [
@@ -212,6 +252,11 @@
     "constraints": ["knee-friendly", "low-back friendly", "apartment/no jumping"],
     "whatYouShouldFeel": ["Glutes squeezing at the top (not your low back taking over).", "Hamstrings helping, but glutes leading."],
     "breathingTips": ["Inhale at the bottom.", "Exhale as you lift and squeeze at the top."],
+    "limitedMobilityAlternatives": [
+      "Reduce range: lift only a few inches and focus on glute squeeze",
+      "Elevate shoulders on a couch/bench to make setup easier",
+      "Isometric glute squeeze holds (no lifting) to start"
+    ],
     "duration": 4,
     "previewVideo": "assets/media/preview_glutebridge.mp4",
     "tips": [
@@ -245,6 +290,11 @@
     "constraints": ["apartment/no jumping", "wrist-safe", "knee-friendly"],
     "whatYouShouldFeel": ["Abs and obliques doing the twist (not your neck pulling).", "Core stays controlled while legs move."],
     "breathingTips": ["Exhale on each crunch/twist.", "Inhale briefly as you switch sides—keep it smooth."],
+    "limitedMobilityAlternatives": [
+      "Heel taps (keep feet on the floor, smaller range)",
+      "Dead bug (slow, controlled) if comfortable",
+      "Slow bicycle with feet higher and a smaller twist"
+    ],
     "duration": 5,
     "tips": [
       "Lie on your back with hands lightly supporting behind your head (don’t pull on your neck)",
@@ -286,6 +336,16 @@
     "constraints": ["wrist-safe"],
     "whatYouShouldFeel": ["Upper back/lats pulling you up (not just your biceps).", "Shoulders stay down away from your ears."],
     "breathingTips": ["Inhale at the bottom hang.", "Exhale as you pull up; inhale as you lower with control."],
+    "noEquipmentAlternatives": [
+      "Doorway row using a sturdy towel/strap (only if safe and stable)",
+      "Prone Y-T-W raises (bodyweight upper-back work)",
+      "Isometric lat pull-down: pull elbows to ribs against a towel"
+    ],
+    "limitedMobilityAlternatives": [
+      "Assisted pull-up with a band or machine (shorter range)",
+      "Scapular pulls (small motion) to build control",
+      "Negative-only reps (slow lower) with assistance"
+    ],
     "duration": 8,
     "previewVideo": "assets/media/preview_pullup.mp4",
     "tips": [
@@ -325,6 +385,11 @@
     "constraints": ["apartment/no jumping", "wrist-safe", "knee-friendly"],
     "whatYouShouldFeel": ["Front abs working (not your neck).", "Ribs gently pulling down as you crunch."],
     "breathingTips": ["Exhale as you crunch up.", "Inhale as you lower with control."],
+    "limitedMobilityAlternatives": [
+      "Hands-on-thighs crunch (slide hands up thighs with a smaller lift)",
+      "Partial crunch range (just lift shoulder blades slightly)",
+      "Seated abdominal brace: sit tall and gently tighten your core for 10–20s"
+    ],
     "duration": 4,
     "tips": [
       "Lie on your back with knees bent and feet flat on the floor",
