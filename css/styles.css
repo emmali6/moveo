@@ -492,6 +492,97 @@ button:focus-visible {
   box-shadow: 0 0 0 3px rgba(255, 230, 109, 0.35);
 }
 
+/* Filter panel (beginner-friendly, reduces endless scrolling) */
+.filter-panel {
+  margin: 0.75rem 0 1.25rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.filter-summary {
+  cursor: pointer;
+  font-family: var(--font-heading);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  list-style: none;
+}
+
+.filter-summary::-webkit-details-marker {
+  display: none;
+}
+
+.filter-panel[open] .filter-summary {
+  margin-bottom: 0.75rem;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+.filter-field-wide {
+  grid-column: 1 / -1;
+}
+
+.filter-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.4rem;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--dark);
+  font-family: var(--font-body);
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.95rem;
+}
+
+.chip input {
+  accent-color: var(--accent);
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.pagination-row {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0 2rem;
+}
+
 /* Daily Exercise Card - fitness card style */
 .daily-exercise {
   background: white;
@@ -801,6 +892,76 @@ button:focus-visible {
 .mod-list li {
   padding: 0.35rem 0;
   color: var(--text-primary);
+}
+
+/* Suggestions */
+.suggestions {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.suggestions-heading {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.suggest-row {
+  margin-top: 1rem;
+}
+
+.suggest-row h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+  color: var(--dark);
+}
+
+.suggest-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.suggest-card {
+  display: block;
+  text-decoration: none;
+  color: var(--dark);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 1rem;
+  background: #f7fafc;
+  transition: var(--transition);
+}
+
+.suggest-card:hover,
+.suggest-card:focus {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(255, 107, 157, 0.45);
+}
+
+.suggest-name {
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.35rem;
+}
+
+.suggest-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.suggest-small {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+@media (min-width: 768px) {
+  .suggest-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .tips-list {
@@ -1282,6 +1443,10 @@ button:focus-visible {
 @media (min-width: 768px) {
   .container {
     padding: 2rem;
+  }
+
+  .filter-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .exercises-grid {

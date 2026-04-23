@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
-const EXERCISE_CATALOG_VERSION = '2026-04-01';
+const EXERCISE_CATALOG_VERSION = '2026-04-23';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -84,6 +84,8 @@ let currentExercise = null;
 let animationSpeed = 1.0;
 let isPlaying = false;
 let showMuscleHighlight = false;
+let visibleHomeCount = 6;
+let visibleExercisesCount = 12;
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
@@ -126,6 +128,7 @@ async function initExercisesPage() {
   loadBookmarks();
   renderExercisesPageGrid();
   setupExerciseSearch();
+  setupPaginationButtons();
 }
 
 async function initAccountPage() {
@@ -354,9 +357,56 @@ async function initializeApp() {
   
   // Render exercise gallery
   renderExerciseGallery();
+  setupPaginationButtons();
   
   // Announce page load to screen readers
   announceToScreenReader('Moveo loaded. Use navigation to explore exercises.');
+}
+
+function resetPagination() {
+  visibleHomeCount = 6;
+  visibleExercisesCount = 12;
+  updateShowMoreVisibility();
+}
+
+function setupPaginationButtons() {
+  const homeBtn = document.getElementById('showMoreHomeBtn');
+  if (homeBtn && homeBtn.dataset.bound !== 'true') {
+    homeBtn.dataset.bound = 'true';
+    homeBtn.addEventListener('click', () => {
+      visibleHomeCount += 6;
+      renderExerciseGallery();
+      updateShowMoreVisibility();
+      homeBtn.focus();
+    });
+  }
+
+  const exBtn = document.getElementById('showMoreExercisesBtn');
+  if (exBtn && exBtn.dataset.bound !== 'true') {
+    exBtn.dataset.bound = 'true';
+    exBtn.addEventListener('click', () => {
+      visibleExercisesCount += 12;
+      renderExercisesPageGrid();
+      updateShowMoreVisibility();
+      exBtn.focus();
+    });
+  }
+
+  updateShowMoreVisibility();
+}
+
+function updateShowMoreVisibility() {
+  const list = getFilteredExercises();
+  const homeBtn = document.getElementById('showMoreHomeBtn');
+  if (homeBtn) {
+    const shouldShow = document.getElementById('exercisesGrid') && list.length > visibleHomeCount;
+    homeBtn.style.display = shouldShow ? 'inline-block' : 'none';
+  }
+  const exBtn = document.getElementById('showMoreExercisesBtn');
+  if (exBtn) {
+    const shouldShow = document.getElementById('exercisesPageGrid') && list.length > visibleExercisesCount;
+    exBtn.style.display = shouldShow ? 'inline-block' : 'none';
+  }
 }
 
 // Base URL for relative paths (works from file, local server, or subdirectory like GitHub Pages)
@@ -529,15 +579,77 @@ function setupEventListeners() {
 function getFilteredExercises() {
   const input = document.getElementById('exerciseSearch');
   const q = (input?.value || '').trim().toLowerCase();
-  if (!q) return exercises;
+  const filters = getActiveFilters();
   const words = q.split(/\s+/).filter(Boolean);
   return exercises.filter((ex) => {
-    const muscle = (ex.muscleGroups || []).join(' ');
-    const hay = [ex.name, ex.description, ex.category, ex.difficulty, muscle]
+    if (!matchesFilters(ex, filters)) return false;
+    if (!words.length) return true;
+    const muscle = [
+      ...(ex.muscleGroups || []),
+      ...(ex.primaryMuscles || []),
+      ...(ex.secondaryMuscles || []),
+    ].join(' ');
+    const extra = [
+      (ex.goals || []).join(' '),
+      (ex.equipment || []).join(' '),
+      (ex.constraints || []).join(' ')
+    ].join(' ');
+    const hay = [ex.name, ex.description, ex.category, ex.difficulty, muscle, extra]
       .join(' ')
       .toLowerCase();
     return words.every((w) => hay.includes(w));
   });
+}
+
+function normalizeFilterValue(v) {
+  return String(v || '').trim().toLowerCase();
+}
+
+function getActiveFilters() {
+  const level = normalizeFilterValue(document.getElementById('filterLevel')?.value);
+  const goal = normalizeFilterValue(document.getElementById('filterGoal')?.value);
+  const equipment = normalizeFilterValue(document.getElementById('filterEquipment')?.value);
+  const muscle = normalizeFilterValue(document.getElementById('filterMuscle')?.value);
+  const constraints = Array.from(document.querySelectorAll('.filter-constraint:checked'))
+    .map((el) => normalizeFilterValue(el.value));
+  return { level, goal, equipment, muscle, constraints };
+}
+
+function exerciseMuscleBuckets(ex) {
+  const primary = (ex.primaryMuscles || []).map(normalizeFilterValue);
+  const secondary = (ex.secondaryMuscles || []).map(normalizeFilterValue);
+  const legacy = (ex.muscleGroups || []).map(normalizeFilterValue);
+  return { primary, secondary, legacy };
+}
+
+function matchesFilters(ex, filters) {
+  if (!filters) return true;
+
+  if (filters.level && normalizeFilterValue(ex.difficulty) !== filters.level) return false;
+
+  if (filters.goal) {
+    const goals = (ex.goals || []).map(normalizeFilterValue);
+    if (!goals.includes(filters.goal)) return false;
+  }
+
+  if (filters.equipment) {
+    const eq = (ex.equipment || []).map(normalizeFilterValue);
+    if (!eq.includes(filters.equipment)) return false;
+  }
+
+  if (filters.muscle) {
+    const { primary, secondary, legacy } = exerciseMuscleBuckets(ex);
+    const bucketHit = primary.includes(filters.muscle) || secondary.includes(filters.muscle) || legacy.includes(filters.muscle);
+    if (!bucketHit) return false;
+  }
+
+  if (filters.constraints?.length) {
+    const cs = (ex.constraints || []).map(normalizeFilterValue);
+    const ok = filters.constraints.every((c) => cs.includes(c));
+    if (!ok) return false;
+  }
+
+  return true;
 }
 
 function setupExerciseSearch() {
@@ -545,11 +657,42 @@ function setupExerciseSearch() {
   if (!input || input.dataset.bound === 'true') return;
   input.dataset.bound = 'true';
   const refresh = () => {
+    resetPagination();
     if (document.getElementById('exercisesGrid')) renderExerciseGallery();
     if (document.getElementById('exercisesPageGrid')) renderExercisesPageGrid();
   };
   input.addEventListener('input', refresh);
   input.addEventListener('search', refresh);
+  bindFilterControls(refresh);
+}
+
+function bindFilterControls(onChange) {
+  const ids = ['filterLevel', 'filterGoal', 'filterEquipment', 'filterMuscle'];
+  ids.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el || el.dataset.bound === 'true') return;
+    el.dataset.bound = 'true';
+    el.addEventListener('change', onChange);
+  });
+
+  document.querySelectorAll('.filter-constraint').forEach((cb) => {
+    if (cb.dataset.bound === 'true') return;
+    cb.dataset.bound = 'true';
+    cb.addEventListener('change', onChange);
+  });
+
+  const clear = document.getElementById('clearFiltersBtn');
+  if (clear && clear.dataset.bound !== 'true') {
+    clear.dataset.bound = 'true';
+    clear.addEventListener('click', () => {
+      ids.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      document.querySelectorAll('.filter-constraint:checked').forEach((cb) => { cb.checked = false; });
+      onChange();
+    });
+  }
 }
 
 function renderExercisesPageGrid() {
@@ -564,9 +707,10 @@ function renderExercisesPageGrid() {
     grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No exercises match your search. Try different words.</p>';
     return;
   }
-  grid.innerHTML = list.map((ex) => createExerciseCard(ex)).join('');
+  const view = list.slice(0, visibleExercisesCount);
+  grid.innerHTML = view.map((ex) => createExerciseCard(ex)).join('');
   grid.querySelectorAll('.exercise-card').forEach((card, index) => {
-    const exercise = list[index];
+    const exercise = view[index];
     const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
     card.addEventListener('click', () => { window.location.href = href; });
     card.addEventListener('keydown', (e) => {
@@ -576,6 +720,7 @@ function renderExercisesPageGrid() {
       }
     });
   });
+  updateShowMoreVisibility();
 }
 
 // Handle keyboard navigation
@@ -613,11 +758,12 @@ function renderExerciseGallery() {
     return;
   }
   
-  gallery.innerHTML = list.map(exercise => createExerciseCard(exercise)).join('');
+  const view = list.slice(0, visibleHomeCount);
+  gallery.innerHTML = view.map(exercise => createExerciseCard(exercise)).join('');
   
   // Add click handlers - navigate to exercise page
   gallery.querySelectorAll('.exercise-card').forEach((card, index) => {
-    const exercise = list[index];
+    const exercise = view[index];
     const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
     card.setAttribute('data-href', href);
     card.addEventListener('click', () => { window.location.href = href; });
@@ -628,6 +774,7 @@ function renderExerciseGallery() {
       }
     });
   });
+  updateShowMoreVisibility();
 }
 
 // Create exercise card HTML
@@ -813,6 +960,8 @@ function renderExerciseDetail(exercise, options = {}) {
           Show Form Tips
         </button>
       </div>
+
+      ${renderSmartSuggestions(exercise)}
       
       <div id="tipsOverlay" class="tips-overlay hidden" role="region" aria-labelledby="tipsHeading">
         <h3 id="tipsHeading">Form Tips</h3>
@@ -855,6 +1004,83 @@ function renderExerciseDetail(exercise, options = {}) {
       video.play().catch(err => console.error('Video play error:', err));
     }
   }
+}
+
+function difficultyRank(d) {
+  const k = String(d || '').toLowerCase();
+  if (k === 'beginner') return 1;
+  if (k === 'intermediate') return 2;
+  if (k === 'advanced') return 3;
+  return 2;
+}
+
+function sharedCount(a, b) {
+  const setB = new Set((b || []).map((x) => String(x).toLowerCase()));
+  let n = 0;
+  (a || []).forEach((x) => { if (setB.has(String(x).toLowerCase())) n += 1; });
+  return n;
+}
+
+function exerciseSuggestScore(base, cand) {
+  const primary = sharedCount(base.primaryMuscles || base.muscleGroups, cand.primaryMuscles || cand.muscleGroups);
+  const secondary = sharedCount(base.secondaryMuscles || [], cand.secondaryMuscles || []);
+  const goals = sharedCount(base.goals || [], cand.goals || []);
+  return primary * 3 + secondary + goals * 2;
+}
+
+function renderSuggestionRow(title, list) {
+  if (!list?.length) return '';
+  const base = getBaseUrl();
+  return `
+    <div class="suggest-row">
+      <h3>${title}</h3>
+      <div class="suggest-grid" role="list">
+        ${list.map((ex) => `
+          <a class="suggest-card" role="listitem" href="${base}exercise.html?id=${encodeURIComponent(ex.id)}">
+            <div class="suggest-name">${ex.name}</div>
+            <div class="suggest-meta">
+              <span class="difficulty-badge ${ex.difficulty}">${ex.difficulty}</span>
+              <span class="suggest-small">${(ex.primaryMuscles || ex.muscleGroups || []).slice(0, 2).join(' · ')}</span>
+            </div>
+          </a>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderSmartSuggestions(exercise) {
+  if (!Array.isArray(exercises) || exercises.length < 2) return '';
+  const baseRank = difficultyRank(exercise.difficulty);
+  const pool = exercises.filter((e) => e && e.id && e.id !== exercise.id);
+
+  const scored = pool
+    .map((cand) => ({ cand, score: exerciseSuggestScore(exercise, cand) }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  const similar = scored.slice(0, 3).map((x) => x.cand);
+
+  const regressions = scored
+    .filter((x) => difficultyRank(x.cand.difficulty) < baseRank)
+    .slice(0, 3)
+    .map((x) => x.cand);
+
+  const progressions = scored
+    .filter((x) => difficultyRank(x.cand.difficulty) > baseRank)
+    .slice(0, 3)
+    .map((x) => x.cand);
+
+  if (!similar.length && !regressions.length && !progressions.length) return '';
+
+  return `
+    <section class="suggestions" aria-label="Suggested exercises">
+      <h2 class="suggestions-heading">If you like this, try…</h2>
+      ${renderSuggestionRow('Similar moves', similar)}
+      ${renderSuggestionRow('Make it easier', regressions)}
+      ${renderSuggestionRow('Level up', progressions)}
+    </section>
+  `;
 }
 
 // Toggle play/pause

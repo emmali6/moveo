@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=muscle-focus-202602">
+    <link rel="stylesheet" href="css/styles.css?v=filters-suggestions-202604">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme" data-page="exercises">
@@ -40,8 +40,74 @@
                     <input type="search" id="exerciseSearch" class="exercise-search-input" placeholder="Search by name, muscle, category, or difficulty…" autocomplete="off" aria-describedby="search-hint">
                     <p id="search-hint" class="sr-only">Filters the list below as you type.</p>
                 </div>
+                
+                <details class="filter-panel" id="exerciseFilters">
+                    <summary class="filter-summary">Filters</summary>
+                    <div class="filter-grid" role="group" aria-label="Exercise filters">
+                        <div class="filter-field">
+                            <label for="filterLevel" class="filter-label">Skill level</label>
+                            <select id="filterLevel" class="filter-select">
+                                <option value="">All</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label for="filterGoal" class="filter-label">Goal</label>
+                            <select id="filterGoal" class="filter-select">
+                                <option value="">All</option>
+                                <option value="strength">Strength</option>
+                                <option value="hypertrophy">Hypertrophy</option>
+                                <option value="mobility">Mobility</option>
+                                <option value="rehab">Rehab</option>
+                                <option value="endurance">Endurance</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label for="filterEquipment" class="filter-label">Equipment</label>
+                            <select id="filterEquipment" class="filter-select">
+                                <option value="">All</option>
+                                <option value="none">None</option>
+                                <option value="dumbbells">Dumbbells</option>
+                                <option value="resistance bands">Resistance bands</option>
+                                <option value="gym machines">Gym machines</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label for="filterMuscle" class="filter-label">Muscle group</label>
+                            <select id="filterMuscle" class="filter-select">
+                                <option value="">All</option>
+                                <option value="core">Core</option>
+                                <option value="glutes">Glutes</option>
+                                <option value="quadriceps">Quadriceps</option>
+                                <option value="hamstrings">Hamstrings</option>
+                                <option value="back">Back</option>
+                                <option value="chest">Chest</option>
+                                <option value="shoulders">Shoulders</option>
+                                <option value="arms">Arms</option>
+                                <option value="hips">Hips</option>
+                            </select>
+                        </div>
+                        <div class="filter-field filter-field-wide">
+                            <span class="filter-label" id="filterConstraintsLabel">Constraints</span>
+                            <div class="filter-chips" role="group" aria-labelledby="filterConstraintsLabel">
+                                <label class="chip"><input type="checkbox" value="knee-friendly" class="filter-constraint"> Knee-friendly</label>
+                                <label class="chip"><input type="checkbox" value="apartment/no jumping" class="filter-constraint"> Apartment / no jumping</label>
+                                <label class="chip"><input type="checkbox" value="wrist-safe" class="filter-constraint"> Wrist-safe</label>
+                                <label class="chip"><input type="checkbox" value="low-back friendly" class="filter-constraint"> Low-back friendly</label>
+                            </div>
+                        </div>
+                        <div class="filter-actions">
+                            <button type="button" class="btn-secondary btn-link filter-clear" id="clearFiltersBtn">Clear filters</button>
+                        </div>
+                    </div>
+                </details>
                 <div id="exercisesPageGrid" class="exercises-grid" role="list" aria-label="Exercise library">
                     <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading exercises...</p>
+                </div>
+                <div class="pagination-row">
+                    <button type="button" class="btn-secondary btn-link" id="showMoreExercisesBtn">Show more</button>
                 </div>
             </div>
         </section>
