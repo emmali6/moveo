@@ -577,6 +577,22 @@ button:focus-visible {
   gap: 0.75rem;
 }
 
+/* Make Clear filters visible on dark background */
+.filter-clear.btn-secondary.btn-link {
+  background: var(--accent);
+  color: var(--dark);
+  border: 2px solid transparent;
+  font-weight: 800;
+  border-radius: 999px;
+}
+
+.filter-clear.btn-secondary.btn-link:hover,
+.filter-clear.btn-secondary.btn-link:focus {
+  background: #ffd84d;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
 .pagination-row {
   display: flex;
   justify-content: center;
@@ -1754,7 +1770,7 @@ button:focus-visible {
   }
 
   .filter-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .workouts-layout {

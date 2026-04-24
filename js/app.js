@@ -1191,9 +1191,10 @@ function getActiveFilters() {
   const goal = normalizeFilterValue(document.getElementById('filterGoal')?.value);
   const equipment = normalizeFilterValue(document.getElementById('filterEquipment')?.value);
   const muscle = normalizeFilterValue(document.getElementById('filterMuscle')?.value);
+  const alpha = String(document.getElementById('filterAlpha')?.value || '').trim().toUpperCase();
   const constraints = Array.from(document.querySelectorAll('.filter-constraint:checked'))
     .map((el) => normalizeFilterValue(el.value));
-  return { level, goal, equipment, muscle, constraints };
+  return { level, goal, equipment, muscle, alpha, constraints };
 }
 
 function exerciseMuscleBuckets(ex) {
@@ -1205,6 +1206,12 @@ function exerciseMuscleBuckets(ex) {
 
 function matchesFilters(ex, filters) {
   if (!filters) return true;
+
+  if (filters.alpha) {
+    const n = String(ex?.name || '').trim();
+    const first = n ? n[0].toUpperCase() : '';
+    if (first !== filters.alpha) return false;
+  }
 
   if (filters.level && normalizeFilterValue(ex.difficulty) !== filters.level) return false;
 
@@ -1248,7 +1255,7 @@ function setupExerciseSearch() {
 }
 
 function bindFilterControls(onChange) {
-  const ids = ['filterLevel', 'filterGoal', 'filterEquipment', 'filterMuscle'];
+  const ids = ['filterLevel', 'filterGoal', 'filterEquipment', 'filterMuscle', 'filterAlpha'];
   ids.forEach((id) => {
     const el = document.getElementById(id);
     if (!el || el.dataset.bound === 'true') return;
