@@ -690,11 +690,14 @@ button:focus-visible {
 }
 
 .workout-actions {
-  display: flex;
-  justify-content: flex-end;
   margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 0.75rem;
-  flex-wrap: wrap;
+}
+
+.workout-actions .btn-link {
+  width: 100%;
 }
 
 .workout-actions #saveWorkoutToAccountBtn,
@@ -729,6 +732,18 @@ button:focus-visible {
   border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 768px) {
+  .workout-actions {
+    grid-template-columns: auto auto auto;
+    align-items: center;
+    justify-content: end;
+  }
+
+  .workout-actions .btn-link {
+    width: auto;
+  }
 }
 
 .workout-controls {

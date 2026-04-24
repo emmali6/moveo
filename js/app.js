@@ -445,7 +445,7 @@ function renderRunnerExercises() {
 
 async function loadRoutines() {
   const base = getBaseUrl();
-  const url = base + 'data/routines.json?v=2026-04-23';
+  const url = base + 'data/routines.json?v=2026-04-24';
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('Failed routines');

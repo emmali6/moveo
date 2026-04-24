@@ -8,9 +8,9 @@
     "constraints": ["apartment/no jumping"],
     "description": "A balanced session: mobility flow to warm up, then simple bodyweight strength and core.",
     "blocks": [
-      { "title": "Warm-up (10 min)", "items": ["bodyweight-squat", "side-lying-leg-raise"] },
-      { "title": "Strength (25 min)", "items": ["push-up", "lunge", "glute-bridge"] },
-      { "title": "Core finisher (10 min)", "items": ["crunch", "bicycle-crunch"] }
+      { "title": "Warm-up (10 min)", "items": ["inchworm", "90-90-hamstring", "all-fours-quad-stretch"] },
+      { "title": "Strength (25 min)", "items": ["push-up", "bodyweight-walking-lunge", "glute-bridge"] },
+      { "title": "Core finisher (10 min)", "items": ["plank", "3-4-sit-up"] }
     ]
   },
   {
@@ -22,9 +22,9 @@
     "constraints": ["apartment/no jumping"],
     "description": "Beginner-friendly full-body calisthenics with simple progressions.",
     "blocks": [
-      { "title": "Warm-up (5 min)", "items": ["glute-bridge"] },
-      { "title": "Main work (20 min)", "items": ["push-up", "bodyweight-squat", "lunge"] },
-      { "title": "Core (5 min)", "items": ["crunch"] }
+      { "title": "Warm-up (5 min)", "items": ["inchworm"] },
+      { "title": "Main work (20 min)", "items": ["push-up", "bodyweight-squat", "bodyweight-walking-lunge"] },
+      { "title": "Core (5 min)", "items": ["plank"] }
     ]
   },
   {
@@ -36,8 +36,35 @@
     "constraints": ["knee-friendly", "low-back friendly", "apartment/no jumping"],
     "description": "Low-intensity routine focused on control, stability, and joint-friendly movement.",
     "blocks": [
-      { "title": "Activation (10 min)", "items": ["side-lying-leg-raise", "glute-bridge"] },
-      { "title": "Core control (10 min)", "items": ["crunch"] }
+      { "title": "Activation (10 min)", "items": ["90-90-hamstring", "glute-bridge", "all-fours-quad-stretch"] },
+      { "title": "Core control (10 min)", "items": ["dead-bug"] }
+    ]
+  },
+  {
+    "id": "full-body-burner-25",
+    "name": "Full Body Burner (25 min)",
+    "minutes": 25,
+    "goals": ["endurance", "strength"],
+    "equipment": ["none"],
+    "constraints": ["apartment/no jumping"],
+    "description": "A short, punchy full-body circuit using moves from the full exercise library.",
+    "blocks": [
+      { "title": "Warm-up (5 min)", "items": ["inchworm"] },
+      { "title": "Circuit (15 min)", "items": ["chair-squat", "mountain-climbers", "plank"] },
+      { "title": "Core finisher (5 min)", "items": ["3-4-sit-up"] }
+    ]
+  },
+  {
+    "id": "core-mobility-reset-15",
+    "name": "Core + Mobility Reset (15 min)",
+    "minutes": 15,
+    "goals": ["mobility", "strength"],
+    "equipment": ["none"],
+    "constraints": ["low-back friendly", "apartment/no jumping"],
+    "description": "Decompress your hips/hamstrings, then lock in core control with slow, clean reps.",
+    "blocks": [
+      { "title": "Mobility (8 min)", "items": ["90-90-hamstring", "all-fours-quad-stretch"] },
+      { "title": "Core control (7 min)", "items": ["dead-bug", "plank"] }
     ]
   }
 ]
