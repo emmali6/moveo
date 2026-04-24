@@ -697,6 +697,40 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
+.workout-actions #saveWorkoutToAccountBtn,
+.workout-actions #clearWorkoutBtn {
+  border-radius: 999px;
+  padding: 0.85rem 1.1rem;
+  font-weight: 800;
+  border: 2px solid transparent;
+}
+
+.workout-actions #saveWorkoutToAccountBtn {
+  background: var(--accent);
+  color: var(--dark);
+}
+
+.workout-actions #saveWorkoutToAccountBtn:hover,
+.workout-actions #saveWorkoutToAccountBtn:focus {
+  background: #ffd84d;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.workout-actions #clearWorkoutBtn {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.workout-actions #clearWorkoutBtn:hover,
+.workout-actions #clearWorkoutBtn:focus {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
 .workout-controls {
   display: grid;
   grid-template-columns: 1fr;
