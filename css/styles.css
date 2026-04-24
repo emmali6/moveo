@@ -572,9 +572,15 @@ button:focus-visible {
 }
 
 .filter-actions {
+  grid-column: 1 / -1;
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  align-items: center;
   gap: 0.75rem;
+  margin-top: 0.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 /* Make Clear filters visible on dark background */
