@@ -1269,6 +1269,8 @@ function setupEventListeners() {
   document.addEventListener('keydown', handleKeyboardNavigation);
 }
 
+let lastSearchNotFoundNotice = '';
+
 /** Filter exercises by search box (name, description, category, difficulty, muscles) */
 function getFilteredExercises() {
   const input = document.getElementById('exerciseSearch');
@@ -1294,14 +1296,39 @@ function getFilteredExercises() {
     return words.every((w) => hay.includes(w));
   });
 
-  // Always sort alphabetically for easier browsing (especially for beginners).
-  return filtered.slice().sort((a, b) => {
+  const sortAlpha = (a, b) => {
     const an = String(a?.name || '').toLowerCase();
     const bn = String(b?.name || '').toLowerCase();
     const byName = an.localeCompare(bn);
     if (byName) return byName;
     return String(a?.id || '').localeCompare(String(b?.id || ''));
-  });
+  };
+
+  // When searching, show exact match(es) first, then close name matches.
+  if (q) {
+    const qNameKey = nameKeyForMatch(q);
+    const qId = q.toLowerCase();
+    const score = (ex) => {
+      const id = String(ex?.id || '').toLowerCase();
+      const name = String(ex?.name || '').toLowerCase();
+      const nameKey = nameKeyForMatch(ex?.name || '');
+      if (id && id === qId) return 0;
+      if (qNameKey && nameKey && nameKey === qNameKey) return 0;
+      if (name && name.startsWith(qId)) return 1;
+      if (name && name.includes(qId)) return 2;
+      return 3;
+    };
+
+    return filtered.slice().sort((a, b) => {
+      const sa = score(a);
+      const sb = score(b);
+      if (sa !== sb) return sa - sb;
+      return sortAlpha(a, b);
+    });
+  }
+
+  // No search term: keep alphabetical browsing.
+  return filtered.slice().sort(sortAlpha);
 }
 
 function normalizeFilterValue(v) {
@@ -1366,13 +1393,38 @@ function setupExerciseSearch() {
   const input = document.getElementById('exerciseSearch');
   if (!input || input.dataset.bound === 'true') return;
   input.dataset.bound = 'true';
+  const maybeShowNotFoundNotice = () => {
+    const raw = (input.value || '').trim();
+    const q = raw.toLowerCase();
+    if (!q) return;
+    const list = getFilteredExercises();
+    const qKey = nameKeyForMatch(raw);
+    const exact = list.some((ex) => {
+      const id = String(ex?.id || '').toLowerCase();
+      const nameKey = nameKeyForMatch(ex?.name || '');
+      return (id && id === q) || (qKey && nameKey && nameKey === qKey);
+    });
+    if (exact) return;
+    if (lastSearchNotFoundNotice === q) return;
+    lastSearchNotFoundNotice = q;
+    showError(`“${raw}” isn’t in the library yet — but it could be added soon.`);
+  };
   const refresh = () => {
     resetPagination();
     if (document.getElementById('exercisesGrid')) renderExerciseGallery();
     if (document.getElementById('exercisesPageGrid')) renderExercisesPageGrid();
   };
   input.addEventListener('input', refresh);
-  input.addEventListener('search', refresh);
+  input.addEventListener('search', () => {
+    refresh();
+    maybeShowNotFoundNotice();
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      // Let the browser fire 'search' if it will, but also show feedback immediately.
+      setTimeout(() => maybeShowNotFoundNotice(), 0);
+    }
+  });
   bindFilterControls(refresh);
 }
 
