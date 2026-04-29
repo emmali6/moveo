@@ -1208,7 +1208,13 @@ async function loadExercises() {
       if (error) {
         console.warn('Moveo: Supabase exercises table error (check RLS allows SELECT for anon):', error.message, error);
       } else if (rows?.length) {
-        exercises = mergeSupabaseVideosIntoExercises(mergedLocal, rows, sb);
+        exercises = mergeSupabaseVideosIntoExercises(mergedLocal, rows, sb).map((ex) => {
+          const hasExplicit = Array.isArray(ex?.constraints) && ex.constraints.length > 0;
+          return {
+            ...ex,
+            inferredConstraints: hasExplicit ? [] : inferConstraintsForExercise(ex),
+          };
+        });
         const withVideo = exercises.filter((e) => e.previewVideo && /^https?:\/\//i.test(e.previewVideo)).length;
         console.info('Moveo: merged', rows.length, 'Supabase exercise row(s);', withVideo, 'exercise(s) now have https video URLs.');
         return;
@@ -1222,7 +1228,13 @@ async function loadExercises() {
     console.warn('Moveo: Supabase client not initialized — videos from Storage will not load. Ensure @supabase/supabase-js loads before app.js.');
   }
 
-  exercises = mergedLocal;
+  exercises = mergedLocal.map((ex) => {
+    const hasExplicit = Array.isArray(ex?.constraints) && ex.constraints.length > 0;
+    return {
+      ...ex,
+      inferredConstraints: hasExplicit ? [] : inferConstraintsForExercise(ex),
+    };
+  });
 }
 
 // Load bookmarks from localStorage
@@ -1335,6 +1347,74 @@ function normalizeFilterValue(v) {
   return String(v || '').trim().toLowerCase();
 }
 
+function getExerciseConstraintTags(ex) {
+  const raw = Array.isArray(ex?.constraints) ? ex.constraints : [];
+  const inferred = Array.isArray(ex?.inferredConstraints) ? ex.inferredConstraints : [];
+  return [...raw, ...inferred].map(normalizeFilterValue).filter(Boolean);
+}
+
+function inferConstraintsForExercise(ex) {
+  const name = String(ex?.name || '').toLowerCase();
+  const desc = String(ex?.description || '').toLowerCase();
+  const id = String(ex?.id || '').toLowerCase();
+  const hay = `${name} ${desc} ${id}`;
+  const equipment = (Array.isArray(ex?.equipment) ? ex.equipment : []).map(normalizeFilterValue);
+
+  const tags = [];
+
+  // Apartment / no jumping: allow unless explicitly plyometric/jumping.
+  const isJumping =
+    /\bjump(ing|s)?\b/.test(hay) ||
+    /\bplyo(metric)?\b/.test(hay) ||
+    /\bburpee(s)?\b/.test(hay) ||
+    /\bbox jump(s)?\b/.test(hay) ||
+    /\btuck jump(s)?\b/.test(hay) ||
+    /\bjump squat(s)?\b/.test(hay);
+  if (!isJumping) tags.push('apartment/no jumping');
+
+  // Knee-friendly: exclude obvious knee-dominant patterns.
+  const kneeHeavy =
+    /\bsquat(s)?\b/.test(hay) ||
+    /\blunge(s)?\b/.test(hay) ||
+    /\bstep[- ]?up(s)?\b/.test(hay) ||
+    /\bpistol\b/.test(hay) ||
+    /\bsplit squat(s)?\b/.test(hay) ||
+    /\bleg press\b/.test(hay) ||
+    isJumping;
+  if (!kneeHeavy) tags.push('knee-friendly');
+
+  // Wrist-safe: exclude common wrist-loading floor/press patterns.
+  const wristHeavy =
+    /\bpush[- ]?up(s)?\b/.test(hay) ||
+    /\bplank(s)?\b/.test(hay) ||
+    /\bhandstand\b/.test(hay) ||
+    /\bmountain climber(s)?\b/.test(hay) ||
+    /\bdip(s)?\b/.test(hay) ||
+    /\bpress\b/.test(hay) ||
+    /\bbench press\b/.test(hay) ||
+    /\bclean\b/.test(hay) ||
+    /\bsnatch\b/.test(hay);
+  if (!wristHeavy) tags.push('wrist-safe');
+
+  // Low-back friendly: exclude obvious hinge/heavy spinal loading patterns.
+  const lowBackHeavy =
+    /\bdeadlift(s)?\b/.test(hay) ||
+    /\bgood morning(s)?\b/.test(hay) ||
+    /\bback extension(s)?\b/.test(hay) ||
+    /\bhyperextension\b/.test(hay) ||
+    /\bkettlebell swing(s)?\b/.test(hay) ||
+    /\brow(s)?\b/.test(hay);
+  if (!lowBackHeavy) tags.push('low-back friendly');
+
+  // If this is clearly weighted, be a bit more conservative about "friendly" tags.
+  const isWeighted = equipment.some((e) => ['barbell', 'dumbbell', 'kettlebell', 'machine', 'cable'].includes(e));
+  if (isWeighted) {
+    return tags.filter((t) => t !== 'knee-friendly' && t !== 'low-back friendly');
+  }
+
+  return tags;
+}
+
 function getActiveFilters() {
   const level = normalizeFilterValue(document.getElementById('filterLevel')?.value);
   const goal = normalizeFilterValue(document.getElementById('filterGoal')?.value);
@@ -1381,7 +1461,7 @@ function matchesFilters(ex, filters) {
   }
 
   if (filters.constraints?.length) {
-    const cs = (ex.constraints || []).map(normalizeFilterValue);
+    const cs = getExerciseConstraintTags(ex);
     const ok = filters.constraints.every((c) => cs.includes(c));
     if (!ok) return false;
   }
