@@ -974,9 +974,46 @@ async function initializeApp() {
 }
 
 function resetPagination() {
-  visibleHomeCount = 6;
-  visibleExercisesCount = 12;
+  const input = document.getElementById('exerciseSearch');
+  const q = (input?.value || '').trim();
+  const f = getActiveFilters();
+  const anyFilters =
+    !!q ||
+    !!f.level ||
+    !!f.goal ||
+    !!f.equipment ||
+    !!f.muscle ||
+    !!f.alpha ||
+    (Array.isArray(f.constraints) && f.constraints.length > 0);
+
+  // When filters are active, show more upfront so changes are obvious.
+  visibleHomeCount = anyFilters ? 18 : 6;
+  visibleExercisesCount = anyFilters ? 36 : 12;
   updateShowMoreVisibility();
+}
+
+function updateResultsMeta({ total, shown }) {
+  const input = document.getElementById('exerciseSearch');
+  if (!input) return;
+  const parent = input.closest('.search-container') || input.parentElement;
+  if (!parent) return;
+
+  let el = document.getElementById('exerciseResultsMeta');
+  if (!el) {
+    el = document.createElement('p');
+    el.id = 'exerciseResultsMeta';
+    el.className = 'workout-help';
+    el.style.marginTop = '0.5rem';
+    parent.appendChild(el);
+  }
+
+  const q = (input.value || '').trim();
+  if (!q && total === exercises.length) {
+    el.textContent = '';
+    return;
+  }
+
+  el.textContent = `Showing ${shown} of ${total} match${total === 1 ? '' : 'es'}.`;
 }
 
 function setupPaginationButtons() {
@@ -1551,6 +1588,7 @@ function renderExercisesPageGrid() {
   }
   const view = list.slice(0, visibleExercisesCount);
   grid.innerHTML = view.map((ex) => createExerciseCard(ex)).join('');
+  updateResultsMeta({ total: list.length, shown: view.length });
   grid.querySelectorAll('.exercise-card').forEach((card, index) => {
     const exercise = view[index];
     const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
@@ -1597,11 +1635,13 @@ function renderExerciseGallery() {
   const list = getFilteredExercises();
   if (list.length === 0) {
     gallery.innerHTML = '<p class="no-exercises">No exercises match your search. Try different words.</p>';
+    updateResultsMeta({ total: 0, shown: 0 });
     return;
   }
   
   const view = list.slice(0, visibleHomeCount);
   gallery.innerHTML = view.map(exercise => createExerciseCard(exercise)).join('');
+  updateResultsMeta({ total: list.length, shown: view.length });
   
   // Add click handlers - navigate to exercise page
   gallery.querySelectorAll('.exercise-card').forEach((card, index) => {
