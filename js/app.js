@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
-const EXERCISE_CATALOG_VERSION = '2026-04-23-8';
+const EXERCISE_CATALOG_VERSION = '2026-04-29-1';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -980,7 +980,6 @@ function resetPagination() {
   const anyFilters =
     !!q ||
     !!f.level ||
-    !!f.goal ||
     !!f.equipment ||
     !!f.muscle ||
     !!f.alpha ||
@@ -1081,7 +1080,6 @@ function normalizeExerciseFromSupabase(row) {
     muscleGroups: Array.isArray(muscleGroups) ? muscleGroups : [],
     primaryMuscles: Array.isArray(primaryMuscles) ? primaryMuscles : [],
     secondaryMuscles: Array.isArray(secondaryMuscles) ? secondaryMuscles : [],
-    goals: Array.isArray(row.goals) ? row.goals : [],
     equipment: Array.isArray(row.equipment) ? row.equipment : [],
     constraints: Array.isArray(row.constraints) ? row.constraints : [],
     whatYouShouldFeel: Array.isArray(row.what_you_should_feel || row.whatYouShouldFeel) ? (row.what_you_should_feel || row.whatYouShouldFeel) : [],
@@ -1335,7 +1333,6 @@ function getFilteredExercises() {
       ...(ex.secondaryMuscles || []),
     ].join(' ');
     const extra = [
-      (ex.goals || []).join(' '),
       (ex.equipment || []).join(' '),
       (ex.constraints || []).join(' ')
     ].join(' ');
@@ -1454,13 +1451,12 @@ function inferConstraintsForExercise(ex) {
 
 function getActiveFilters() {
   const level = normalizeFilterValue(document.getElementById('filterLevel')?.value);
-  const goal = normalizeFilterValue(document.getElementById('filterGoal')?.value);
   const equipment = normalizeFilterValue(document.getElementById('filterEquipment')?.value);
   const muscle = normalizeFilterValue(document.getElementById('filterMuscle')?.value);
   const alpha = String(document.getElementById('filterAlpha')?.value || '').trim().toUpperCase();
   const constraints = Array.from(document.querySelectorAll('.filter-constraint:checked'))
     .map((el) => normalizeFilterValue(el.value));
-  return { level, goal, equipment, muscle, alpha, constraints };
+  return { level, equipment, muscle, alpha, constraints };
 }
 
 function exerciseMuscleBuckets(ex) {
@@ -1480,11 +1476,6 @@ function matchesFilters(ex, filters) {
   }
 
   if (filters.level && normalizeFilterValue(ex.difficulty) !== filters.level) return false;
-
-  if (filters.goal) {
-    const goals = (ex.goals || []).map(normalizeFilterValue);
-    if (!goals.includes(filters.goal)) return false;
-  }
 
   if (filters.equipment) {
     const eq = (ex.equipment || []).map(normalizeFilterValue);
@@ -1546,7 +1537,7 @@ function setupExerciseSearch() {
 }
 
 function bindFilterControls(onChange) {
-  const ids = ['filterLevel', 'filterGoal', 'filterEquipment', 'filterMuscle', 'filterAlpha'];
+  const ids = ['filterLevel', 'filterEquipment', 'filterMuscle', 'filterAlpha'];
   ids.forEach((id) => {
     const el = document.getElementById(id);
     if (!el || el.dataset.bound === 'true') return;

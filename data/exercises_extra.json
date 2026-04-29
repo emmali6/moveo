@@ -12,10 +12,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -77,9 +73,6 @@
       "calves"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -138,10 +131,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -205,10 +194,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -270,9 +255,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -333,9 +315,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -398,10 +377,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -463,10 +438,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -529,9 +500,6 @@
       "quadriceps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -591,10 +559,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -658,10 +622,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -723,10 +683,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -795,9 +751,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -858,10 +811,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -923,10 +872,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -993,10 +938,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -1065,10 +1006,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -1131,10 +1068,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -1198,10 +1131,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -1268,10 +1197,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -1332,9 +1257,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -1392,9 +1314,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -1452,9 +1371,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -1518,10 +1434,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -1585,9 +1497,6 @@
       "traps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -1647,10 +1556,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -1715,10 +1620,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -1785,9 +1686,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -1860,9 +1758,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -1931,9 +1826,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -1998,10 +1890,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -2071,9 +1959,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -2133,9 +2018,6 @@
     ],
     "secondaryMuscles": [],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -2200,10 +2082,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -2267,10 +2145,6 @@
       "glutes"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -2337,10 +2211,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -2405,9 +2275,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -2471,9 +2338,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -2534,10 +2398,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -2604,10 +2464,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -2669,10 +2525,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -2736,10 +2588,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -2804,10 +2652,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -2872,10 +2716,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -2940,10 +2780,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3006,10 +2842,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3080,10 +2912,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3151,10 +2979,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3221,9 +3045,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3287,10 +3108,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3357,10 +3174,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3425,9 +3238,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3491,10 +3301,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3559,10 +3365,6 @@
       "chest"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3628,10 +3430,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3698,10 +3496,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3769,10 +3563,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3833,10 +3623,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3903,10 +3689,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -3969,10 +3751,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4037,10 +3815,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4104,10 +3878,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4173,10 +3943,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4243,10 +4009,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4315,10 +4077,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4389,10 +4147,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4458,10 +4212,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4526,10 +4276,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4595,9 +4341,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4659,9 +4402,6 @@
       "shoulders"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4726,10 +4466,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -4792,9 +4528,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -4859,9 +4592,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -4926,10 +4656,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -4998,9 +4724,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -5066,9 +4789,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -5134,10 +4854,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -5199,10 +4915,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -5269,10 +4981,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -5340,10 +5048,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -5410,10 +5114,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -5481,10 +5181,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -5549,10 +5245,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -5621,10 +5313,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -5690,10 +5378,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -5760,10 +5444,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -5827,10 +5507,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -5894,9 +5570,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -5959,9 +5632,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -6026,9 +5696,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -6090,10 +5757,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -6156,10 +5819,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -6222,10 +5881,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -6291,10 +5946,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -6358,10 +6009,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -6423,10 +6070,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -6485,10 +6128,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -6556,10 +6195,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -6620,10 +6255,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -6689,9 +6320,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -6758,9 +6386,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -6829,9 +6454,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -6900,9 +6522,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -6971,10 +6590,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7037,9 +6652,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7101,10 +6713,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7170,10 +6778,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -7231,10 +6835,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -7294,10 +6894,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7363,10 +6959,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7430,10 +7022,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7496,10 +7084,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7568,10 +7152,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7633,10 +7213,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7700,10 +7276,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7768,10 +7340,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7834,10 +7402,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7900,10 +7464,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -7966,10 +7526,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8032,10 +7588,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8098,10 +7650,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8164,10 +7712,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8233,10 +7777,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8301,10 +7841,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8366,10 +7902,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8433,10 +7965,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8502,10 +8030,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8569,10 +8093,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8637,10 +8157,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8706,10 +8222,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8776,10 +8288,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8841,10 +8349,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8907,10 +8411,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -8974,10 +8474,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -9039,10 +8535,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -9105,10 +8597,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -9171,10 +8659,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -9237,9 +8721,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -9297,9 +8778,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -9357,10 +8835,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -9422,9 +8896,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -9490,9 +8961,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -9556,10 +9024,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -9628,9 +9092,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -9691,9 +9152,6 @@
       "traps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -9755,9 +9213,6 @@
       "shoulders"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -9818,9 +9273,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -9884,9 +9336,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -9949,9 +9398,6 @@
       "adductors"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10015,9 +9461,6 @@
       "lower back"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -10079,10 +9522,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10149,9 +9588,6 @@
       "chest"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10213,9 +9649,6 @@
       "shoulders"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10280,9 +9713,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10348,9 +9778,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10415,9 +9842,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10482,9 +9906,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10545,9 +9966,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10611,9 +10029,6 @@
       "middle back"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -10673,9 +10088,6 @@
       "traps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -10736,10 +10148,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -10806,9 +10214,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10878,9 +10283,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -10952,9 +10354,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11031,10 +10430,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11106,9 +10501,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11175,9 +10567,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11245,9 +10634,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11311,9 +10697,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11376,10 +10759,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -11443,10 +10822,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11512,10 +10887,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -11580,10 +10951,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11648,10 +11015,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11717,10 +11080,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11787,10 +11146,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11858,10 +11213,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -11922,10 +11273,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -11988,10 +11335,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -12057,9 +11400,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -12121,10 +11461,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -12189,10 +11525,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -12257,10 +11589,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -12324,10 +11652,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -12393,9 +11717,6 @@
       "quadriceps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -12455,9 +11776,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -12517,10 +11835,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -12580,10 +11894,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -12645,10 +11955,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -12711,10 +12017,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -12780,9 +12082,6 @@
       "glutes"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -12841,10 +12140,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -12913,9 +12208,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -12983,9 +12275,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -13050,10 +12339,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -13120,10 +12405,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -13188,10 +12469,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -13255,10 +12532,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -13322,10 +12595,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -13388,10 +12657,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -13454,10 +12719,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -13520,10 +12781,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -13587,10 +12844,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -13649,10 +12902,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -13715,10 +12964,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -13788,9 +13033,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -13857,9 +13099,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -13924,10 +13163,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -13993,10 +13228,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -14061,10 +13292,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -14123,10 +13350,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -14197,10 +13420,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -14265,10 +13484,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -14337,10 +13552,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -14405,10 +13616,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -14474,10 +13681,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -14545,9 +13748,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -14609,10 +13809,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -14674,10 +13870,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -14742,9 +13934,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -14807,10 +13996,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -14876,10 +14061,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -14945,10 +14126,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15012,10 +14189,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15085,10 +14258,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15154,9 +14323,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15217,10 +14383,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15288,10 +14450,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15355,10 +14513,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15425,10 +14579,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15492,10 +14642,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15558,10 +14704,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15625,10 +14767,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15691,10 +14829,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15760,10 +14894,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15827,10 +14957,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15897,10 +15023,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -15963,10 +15085,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16032,10 +15150,6 @@
       "biceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16101,10 +15215,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16168,10 +15278,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16236,9 +15342,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16300,10 +15403,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16369,10 +15468,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16436,10 +15531,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16501,10 +15592,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16571,10 +15658,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16642,10 +15725,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16712,10 +15791,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16777,10 +15852,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -16842,9 +15913,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -16903,9 +15971,6 @@
       "middle back"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -16964,9 +16029,6 @@
       "traps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -17024,10 +16086,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -17087,9 +16145,6 @@
       "shoulders"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -17150,10 +16205,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -17218,10 +16269,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -17290,9 +16337,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -17352,10 +16396,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -17418,10 +16458,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -17487,10 +16523,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -17550,10 +16582,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -17617,10 +16645,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -17683,10 +16707,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -17748,10 +16768,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -17816,10 +16832,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -17883,10 +16895,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -17952,9 +16960,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -18021,9 +17026,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -18081,10 +17083,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -18146,10 +17144,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -18214,10 +17208,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -18277,10 +17267,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -18339,10 +17325,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -18409,10 +17391,6 @@
       "glutes"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -18474,9 +17452,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -18540,9 +17515,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -18606,10 +17578,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -18669,9 +17637,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -18738,9 +17703,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -18805,9 +17767,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -18873,10 +17832,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -18941,9 +17896,6 @@
       "hamstrings"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -19000,10 +17952,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -19069,10 +18017,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -19140,10 +18084,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -19213,9 +18153,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -19277,10 +18214,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -19349,9 +18282,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -19414,10 +18344,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -19479,10 +18405,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -19545,9 +18467,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -19604,10 +18523,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -19673,10 +18588,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -19743,10 +18654,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -19811,10 +18718,6 @@
       "glutes"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -19875,10 +18778,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -19944,10 +18843,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -20010,10 +18905,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -20080,9 +18971,6 @@
       "glutes"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -20145,10 +19033,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -20212,10 +19096,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -20280,9 +19160,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -20347,9 +19224,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -20412,10 +19286,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -20475,9 +19345,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -20535,9 +19402,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -20599,10 +19463,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -20667,10 +19527,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -20736,10 +19592,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -20804,9 +19656,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -20864,9 +19713,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -20929,10 +19775,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -21000,9 +19842,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -21071,9 +19910,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -21144,9 +19980,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -21217,9 +20050,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -21285,9 +20115,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -21349,10 +20176,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -21411,10 +20234,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -21481,9 +20300,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -21548,9 +20364,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -21611,10 +20424,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -21678,9 +20487,6 @@
       "adductors"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -21740,10 +20546,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -21805,10 +20607,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -21873,9 +20671,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -21940,9 +20735,6 @@
       "glutes"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -22005,9 +20797,6 @@
       "glutes"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -22071,9 +20860,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -22138,10 +20924,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -22208,10 +20990,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -22271,9 +21049,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -22334,9 +21109,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -22398,10 +21170,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -22468,10 +21236,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -22539,10 +21303,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -22605,10 +21365,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -22675,10 +21431,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -22743,10 +21495,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -22810,10 +21558,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -22879,10 +21623,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -22949,10 +21689,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -23017,10 +21753,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -23081,10 +21813,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -23150,10 +21878,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -23214,10 +21938,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -23280,9 +22000,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -23348,10 +22065,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -23415,10 +22128,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -23482,10 +22191,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -23545,9 +22250,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -23607,9 +22309,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -23669,10 +22368,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -23737,10 +22432,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -23803,10 +22494,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -23875,10 +22562,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -23935,9 +22618,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -23998,9 +22678,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -24060,10 +22737,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -24123,10 +22796,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -24190,10 +22859,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -24252,9 +22917,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -24314,10 +22976,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -24376,10 +23034,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -24444,10 +23098,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -24517,9 +23167,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -24583,9 +23230,6 @@
       "calves"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -24648,10 +23292,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -24717,9 +23357,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -24790,9 +23427,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -24856,10 +23490,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -24926,10 +23556,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -24993,10 +23619,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25062,10 +23684,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25129,10 +23747,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25197,10 +23811,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25262,10 +23872,6 @@
       "abdominals"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25332,10 +23938,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25399,10 +24001,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25465,10 +24063,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25535,10 +24129,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25601,10 +24191,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25671,10 +24257,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25741,10 +24323,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25810,10 +24388,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25882,10 +24456,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -25951,9 +24521,6 @@
       "lower back"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -26013,9 +24580,6 @@
       "quadriceps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -26079,9 +24643,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -26139,10 +24700,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -26207,9 +24764,6 @@
       "abdominals"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -26268,10 +24822,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -26338,10 +24888,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -26406,9 +24952,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -26468,10 +25011,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -26534,9 +25073,6 @@
       "quadriceps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -26597,9 +25133,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -26664,10 +25197,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -26733,9 +25262,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -26800,10 +25326,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -26873,10 +25395,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -26945,9 +25463,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -27013,9 +25528,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -27084,9 +25596,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -27148,10 +25657,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -27213,9 +25718,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -27275,10 +25777,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -27342,10 +25840,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -27409,10 +25903,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -27475,10 +25965,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -27540,10 +26026,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -27604,9 +26086,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -27667,10 +26146,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -27735,10 +26210,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -27801,10 +26272,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -27867,10 +26334,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -27935,10 +26398,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28002,10 +26461,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28068,10 +26523,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28134,10 +26585,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28203,9 +26650,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -28268,9 +26712,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -28333,9 +26774,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28407,9 +26845,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28474,10 +26909,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28539,9 +26970,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -28600,10 +27028,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28665,10 +27089,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28736,10 +27156,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28802,9 +27218,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -28861,9 +27274,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28927,10 +27337,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -28997,10 +27403,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29062,9 +27464,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29125,10 +27524,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29196,10 +27591,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29261,10 +27652,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29329,10 +27716,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29395,10 +27778,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29461,9 +27840,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -29525,10 +27901,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -29590,10 +27962,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29655,10 +28023,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29722,9 +28086,6 @@
       "abductors"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -29785,9 +28146,6 @@
       "calves"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29848,10 +28206,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29913,10 +28267,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -29982,10 +28332,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30049,10 +28395,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -30115,9 +28457,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -30176,10 +28515,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -30242,10 +28577,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -30311,10 +28642,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30378,10 +28705,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30447,10 +28770,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30515,10 +28834,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30580,10 +28895,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30648,10 +28959,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30714,10 +29021,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30782,9 +29085,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30849,9 +29149,6 @@
       "shoulders"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30917,9 +29214,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -30980,10 +29274,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -31049,9 +29339,6 @@
       "lower back"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -31111,10 +29398,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -31177,10 +29460,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -31245,9 +29524,6 @@
       "shoulders"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -31307,9 +29583,6 @@
       "quadriceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -31373,9 +29646,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -31444,10 +29714,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -31513,10 +29779,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -31585,10 +29847,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -31656,10 +29914,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -31727,10 +29981,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -31792,10 +30042,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -31858,9 +30104,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -31920,10 +30163,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -31985,10 +30224,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -32052,9 +30287,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -32115,9 +30347,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -32174,9 +30403,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -32238,9 +30464,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -32301,10 +30524,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -32372,10 +30591,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -32440,10 +30655,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -32509,10 +30720,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -32580,10 +30787,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -32645,10 +30848,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -32712,10 +30911,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -32784,9 +30979,6 @@
       "chest"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -32847,9 +31039,6 @@
       "biceps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -32911,9 +31100,6 @@
       "lower back"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -32976,10 +31162,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33048,10 +31230,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -33116,10 +31294,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -33183,10 +31357,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33252,10 +31422,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -33324,10 +31490,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33388,10 +31550,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33457,10 +31615,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33525,10 +31679,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33592,10 +31742,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33658,10 +31804,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33726,10 +31868,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33793,10 +31931,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33862,10 +31996,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -33931,10 +32061,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34000,10 +32126,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34070,10 +32192,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34133,10 +32251,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34202,10 +32316,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34273,10 +32383,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34343,10 +32449,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34414,10 +32516,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34481,10 +32579,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -34550,10 +32644,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34622,10 +32712,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34690,10 +32776,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34755,10 +32837,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34824,9 +32902,6 @@
       "triceps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34887,9 +32962,6 @@
     ],
     "secondaryMuscles": [],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -34959,9 +33031,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -35030,9 +33099,6 @@
       "triceps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -35091,9 +33157,6 @@
       "lats"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -35155,10 +33218,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -35226,10 +33285,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -35296,10 +33351,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -35364,10 +33415,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -35432,10 +33479,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -35500,10 +33543,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -35571,10 +33610,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -35636,9 +33671,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -35696,9 +33728,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -35758,9 +33787,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -35822,10 +33848,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -35892,9 +33914,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -35958,9 +33977,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -36020,10 +34036,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -36080,10 +34092,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -36146,10 +34154,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -36214,10 +34218,6 @@
       "glutes"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -36284,10 +34284,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -36353,10 +34349,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -36420,9 +34412,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -36483,9 +34472,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -36555,10 +34541,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -36642,9 +34624,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -36714,9 +34693,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -36779,10 +34755,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -36853,9 +34825,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -36927,9 +34896,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -37000,9 +34966,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -37064,10 +35027,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -37132,10 +35091,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -37201,10 +35156,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -37266,10 +35217,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -37333,9 +35280,6 @@
       "shoulders"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -37399,10 +35343,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -37465,10 +35405,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -37531,9 +35467,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -37594,9 +35527,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -37661,10 +35591,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -37728,10 +35654,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -37793,10 +35715,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -37858,10 +35776,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -37924,10 +35838,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -37993,10 +35903,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -38058,10 +35964,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -38122,9 +36024,6 @@
       "shoulders"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38184,9 +36083,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38246,9 +36142,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38311,9 +36204,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38378,9 +36268,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38447,9 +36334,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38515,9 +36399,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38578,9 +36459,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -38641,9 +36519,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38707,9 +36582,6 @@
       "triceps"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38778,9 +36650,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38850,9 +36719,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38921,9 +36787,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -38992,9 +36855,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39065,9 +36925,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39132,10 +36989,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39199,10 +37052,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39267,10 +37116,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39332,10 +37177,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -39395,10 +37236,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -39462,10 +37299,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -39534,10 +37367,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39600,10 +37429,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39669,10 +37494,6 @@
       "glutes"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39735,10 +37556,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39802,10 +37619,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39871,10 +37684,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -39939,9 +37748,6 @@
       "traps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40009,9 +37815,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40077,9 +37880,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40143,10 +37943,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40211,9 +38007,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -40271,10 +38064,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40344,10 +38133,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40415,10 +38200,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40486,9 +38267,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40554,10 +38332,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40620,10 +38394,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40689,9 +38459,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40751,10 +38518,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40819,9 +38582,6 @@
       "chest"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40889,9 +38649,6 @@
       "middle back"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -40954,9 +38711,6 @@
       "calves"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -41018,9 +38772,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -41082,10 +38833,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -41156,9 +38903,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -41223,10 +38967,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -41284,9 +39024,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -41349,9 +39086,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -41410,10 +39144,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -41477,10 +39207,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -41543,10 +39269,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -41610,10 +39332,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -41678,10 +39396,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -41745,10 +39459,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -41815,9 +39525,6 @@
       "shoulders"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -41879,10 +39586,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -41947,10 +39650,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -42012,10 +39711,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -42082,9 +39777,6 @@
       "lower back"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -42143,10 +39835,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -42209,10 +39897,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -42275,10 +39959,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -42342,10 +40022,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -42410,10 +40086,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -42480,10 +40152,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -42547,10 +40215,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -42611,9 +40275,6 @@
       "calves"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -42672,9 +40333,6 @@
       "chest"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -42734,9 +40392,6 @@
       "adductors"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -42796,9 +40451,6 @@
       "glutes"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -42862,9 +40514,6 @@
       "calves"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -42924,9 +40573,6 @@
       "calves"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -42986,10 +40632,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -43053,10 +40695,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -43119,10 +40757,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -43185,10 +40819,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -43252,10 +40882,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -43319,10 +40945,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -43386,9 +41008,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -43447,10 +41066,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -43513,10 +41128,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -43579,10 +41190,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -43644,10 +41251,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -43709,10 +41312,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -43782,10 +41381,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -43851,10 +41446,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -43918,9 +41509,6 @@
       "traps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -43979,10 +41567,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -44045,9 +41629,6 @@
       "lats"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -44103,9 +41684,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -44163,10 +41741,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -44225,9 +41799,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -44288,10 +41859,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -44345,10 +41912,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -44412,10 +41975,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -44479,9 +42038,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -44541,9 +42097,6 @@
       "hamstrings"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -44601,9 +42154,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -44664,9 +42214,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -44729,9 +42276,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -44797,10 +42341,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -44868,9 +42408,6 @@
       "lats"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -44927,9 +42464,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -44989,10 +42523,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -45056,9 +42586,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -45119,10 +42646,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -45184,9 +42707,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -45247,10 +42767,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -45316,10 +42832,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -45384,10 +42896,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -45450,9 +42958,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -45516,10 +43021,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -45585,9 +43086,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -45654,9 +43152,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -45718,10 +43213,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -45788,9 +43279,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -45855,9 +43343,6 @@
       "hamstrings"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -45915,10 +43400,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -45984,9 +43465,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46050,9 +43528,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46116,10 +43591,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46180,10 +43651,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46251,9 +43718,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46313,10 +43777,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46381,10 +43841,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46452,9 +43908,6 @@
       "shoulders"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46518,10 +43971,6 @@
       "chest"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46587,10 +44036,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46656,10 +44101,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46726,10 +44167,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46793,10 +44230,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46862,10 +44295,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -46931,10 +44360,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47003,10 +44428,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47070,10 +44491,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47138,10 +44555,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47208,10 +44621,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47275,10 +44684,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47343,10 +44748,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47413,10 +44814,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47479,10 +44876,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47551,10 +44944,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47621,10 +45010,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47691,10 +45076,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47761,10 +45142,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47837,9 +45214,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47910,9 +45284,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -47981,9 +45352,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -48053,9 +45421,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -48124,10 +45489,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -48192,9 +45553,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -48254,10 +45612,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -48323,9 +45677,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -48393,10 +45744,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -48463,10 +45810,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -48532,10 +45875,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -48593,10 +45932,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -48666,9 +46001,6 @@
       "traps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -48735,9 +46067,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -48806,9 +46135,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -48874,9 +46200,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -48946,9 +46269,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -49015,10 +46335,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -49084,9 +46400,6 @@
       "quadriceps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -49149,10 +46462,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -49219,9 +46528,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -49289,9 +46595,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -49359,10 +46662,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -49433,10 +46732,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -49503,9 +46798,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -49568,10 +46860,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -49633,10 +46921,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -49702,10 +46986,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -49771,10 +47051,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -49838,10 +47114,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -49903,10 +47175,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -49971,9 +47239,6 @@
       "shoulders"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -50035,10 +47300,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -50105,10 +47366,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -50172,10 +47429,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -50243,10 +47496,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -50312,10 +47561,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -50380,10 +47625,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -50445,10 +47686,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -50512,10 +47749,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -50578,10 +47811,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -50643,10 +47872,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -50709,10 +47934,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -50778,10 +47999,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -50843,9 +48060,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -50906,10 +48120,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -50974,9 +48184,6 @@
       "hamstrings"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -51034,9 +48241,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -51099,9 +48303,6 @@
       "adductors"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -51160,9 +48361,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -51219,10 +48417,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -51287,9 +48481,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -51348,10 +48539,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -51418,9 +48605,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -51481,10 +48665,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -51551,10 +48731,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -51619,10 +48795,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -51688,10 +48860,6 @@
       "biceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -51753,10 +48921,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -51820,10 +48984,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -51890,10 +49050,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -51959,10 +49115,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -52027,10 +49179,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -52097,10 +49245,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -52162,10 +49306,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -52231,9 +49371,6 @@
       "glutes"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -52291,10 +49428,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -52356,9 +49489,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -52417,9 +49547,6 @@
       "calves"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -52476,10 +49603,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -52541,9 +49664,6 @@
       "lats"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -52609,9 +49729,6 @@
       "shoulders"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -52673,9 +49790,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -52738,10 +49852,6 @@
       "quadriceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -52802,10 +49912,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -52872,10 +49978,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -52941,10 +50043,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -53007,9 +50105,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -53072,10 +50167,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53138,10 +50229,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53207,10 +50294,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -53274,10 +50357,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53345,9 +50424,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53417,9 +50493,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53489,9 +50562,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53563,9 +50633,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53631,9 +50698,6 @@
       "hamstrings"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -53695,9 +50759,6 @@
       "shoulders"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53763,9 +50824,6 @@
       "shoulders"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53830,9 +50888,6 @@
       "shoulders"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53898,10 +50953,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -53967,10 +51018,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54032,10 +51079,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54100,10 +51143,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54170,10 +51209,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54239,10 +51274,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54307,10 +51338,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54376,10 +51403,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -54445,9 +51468,6 @@
       "calves"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -54506,10 +51526,6 @@
       "glutes"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54574,10 +51590,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54649,9 +51661,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54712,9 +51721,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -54775,9 +51781,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54841,9 +51844,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "none"
     ],
@@ -54903,10 +51903,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -54968,10 +51964,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -55035,9 +52027,6 @@
       "shoulders"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -55093,10 +52082,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -55158,10 +52143,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -55224,10 +52205,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -55290,10 +52267,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -55358,9 +52331,6 @@
       "lats"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -55416,10 +52386,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -55480,10 +52446,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -55551,10 +52513,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -55619,10 +52577,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -55683,10 +52637,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -55749,10 +52699,6 @@
       "lats"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -55816,10 +52762,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -55885,9 +52827,6 @@
       "middle back"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -55946,9 +52885,6 @@
       "middle back"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -56007,10 +52943,6 @@
       "traps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -56074,10 +53006,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -56141,10 +53069,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "resistance bands"
     ],
@@ -56209,9 +53133,6 @@
       "lats"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -56272,10 +53193,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -56343,10 +53260,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -56410,9 +53323,6 @@
       "shoulders"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -56478,9 +53388,6 @@
       "hamstrings"
     ],
     "category": "endurance",
-    "goals": [
-      "endurance"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -56544,10 +53451,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -56609,10 +53512,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -56680,10 +53579,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -56746,10 +53641,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -56817,10 +53708,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -56885,10 +53772,6 @@
       "middle back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -56954,10 +53837,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57019,10 +53898,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57088,10 +53963,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57159,10 +54030,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57230,9 +54097,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57295,10 +54159,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57363,10 +54223,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57431,10 +54287,6 @@
       "triceps"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57502,10 +54354,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57573,10 +54421,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57644,10 +54488,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -57707,10 +54547,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -57773,10 +54609,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "none"
     ],
@@ -57839,9 +54671,6 @@
       "lower back"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -57903,9 +54732,6 @@
       "quadriceps"
     ],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -57963,9 +54789,6 @@
     ],
     "secondaryMuscles": [],
     "category": "mobility",
-    "goals": [
-      "mobility"
-    ],
     "equipment": [
       "none"
     ],
@@ -58025,10 +54848,6 @@
       "shoulders"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -58091,10 +54910,6 @@
     ],
     "secondaryMuscles": [],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -58163,9 +54978,6 @@
       "lower back"
     ],
     "category": "strength",
-    "goals": [
-      "strength"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -58230,10 +55042,6 @@
       "hamstrings"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "gym machines"
     ],
@@ -58299,10 +55107,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],
@@ -58370,10 +55174,6 @@
       "forearms"
     ],
     "category": "strength",
-    "goals": [
-      "strength",
-      "hypertrophy"
-    ],
     "equipment": [
       "dumbbells"
     ],

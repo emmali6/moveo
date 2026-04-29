@@ -4,21 +4,42 @@
     "name": "Bodyweight Squat",
     "description": "A foundational lower-body movement that teaches proper squat mechanics. Perfect for beginners to learn joint alignment and knee tracking before adding weight. This exercise builds strength in your legs and glutes while improving mobility.",
     "difficulty": "beginner",
-    "muscleGroups": ["quadriceps", "glutes"],
-    "primaryMuscles": ["quadriceps", "glutes"],
-    "secondaryMuscles": ["core"],
+    "muscleGroups": [
+      "quadriceps",
+      "glutes"
+    ],
+    "primaryMuscles": [
+      "quadriceps",
+      "glutes"
+    ],
+    "secondaryMuscles": [
+      "core"
+    ],
     "category": "strength",
-    "goals": ["strength", "hypertrophy", "mobility"],
-    "equipment": ["none"],
-    "constraints": ["knee-friendly", "apartment/no jumping"],
-    "whatYouShouldFeel": ["Quads and glutes doing the work (not your knees).", "Core supporting you so your torso feels steady."],
-    "breathingTips": ["Inhale on the way down.", "Exhale as you stand up and drive through your heels."],
+    "equipment": [
+      "none"
+    ],
+    "constraints": [
+      "knee-friendly",
+      "apartment/no jumping"
+    ],
+    "whatYouShouldFeel": [
+      "Quads and glutes doing the work (not your knees).",
+      "Core supporting you so your torso feels steady."
+    ],
+    "breathingTips": [
+      "Inhale on the way down.",
+      "Exhale as you stand up and drive through your heels."
+    ],
     "setsReps": {
       "strength": "3–5 sets × 3–6 reps (rest 2–3 min)",
       "hypertrophy": "3–4 sets × 8–12 reps (rest 60–90 sec)",
       "endurance": "2–4 sets × 12–20 reps (rest 30–60 sec)"
     },
-    "workoutRole": ["main lift", "accessory"],
+    "workoutRole": [
+      "main lift",
+      "accessory"
+    ],
     "pairingSuggestions": [
       "Superset with Glute Bridge for a lower-body combo",
       "Combine into a short routine: Squat → Push-Up → Crunch (2–3 rounds)"
@@ -50,21 +71,43 @@
     "name": "Deadlift",
     "description": "A fundamental posterior chain exercise that teaches the hip hinge pattern. Essential for building glutes, hamstrings, and lower back strength. Perfect for learning proper spine alignment and posterior chain activation.",
     "difficulty": "intermediate",
-    "muscleGroups": ["glutes", "hamstrings", "lower back"],
-    "primaryMuscles": ["glutes", "hamstrings"],
-    "secondaryMuscles": ["lower back", "core", "back"],
+    "muscleGroups": [
+      "glutes",
+      "hamstrings",
+      "lower back"
+    ],
+    "primaryMuscles": [
+      "glutes",
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "lower back",
+      "core",
+      "back"
+    ],
     "category": "strength",
-    "goals": ["strength", "hypertrophy"],
-    "equipment": ["gym machines"],
-    "constraints": ["low-back friendly"],
-    "whatYouShouldFeel": ["Hamstrings and glutes loading during the hinge.", "Back feels braced and long (not pinchy in the low back)."],
-    "breathingTips": ["Inhale and brace before you lift.", "Exhale gently as you stand tall, then reset your breath between reps."],
+    "equipment": [
+      "gym machines"
+    ],
+    "constraints": [
+      "low-back friendly"
+    ],
+    "whatYouShouldFeel": [
+      "Hamstrings and glutes loading during the hinge.",
+      "Back feels braced and long (not pinchy in the low back)."
+    ],
+    "breathingTips": [
+      "Inhale and brace before you lift.",
+      "Exhale gently as you stand tall, then reset your breath between reps."
+    ],
     "setsReps": {
       "strength": "3–5 sets × 3–5 reps (rest 2–3 min)",
       "hypertrophy": "3–4 sets × 6–10 reps (rest 90 sec)",
       "endurance": "2–3 sets × 10–15 reps (rest 45–60 sec)"
     },
-    "workoutRole": ["main lift"],
+    "workoutRole": [
+      "main lift"
+    ],
     "pairingSuggestions": [
       "Pair with Side Lying Leg Raise for hip stability",
       "Finish with a short core set: Bicycle Crunch (2 sets)"
@@ -101,21 +144,45 @@
     "name": "Push-Up",
     "description": "A classic upper-body push pattern that strengthens chest, triceps, and core. Can be easily modified for beginners (knee or wall push-ups) or progressed for advanced users. Great for learning proper body alignment and controlled movement.",
     "difficulty": "beginner",
-    "muscleGroups": ["chest", "triceps", "core"],
-    "primaryMuscles": ["chest", "triceps"],
-    "secondaryMuscles": ["core", "shoulders"],
+    "muscleGroups": [
+      "chest",
+      "triceps",
+      "core"
+    ],
+    "primaryMuscles": [
+      "chest",
+      "triceps"
+    ],
+    "secondaryMuscles": [
+      "core",
+      "shoulders"
+    ],
     "category": "endurance",
-    "goals": ["strength", "hypertrophy", "endurance"],
-    "equipment": ["none"],
-    "constraints": ["apartment/no jumping", "wrist-safe"],
-    "whatYouShouldFeel": ["Chest and triceps pushing (not your shoulders shrugging up).", "Core staying tight so your body moves as one piece."],
-    "breathingTips": ["Inhale as you lower.", "Exhale as you press up."],
+    "equipment": [
+      "none"
+    ],
+    "constraints": [
+      "apartment/no jumping",
+      "wrist-safe"
+    ],
+    "whatYouShouldFeel": [
+      "Chest and triceps pushing (not your shoulders shrugging up).",
+      "Core staying tight so your body moves as one piece."
+    ],
+    "breathingTips": [
+      "Inhale as you lower.",
+      "Exhale as you press up."
+    ],
     "setsReps": {
       "strength": "4–6 sets × 4–8 reps (rest 90–120 sec)",
       "hypertrophy": "3–4 sets × 8–15 reps (rest 60–90 sec)",
       "endurance": "2–4 sets × 12–25 reps (rest 30–60 sec)"
     },
-    "workoutRole": ["main lift", "accessory", "finisher"],
+    "workoutRole": [
+      "main lift",
+      "accessory",
+      "finisher"
+    ],
     "pairingSuggestions": [
       "Superset with Bicycle Crunch (push + core)",
       "Combine into a routine: Push-Up → Lunge → Glute Bridge (2–4 rounds)"
@@ -148,21 +215,40 @@
     "name": "Bicep Curl",
     "description": "A simple isolation movement perfect for beginners to understand controlled, focused motion. Teaches proper form for arm exercises and helps build bicep strength and muscle mind connection.",
     "difficulty": "beginner",
-    "muscleGroups": ["biceps"],
-    "primaryMuscles": ["biceps"],
-    "secondaryMuscles": ["forearms"],
+    "muscleGroups": [
+      "biceps"
+    ],
+    "primaryMuscles": [
+      "biceps"
+    ],
+    "secondaryMuscles": [
+      "forearms"
+    ],
     "category": "hypertrophy",
-    "goals": ["hypertrophy", "strength"],
-    "equipment": ["dumbbells", "resistance bands"],
-    "constraints": ["apartment/no jumping"],
-    "whatYouShouldFeel": ["Biceps working through the curl (not your shoulders).", "Elbows stay close to your sides."],
-    "breathingTips": ["Exhale as you curl up.", "Inhale as you lower slowly."],
+    "equipment": [
+      "dumbbells",
+      "resistance bands"
+    ],
+    "constraints": [
+      "apartment/no jumping"
+    ],
+    "whatYouShouldFeel": [
+      "Biceps working through the curl (not your shoulders).",
+      "Elbows stay close to your sides."
+    ],
+    "breathingTips": [
+      "Exhale as you curl up.",
+      "Inhale as you lower slowly."
+    ],
     "setsReps": {
       "strength": "3–5 sets × 5–8 reps (rest 90 sec)",
       "hypertrophy": "3–4 sets × 10–15 reps (rest 60 sec)",
       "endurance": "2–3 sets × 15–25 reps (rest 30–45 sec)"
     },
-    "workoutRole": ["accessory", "finisher"],
+    "workoutRole": [
+      "accessory",
+      "finisher"
+    ],
     "pairingSuggestions": [
       "Superset with Push-Up for an upper-body combo",
       "Add as a finisher: 2 sets of slow curls after your main work"
@@ -200,21 +286,45 @@
     "supabaseId": 4,
     "description": "A beginner-friendly hip-strength exercise that targets the glutes and hip abductors. By moving the top leg while keeping your pelvis stable, you learn how to activate the muscles on the outside of your hips without compensating.",
     "difficulty": "beginner",
-    "muscleGroups": ["glutes", "hip abductors", "core"],
-    "primaryMuscles": ["hip abductors", "glutes"],
-    "secondaryMuscles": ["core"],
+    "muscleGroups": [
+      "glutes",
+      "hip abductors",
+      "core"
+    ],
+    "primaryMuscles": [
+      "hip abductors",
+      "glutes"
+    ],
+    "secondaryMuscles": [
+      "core"
+    ],
     "category": "rehab",
-    "goals": ["rehab", "mobility", "strength"],
-    "equipment": ["none", "resistance bands"],
-    "constraints": ["knee-friendly", "apartment/no jumping"],
-    "whatYouShouldFeel": ["Outer hip/glute working on the top side (not your low back).", "Pelvis staying stacked and steady."],
-    "breathingTips": ["Inhale to set up.", "Exhale gently as you lift; inhale as you lower with control."],
+    "equipment": [
+      "none",
+      "resistance bands"
+    ],
+    "constraints": [
+      "knee-friendly",
+      "apartment/no jumping"
+    ],
+    "whatYouShouldFeel": [
+      "Outer hip/glute working on the top side (not your low back).",
+      "Pelvis staying stacked and steady."
+    ],
+    "breathingTips": [
+      "Inhale to set up.",
+      "Exhale gently as you lift; inhale as you lower with control."
+    ],
     "setsReps": {
       "strength": "3–4 sets × 10–15 reps (rest 45–60 sec)",
       "hypertrophy": "3–4 sets × 12–20 reps (rest 45–60 sec)",
       "endurance": "2–3 sets × 15–25 reps (rest 30–45 sec)"
     },
-    "workoutRole": ["warm-up", "accessory", "rehab"],
+    "workoutRole": [
+      "warm-up",
+      "accessory",
+      "rehab"
+    ],
     "pairingSuggestions": [
       "Pair with Glute Bridge for glute activation",
       "Use as a warm-up before Squats or Lunges (1–2 sets)"
@@ -256,21 +366,44 @@
     "name": "Lunge",
     "description": "A single-leg stability exercise that improves balance, coordination, and leg strength. Great for addressing muscle imbalances and teaching proper front/back plane movement. Challenges each leg independently.",
     "difficulty": "intermediate",
-    "muscleGroups": ["glutes", "quadriceps"],
-    "primaryMuscles": ["glutes", "quadriceps"],
-    "secondaryMuscles": ["core", "hips"],
+    "muscleGroups": [
+      "glutes",
+      "quadriceps"
+    ],
+    "primaryMuscles": [
+      "glutes",
+      "quadriceps"
+    ],
+    "secondaryMuscles": [
+      "core",
+      "hips"
+    ],
     "category": "mobility",
-    "goals": ["strength", "hypertrophy", "mobility"],
-    "equipment": ["none", "dumbbells"],
-    "constraints": ["knee-friendly", "apartment/no jumping"],
-    "whatYouShouldFeel": ["Front leg glute and quad working (not your front knee collapsing inward).", "Core helping you stay tall and balanced."],
-    "breathingTips": ["Inhale as you lower.", "Exhale as you push back up."],
+    "equipment": [
+      "none",
+      "dumbbells"
+    ],
+    "constraints": [
+      "knee-friendly",
+      "apartment/no jumping"
+    ],
+    "whatYouShouldFeel": [
+      "Front leg glute and quad working (not your front knee collapsing inward).",
+      "Core helping you stay tall and balanced."
+    ],
+    "breathingTips": [
+      "Inhale as you lower.",
+      "Exhale as you push back up."
+    ],
     "setsReps": {
       "strength": "3–5 sets × 5–8 reps/side (rest 90 sec)",
       "hypertrophy": "3–4 sets × 8–12 reps/side (rest 60–90 sec)",
       "endurance": "2–3 sets × 12–20 reps/side (rest 30–60 sec)"
     },
-    "workoutRole": ["main lift", "accessory"],
+    "workoutRole": [
+      "main lift",
+      "accessory"
+    ],
     "pairingSuggestions": [
       "Superset with Push-Up for a full-body pair",
       "Combine into a routine: Lunge → Bicycle Crunch (3 rounds)"
@@ -303,21 +436,44 @@
     "name": "Glute Bridge",
     "description": "A beginner-friendly posterior chain exercise that's perfect for learning glute activation. Low intimidation factor makes it ideal for those new to strength training. Great for highlighting muscle activation and teaching hip extension.",
     "difficulty": "beginner",
-    "muscleGroups": ["glutes"],
-    "primaryMuscles": ["glutes"],
-    "secondaryMuscles": ["hamstrings", "core"],
+    "muscleGroups": [
+      "glutes"
+    ],
+    "primaryMuscles": [
+      "glutes"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "core"
+    ],
     "category": "rehab",
-    "goals": ["rehab", "strength", "hypertrophy"],
-    "equipment": ["none", "resistance bands"],
-    "constraints": ["knee-friendly", "low-back friendly", "apartment/no jumping"],
-    "whatYouShouldFeel": ["Glutes squeezing at the top (not your low back taking over).", "Hamstrings helping, but glutes leading."],
-    "breathingTips": ["Inhale at the bottom.", "Exhale as you lift and squeeze at the top."],
+    "equipment": [
+      "none",
+      "resistance bands"
+    ],
+    "constraints": [
+      "knee-friendly",
+      "low-back friendly",
+      "apartment/no jumping"
+    ],
+    "whatYouShouldFeel": [
+      "Glutes squeezing at the top (not your low back taking over).",
+      "Hamstrings helping, but glutes leading."
+    ],
+    "breathingTips": [
+      "Inhale at the bottom.",
+      "Exhale as you lift and squeeze at the top."
+    ],
     "setsReps": {
       "strength": "4–5 sets × 6–10 reps (rest 90 sec)",
       "hypertrophy": "3–4 sets × 10–15 reps (rest 60 sec)",
       "endurance": "2–3 sets × 15–25 reps (rest 30–45 sec)"
     },
-    "workoutRole": ["warm-up", "accessory", "rehab"],
+    "workoutRole": [
+      "warm-up",
+      "accessory",
+      "rehab"
+    ],
     "pairingSuggestions": [
       "Pair with Side Lying Leg Raise for glute + hip stability",
       "Use as activation before Squats or Lunges (1–2 sets)"
@@ -351,21 +507,44 @@
     "supabaseId": 2,
     "description": "A dynamic core movement that trains the rectus abdominis and obliques through alternating elbow-to-knee motion. It also reinforces coordinated control and breathing for safer trunk rotation.",
     "difficulty": "intermediate",
-    "muscleGroups": ["obliques", "core", "hip flexors"],
-    "primaryMuscles": ["obliques", "core"],
-    "secondaryMuscles": ["hip flexors"],
+    "muscleGroups": [
+      "obliques",
+      "core",
+      "hip flexors"
+    ],
+    "primaryMuscles": [
+      "obliques",
+      "core"
+    ],
+    "secondaryMuscles": [
+      "hip flexors"
+    ],
     "category": "endurance",
-    "goals": ["strength", "endurance"],
-    "equipment": ["none"],
-    "constraints": ["apartment/no jumping", "wrist-safe", "knee-friendly"],
-    "whatYouShouldFeel": ["Abs and obliques doing the twist (not your neck pulling).", "Core stays controlled while legs move."],
-    "breathingTips": ["Exhale on each crunch/twist.", "Inhale briefly as you switch sides—keep it smooth."],
+    "equipment": [
+      "none"
+    ],
+    "constraints": [
+      "apartment/no jumping",
+      "wrist-safe",
+      "knee-friendly"
+    ],
+    "whatYouShouldFeel": [
+      "Abs and obliques doing the twist (not your neck pulling).",
+      "Core stays controlled while legs move."
+    ],
+    "breathingTips": [
+      "Exhale on each crunch/twist.",
+      "Inhale briefly as you switch sides—keep it smooth."
+    ],
     "setsReps": {
       "strength": "3–4 sets × 8–12 reps/side (rest 60 sec)",
       "hypertrophy": "3–4 sets × 12–20 reps/side (rest 45–60 sec)",
       "endurance": "2–4 sets × 20–40 seconds (rest 30 sec)"
     },
-    "workoutRole": ["accessory", "finisher"],
+    "workoutRole": [
+      "accessory",
+      "finisher"
+    ],
     "pairingSuggestions": [
       "Superset with Push-Up (upper body + core)",
       "Finish a routine with: Bicycle Crunch → Crunch (2 rounds)"
@@ -407,21 +586,44 @@
     "name": "Pull-Up / Assisted Pull-Up",
     "description": "An upper-body pull pattern that builds back, lat, and arm strength. Shows the concept of progression - start with assisted variations and work toward full pull-ups. An aspirational skill that motivates users to build strength over time.",
     "difficulty": "advanced",
-    "muscleGroups": ["lats", "back", "arms"],
-    "primaryMuscles": ["lats", "back"],
-    "secondaryMuscles": ["arms", "core"],
+    "muscleGroups": [
+      "lats",
+      "back",
+      "arms"
+    ],
+    "primaryMuscles": [
+      "lats",
+      "back"
+    ],
+    "secondaryMuscles": [
+      "arms",
+      "core"
+    ],
     "category": "strength",
-    "goals": ["strength", "hypertrophy"],
-    "equipment": ["gym machines", "resistance bands"],
-    "constraints": ["wrist-safe"],
-    "whatYouShouldFeel": ["Upper back/lats pulling you up (not just your biceps).", "Shoulders stay down away from your ears."],
-    "breathingTips": ["Inhale at the bottom hang.", "Exhale as you pull up; inhale as you lower with control."],
+    "equipment": [
+      "gym machines",
+      "resistance bands"
+    ],
+    "constraints": [
+      "wrist-safe"
+    ],
+    "whatYouShouldFeel": [
+      "Upper back/lats pulling you up (not just your biceps).",
+      "Shoulders stay down away from your ears."
+    ],
+    "breathingTips": [
+      "Inhale at the bottom hang.",
+      "Exhale as you pull up; inhale as you lower with control."
+    ],
     "setsReps": {
       "strength": "4–6 sets × 2–5 reps (rest 2–3 min)",
       "hypertrophy": "3–5 sets × 5–10 reps (rest 90 sec)",
       "endurance": "2–4 sets × 8–15 reps (rest 60 sec)"
     },
-    "workoutRole": ["main lift", "accessory"],
+    "workoutRole": [
+      "main lift",
+      "accessory"
+    ],
     "pairingSuggestions": [
       "Pair with Push-Up for push/pull balance",
       "Combine into a routine: Pull-Up → Lunge → Crunch (2–3 rounds)"
@@ -466,21 +668,43 @@
     "supabaseId": 1,
     "description": "A foundational ab exercise that teaches controlled spinal flexion and core engagement. Crunches help beginners understand how to lift the ribcage with tension in the core, building a safer base for more advanced ab movements.",
     "difficulty": "beginner",
-    "muscleGroups": ["rectus abdominis", "core"],
-    "primaryMuscles": ["core", "rectus abdominis"],
-    "secondaryMuscles": ["obliques"],
+    "muscleGroups": [
+      "rectus abdominis",
+      "core"
+    ],
+    "primaryMuscles": [
+      "core",
+      "rectus abdominis"
+    ],
+    "secondaryMuscles": [
+      "obliques"
+    ],
     "category": "endurance",
-    "goals": ["strength", "endurance"],
-    "equipment": ["none"],
-    "constraints": ["apartment/no jumping", "wrist-safe", "knee-friendly"],
-    "whatYouShouldFeel": ["Front abs working (not your neck).", "Ribs gently pulling down as you crunch."],
-    "breathingTips": ["Exhale as you crunch up.", "Inhale as you lower with control."],
+    "equipment": [
+      "none"
+    ],
+    "constraints": [
+      "apartment/no jumping",
+      "wrist-safe",
+      "knee-friendly"
+    ],
+    "whatYouShouldFeel": [
+      "Front abs working (not your neck).",
+      "Ribs gently pulling down as you crunch."
+    ],
+    "breathingTips": [
+      "Exhale as you crunch up.",
+      "Inhale as you lower with control."
+    ],
     "setsReps": {
       "strength": "3–4 sets × 8–12 reps (rest 60 sec)",
       "hypertrophy": "3–4 sets × 12–20 reps (rest 45–60 sec)",
       "endurance": "2–4 sets × 20–40 seconds (rest 30 sec)"
     },
-    "workoutRole": ["accessory", "finisher"],
+    "workoutRole": [
+      "accessory",
+      "finisher"
+    ],
     "pairingSuggestions": [
       "Superset with Push-Up (push + core)",
       "Combine into a routine: Squat → Push-Up → Crunch (2–3 rounds)"
