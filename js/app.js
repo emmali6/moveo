@@ -1060,44 +1060,85 @@ function nameKeyForMatch(str) {
 function mergeSupabaseVideosIntoExercises(localList, supabaseRows, sb) {
   if (!supabaseRows?.length) return localList;
 
-  const urlByKey = new Map();
+  const byId = new Map();
+  const byName = new Map();
+  const usedIds = new Set();
+  (Array.isArray(localList) ? localList : []).forEach((ex, idx) => {
+    const id = String(ex?.id || '').toLowerCase();
+    if (id) {
+      byId.set(id, idx);
+      usedIds.add(id);
+    }
+    const nk = nameKeyForMatch(ex?.name);
+    if (nk) byName.set(`name:${nk}`, idx);
+  });
+
+  const out = (Array.isArray(localList) ? localList : []).map((x) => ({ ...x }));
+
   supabaseRows.forEach((row) => {
     const url = resolveExerciseVideoUrl(sb, row);
-    if (!url) {
-      console.warn('Moveo: exercise row has no resolvable video URL:', row.name || row.id, row);
-      return;
-    }
-
-    const keys = [
+    const matchKeys = [
       row.slug,
       row.exercise_id,
       row.exercise_key,
       row.key,
-    ].filter((k) => k != null && String(k).trim() !== '');
-
-    keys.forEach((k) => urlByKey.set(String(k).toLowerCase(), url));
-
-    if (row.id != null) {
-      urlByKey.set(String(row.id).toLowerCase(), url);
-    }
+      row.id,
+    ]
+      .filter((k) => k != null && String(k).trim() !== '')
+      .map((k) => String(k).toLowerCase());
 
     const nk = nameKeyForMatch(row.name);
-    if (nk) urlByKey.set(`name:${nk}`, url);
+    const nameKey = nk ? `name:${nk}` : null;
+
+    let idx = null;
+    for (const k of matchKeys) {
+      if (byId.has(k)) {
+        idx = byId.get(k);
+        break;
+      }
+    }
+    if (idx == null && nameKey && byName.has(nameKey)) {
+      idx = byName.get(nameKey);
+    }
+
+    if (idx != null) {
+      if (url) out[idx] = { ...out[idx], previewVideo: url };
+      return;
+    }
+
+    // No match: create a new exercise entry so Supabase-only exercises appear in the library.
+    const normalized = normalizeExerciseFromSupabase(row);
+    const baseId =
+      (row.slug && String(row.slug).trim()) ||
+      (row.exercise_id && String(row.exercise_id).trim()) ||
+      (row.id != null ? String(row.id).trim() : '') ||
+      (nk ? `sb-${nk}` : '');
+
+    let id = String(baseId || '').toLowerCase();
+    if (!id) return;
+    if (usedIds.has(id)) {
+      // Extremely unlikely, but guarantee uniqueness.
+      let n = 2;
+      while (usedIds.has(`${id}-${n}`)) n += 1;
+      id = `${id}-${n}`;
+    }
+    usedIds.add(id);
+
+    const created = {
+      ...normalized,
+      id,
+      // Prefer resolved Storage/public URL when available.
+      previewVideo: url || normalized.previewVideo || null,
+      // Keep the raw Supabase row id for troubleshooting/mapping.
+      supabaseId: row.id != null ? String(row.id) : undefined,
+    };
+
+    out.push(created);
+    byId.set(id, out.length - 1);
+    if (nameKey) byName.set(nameKey, out.length - 1);
   });
 
-  return localList.map((ex) => {
-    const supabaseIdKey =
-      ex.supabaseId != null ? String(ex.supabaseId).toLowerCase() : null;
-
-    let videoUrl =
-      urlByKey.get(String(ex.id).toLowerCase()) ||
-      (supabaseIdKey ? urlByKey.get(supabaseIdKey) : null) ||
-      urlByKey.get(`name:${nameKeyForMatch(ex.name)}`);
-
-    if (!videoUrl) return ex;
-
-    return { ...ex, previewVideo: videoUrl };
-  });
+  return out;
 }
 
 // Load exercises: local JSON catalog + Supabase videos merged in (same ids/names as site exercises)
