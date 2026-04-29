@@ -83,6 +83,7 @@ let bookmarkedExercises = [];
 let currentExercise = null;
 let animationSpeed = 1.0;
 let isPlaying = false;
+// Kept for backward compatibility with older cached HTML/JS; no UI uses this anymore.
 let showMuscleHighlight = false;
 let visibleHomeCount = 6;
 let visibleExercisesCount = 12;
@@ -1498,17 +1499,6 @@ function renderExerciseDetail(exercise, options = {}) {
             </svg>
             Slow Motion
           </button>
-          
-          <button 
-            id="highlightMusclesBtn" 
-            class="control-btn ${showMuscleHighlight ? 'active' : ''}" 
-            onclick="toggleMuscleHighlight()"
-            aria-label="Toggle muscle highlight">
-            <svg aria-hidden="true" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-            Highlight Muscles
-          </button>
         </div>
       </div>
       
@@ -1548,7 +1538,7 @@ function renderExerciseDetail(exercise, options = {}) {
           <h3>Target Muscles</h3>
           <div id="muscleTags">
             ${exercise.muscleGroups.map(muscle => 
-              `<span class="muscle-highlight ${showMuscleHighlight ? 'active' : ''}">${muscle}</span>`
+              `<span class="muscle-highlight">${muscle}</span>`
             ).join('')}
           </div>
         </div>
@@ -1799,28 +1789,7 @@ function toggleSlowMotion() {
   announceToScreenReader(`Slow motion ${animationSpeed === 0.5 ? 'enabled' : 'disabled'}`);
 }
 
-// Toggle muscle highlight
-function toggleMuscleHighlight() {
-  showMuscleHighlight = !showMuscleHighlight;
-  const btn = document.getElementById('highlightMusclesBtn');
-  const muscleTags = document.querySelectorAll('.muscle-highlight');
-  const muscleGroups = document.querySelector('.muscle-groups');
-  
-  if (btn) {
-    btn.classList.toggle('active', showMuscleHighlight);
-    btn.setAttribute('aria-label', `Muscle highlight ${showMuscleHighlight ? 'on' : 'off'}`);
-  }
-
-  if (muscleGroups) {
-    muscleGroups.classList.toggle('muscle-focus', showMuscleHighlight);
-  }
-  
-  muscleTags.forEach(tag => {
-    tag.classList.toggle('active', showMuscleHighlight);
-  });
-  
-  announceToScreenReader(`Muscle highlight ${showMuscleHighlight ? 'enabled' : 'disabled'}`);
-}
+// (Removed) Muscle highlight toggle UI
 
 // Toggle bookmark
 function toggleBookmark(exerciseId) {
@@ -1971,6 +1940,5 @@ window.viewExercise = viewExercise;
 window.toggleBookmark = toggleBookmark;
 window.togglePlayPause = togglePlayPause;
 window.toggleSlowMotion = toggleSlowMotion;
-window.toggleMuscleHighlight = toggleMuscleHighlight;
 window.toggleTipsOverlay = toggleTipsOverlay;
 window.backToGallery = backToGallery;
