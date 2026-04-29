@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=ui-fix-202604b">
+    <link rel="stylesheet" href="css/styles.css?v=runner-preview-20260429a">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme" data-page="workouts">
@@ -77,6 +77,17 @@
                                 <button type="button" class="btn-secondary btn-link" id="runnerNextSetBtn">Complete set → Rest</button>
                                 <button type="button" class="btn-secondary btn-link" id="runnerEndBtn">End session</button>
                             </div>
+                            <details id="runnerNowPlaying" class="runner-now-playing" aria-label="Current exercise video">
+                                <summary class="runner-now-summary">
+                                    <span class="runner-now-kicker">Current exercise</span>
+                                    <span id="runnerNowTitle" class="runner-now-title">—</span>
+                                    <span class="runner-now-hint">Tap to expand</span>
+                                </summary>
+                                <div class="runner-now-body">
+                                    <div id="runnerNowMedia" class="runner-now-media"></div>
+                                    <div id="runnerNowMeta" class="runner-now-meta"></div>
+                                </div>
+                            </details>
                             <div id="runnerExerciseList" class="runner-exercise-list" role="list" aria-label="Set and rep tracker"></div>
                         </div>
                     </div>
@@ -108,7 +119,7 @@
         </div>
     </footer>
 
-    <script src="js/app.js?v=ui-fix-202604a"></script>
+    <script src="js/app.js?v=runner-preview-20260429a"></script>
 </body>
 </html>
 

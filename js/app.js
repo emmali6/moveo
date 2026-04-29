@@ -426,14 +426,16 @@ function renderRunnerExercises() {
   if (!runnerState) return;
   const listEl = document.getElementById('runnerExerciseList');
   if (!listEl) return;
+  renderRunnerNowPlaying();
   listEl.innerHTML = runnerState.exercises.map((ex, idx) => {
     const pills = Array.from({ length: ex.sets }).map((_, i) => {
       const done = i < ex.completedSets;
       return `<span class="set-pill ${done ? 'done' : ''}">Set ${i + 1}</span>`;
     }).join('');
-    const active = idx === runnerState.activeExerciseIndex ? ' style="border-left: 4px solid var(--primary);"' : '';
+    const isActive = idx === runnerState.activeExerciseIndex;
+    const active = isActive ? ' style="border-left: 4px solid var(--primary);"' : '';
     return `
-      <div class="runner-ex" role="listitem"${active}>
+      <div class="runner-ex" role="button" tabindex="0" data-runner-idx="${idx}" aria-label="Show video for ${ex.name}"${active}>
         <div class="runner-ex-top">
           <div class="runner-ex-name">${ex.name}</div>
           <div class="runner-ex-prescription">${ex.sets} × ${ex.reps} · rest ${Math.round(ex.rest / 60)}m</div>
@@ -442,6 +444,65 @@ function renderRunnerExercises() {
       </div>
     `;
   }).join('');
+
+  // Bind click/keyboard to swap current exercise preview without leaving the page
+  listEl.querySelectorAll('[data-runner-idx]').forEach((el) => {
+    if (el.dataset.bound === 'true') return;
+    el.dataset.bound = 'true';
+    const go = () => {
+      const idx = Number(el.dataset.runnerIdx);
+      if (!Number.isFinite(idx) || !runnerState) return;
+      runnerState.activeExerciseIndex = Math.max(0, Math.min(idx, runnerState.exercises.length - 1));
+      renderRunnerExercises();
+      updateRunnerUI();
+    };
+    el.addEventListener('click', go);
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        go();
+      }
+    });
+  });
+}
+
+function renderRunnerNowPlaying() {
+  if (!runnerState) return;
+  const details = document.getElementById('runnerNowPlaying');
+  const titleEl = document.getElementById('runnerNowTitle');
+  const mediaEl = document.getElementById('runnerNowMedia');
+  const metaEl = document.getElementById('runnerNowMeta');
+  if (!details || !titleEl || !mediaEl || !metaEl) return;
+
+  const ex = runnerState.exercises[runnerState.activeExerciseIndex];
+  if (!ex) return;
+  titleEl.textContent = ex.name || '—';
+
+  const full = exercises.find((e) => e.id === ex.id);
+  const videoUrl = full?.previewVideo || '';
+
+  metaEl.textContent = `${ex.sets} × ${ex.reps} · rest ${Math.round(ex.rest / 60)}m`;
+
+  if (videoUrl) {
+    mediaEl.innerHTML = `
+      <video
+        src="${videoUrl}"
+        controls
+        playsinline
+        preload="metadata"
+        aria-label="Video demonstration of ${ex.name}">
+      </video>
+    `;
+  } else {
+    mediaEl.innerHTML = `
+      <div class="runner-now-placeholder">
+        Video not available for this exercise yet.
+        <div style="margin-top: 0.5rem;">
+          <a class="btn-secondary btn-link" href="exercise.html?id=${encodeURIComponent(ex.id)}">Open exercise page</a>
+        </div>
+      </div>
+    `;
+  }
 }
 
 async function loadRoutines() {
