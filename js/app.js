@@ -1030,19 +1030,37 @@ function getBaseUrl() {
 function normalizeExerciseFromSupabase(row) {
   const id = row.id != null ? String(row.id) : '';
   const videoUrl = row.video_url || row.preview_video || row.previewVideo || null;
+  const muscleGroups = row.muscle_groups || row.muscleGroups || [];
+  const primaryMuscles = row.primary_muscles || row.primaryMuscles || muscleGroups || [];
+  const secondaryMuscles = row.secondary_muscles || row.secondaryMuscles || [];
   return {
     id,
     name: row.name || 'Exercise',
     description: row.description || '',
     duration: row.duration != null ? Number(row.duration) : 5,
     difficulty: row.difficulty || 'beginner',
-    category: row.category || 'strength',
+    category: (row.category || 'strength').toLowerCase(),
     previewVideo: videoUrl,
-    muscleGroups: row.muscle_groups || row.muscleGroups || [],
-    tips: row.tips || [],
-    commonMistakes: row.common_mistakes || row.commonMistakes,
-    progression: row.progression,
-    rhythm: row.rhythm,
+    muscleGroups: Array.isArray(muscleGroups) ? muscleGroups : [],
+    primaryMuscles: Array.isArray(primaryMuscles) ? primaryMuscles : [],
+    secondaryMuscles: Array.isArray(secondaryMuscles) ? secondaryMuscles : [],
+    goals: Array.isArray(row.goals) ? row.goals : [],
+    equipment: Array.isArray(row.equipment) ? row.equipment : [],
+    constraints: Array.isArray(row.constraints) ? row.constraints : [],
+    whatYouShouldFeel: Array.isArray(row.what_you_should_feel || row.whatYouShouldFeel) ? (row.what_you_should_feel || row.whatYouShouldFeel) : [],
+    breathingTips: Array.isArray(row.breathing_tips || row.breathingTips) ? (row.breathing_tips || row.breathingTips) : [],
+    setsReps: row.sets_reps || row.setsReps || null,
+    workoutRole: Array.isArray(row.workout_role || row.workoutRole) ? (row.workout_role || row.workoutRole) : [],
+    pairingSuggestions: Array.isArray(row.pairing_suggestions || row.pairingSuggestions) ? (row.pairing_suggestions || row.pairingSuggestions) : [],
+    limitedMobilityAlternatives: Array.isArray(row.limited_mobility_alternatives || row.limitedMobilityAlternatives)
+      ? (row.limited_mobility_alternatives || row.limitedMobilityAlternatives)
+      : [],
+    modifications: Array.isArray(row.modifications) ? row.modifications : [],
+    amplifications: Array.isArray(row.amplifications) ? row.amplifications : [],
+    tips: Array.isArray(row.tips) ? row.tips : [],
+    commonMistakes: row.common_mistakes || row.commonMistakes || [],
+    progression: row.progression || [],
+    rhythm: row.rhythm || null,
   };
 }
 
@@ -1131,6 +1149,7 @@ function mergeSupabaseVideosIntoExercises(localList, supabaseRows, sb) {
       previewVideo: url || normalized.previewVideo || null,
       // Keep the raw Supabase row id for troubleshooting/mapping.
       supabaseId: row.id != null ? String(row.id) : undefined,
+      createdFromSupabase: true,
     };
 
     out.push(created);
@@ -1551,6 +1570,9 @@ function renderExerciseDetail(exercise, options = {}) {
   const backMarkup = `<a href="${backUrl}" class="btn-secondary btn-link">← Back to Gallery</a>`;
   
   const isBookmarked = bookmarkedExercises.includes(exercise.id);
+  const showPlaceholders = !!exercise.createdFromSupabase;
+  const placeholderLine = (msg) => `<p class="workout-help" style="margin-top: 0.25rem;">${msg}</p>`;
+  const placeholderList = (msg) => `<ul class="cue-list"><li>${msg}</li></ul>`;
   
   detailContainer.innerHTML = `
     <div class="exercise-detail">
@@ -1645,20 +1667,20 @@ function renderExerciseDetail(exercise, options = {}) {
           </div>
         </div>
 
-        ${Array.isArray(exercise.whatYouShouldFeel) && exercise.whatYouShouldFeel.length ? `
+        ${(Array.isArray(exercise.whatYouShouldFeel) && exercise.whatYouShouldFeel.length) || showPlaceholders ? `
           <div class="cue-block">
             <h3>What you should feel</h3>
-            <ul class="cue-list">
-              ${exercise.whatYouShouldFeel.map((c) => `<li>${c}</li>`).join('')}
-            </ul>
+            ${(Array.isArray(exercise.whatYouShouldFeel) && exercise.whatYouShouldFeel.length)
+              ? `<ul class="cue-list">${exercise.whatYouShouldFeel.map((c) => `<li>${c}</li>`).join('')}</ul>`
+              : placeholderList('Coming soon — add “what you should feel” to this Supabase exercise to show it here.')}
           </div>` : ''}
 
-        ${Array.isArray(exercise.breathingTips) && exercise.breathingTips.length ? `
+        ${(Array.isArray(exercise.breathingTips) && exercise.breathingTips.length) || showPlaceholders ? `
           <div class="cue-block">
             <h3>Breathing</h3>
-            <ul class="cue-list">
-              ${exercise.breathingTips.map((c) => `<li>${c}</li>`).join('')}
-            </ul>
+            ${(Array.isArray(exercise.breathingTips) && exercise.breathingTips.length)
+              ? `<ul class="cue-list">${exercise.breathingTips.map((c) => `<li>${c}</li>`).join('')}</ul>`
+              : placeholderList('Coming soon — add breathing tips to this Supabase exercise to show them here.')}
           </div>` : ''}
 
         ${shouldShowNoEquipmentAlternatives(exercise) ? `
@@ -1669,22 +1691,24 @@ function renderExerciseDetail(exercise, options = {}) {
             </ul>
           </div>` : ''}
 
-        ${Array.isArray(exercise.limitedMobilityAlternatives) && exercise.limitedMobilityAlternatives.length ? `
+        ${(Array.isArray(exercise.limitedMobilityAlternatives) && exercise.limitedMobilityAlternatives.length) || showPlaceholders ? `
           <div class="cue-block">
             <h3>Limited mobility alternatives</h3>
-            <ul class="cue-list">
-              ${exercise.limitedMobilityAlternatives.map((c) => `<li>${c}</li>`).join('')}
-            </ul>
+            ${(Array.isArray(exercise.limitedMobilityAlternatives) && exercise.limitedMobilityAlternatives.length)
+              ? `<ul class="cue-list">${exercise.limitedMobilityAlternatives.map((c) => `<li>${c}</li>`).join('')}</ul>`
+              : placeholderList('Coming soon — add limited mobility alternatives to this Supabase exercise to show them here.')}
           </div>` : ''}
 
-        ${exercise.setsReps ? `
+        ${exercise.setsReps || showPlaceholders ? `
           <div class="cue-block">
             <h3>Suggested sets & reps</h3>
-            <ul class="cue-list">
-              ${exercise.setsReps.strength ? `<li><strong>Strength:</strong> ${exercise.setsReps.strength}</li>` : ''}
-              ${exercise.setsReps.hypertrophy ? `<li><strong>Hypertrophy:</strong> ${exercise.setsReps.hypertrophy}</li>` : ''}
-              ${exercise.setsReps.endurance ? `<li><strong>Endurance:</strong> ${exercise.setsReps.endurance}</li>` : ''}
-            </ul>
+            ${exercise.setsReps ? `
+              <ul class="cue-list">
+                ${exercise.setsReps.strength ? `<li><strong>Strength:</strong> ${exercise.setsReps.strength}</li>` : ''}
+                ${exercise.setsReps.hypertrophy ? `<li><strong>Hypertrophy:</strong> ${exercise.setsReps.hypertrophy}</li>` : ''}
+                ${exercise.setsReps.endurance ? `<li><strong>Endurance:</strong> ${exercise.setsReps.endurance}</li>` : ''}
+              </ul>
+            ` : placeholderLine('Coming soon — add a sets/reps preset in Supabase (strength/hypertrophy/endurance) to show it here.')}
           </div>` : ''}
 
         ${Array.isArray(exercise.workoutRole) && exercise.workoutRole.length ? `
@@ -1693,12 +1717,12 @@ function renderExerciseDetail(exercise, options = {}) {
             <p class="cue-inline">${exercise.workoutRole.join(' · ')}</p>
           </div>` : ''}
 
-        ${Array.isArray(exercise.pairingSuggestions) && exercise.pairingSuggestions.length ? `
+        ${(Array.isArray(exercise.pairingSuggestions) && exercise.pairingSuggestions.length) || showPlaceholders ? `
           <div class="cue-block">
             <h3>Pairing ideas</h3>
-            <ul class="cue-list">
-              ${exercise.pairingSuggestions.map((c) => `<li>${c}</li>`).join('')}
-            </ul>
+            ${(Array.isArray(exercise.pairingSuggestions) && exercise.pairingSuggestions.length)
+              ? `<ul class="cue-list">${exercise.pairingSuggestions.map((c) => `<li>${c}</li>`).join('')}</ul>`
+              : placeholderList('Coming soon — add pairing suggestions to this Supabase exercise to show them here.')}
           </div>` : ''}
         
         <button 
@@ -1713,7 +1737,9 @@ function renderExerciseDetail(exercise, options = {}) {
       <div id="tipsOverlay" class="tips-overlay hidden" role="region" aria-labelledby="tipsHeading">
         <h3 id="tipsHeading">Form Tips</h3>
         <ul class="tips-list">
-          ${exercise.tips.map(tip => `<li>${tip}</li>`).join('')}
+          ${(Array.isArray(exercise.tips) && exercise.tips.length)
+            ? exercise.tips.map(tip => `<li>${tip}</li>`).join('')
+            : (showPlaceholders ? '<li>Add form tips in Supabase to show them here.</li>' : '')}
         </ul>
         
         ${exercise.commonMistakes ? `
