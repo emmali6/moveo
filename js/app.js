@@ -566,6 +566,39 @@ function isBodyweightOnly(ex) {
   return !eq.length || eq.includes('none');
 }
 
+function listToHuman(items, max = 3) {
+  const arr = (Array.isArray(items) ? items : []).map((x) => String(x || '').trim()).filter(Boolean);
+  if (!arr.length) return '';
+  const cut = arr.slice(0, max);
+  return cut.join(', ') + (arr.length > max ? '…' : '');
+}
+
+function generateExerciseDescription(ex) {
+  const name = String(ex?.name || 'This exercise');
+  const category = normalizeFilterValue(ex?.category);
+  const primary = Array.isArray(ex?.primaryMuscles) && ex.primaryMuscles.length ? ex.primaryMuscles : ex?.muscleGroups;
+  const muscle = listToHuman(primary, 2);
+  const equipment = listToHuman(ex?.equipment, 2) || 'minimal equipment';
+
+  const base = muscle ? `${name} targets ${muscle}.` : `${name} is a simple movement you can repeat with good form.`;
+
+  if (category === 'mobility') return `${base} Use it to open up range of motion and feel looser before or after training.`;
+  if (category === 'rehab') return `${base} Keep reps controlled and pain-free—think stability, control, and joint-friendly range.`;
+  if (category === 'endurance') return `${base} Keep breathing steady and aim for smooth reps to build stamina and conditioning.`;
+  if (category === 'hypertrophy') return `${base} Slow the tempo and chase a solid pump—great for muscle-building sets.`;
+  return `${base} A strong pick for building strength with ${equipment}.`;
+}
+
+function shouldRegenerateDescription(desc) {
+  const d = String(desc || '').trim();
+  if (!d) return true;
+  // Catch the imported-library boilerplate style.
+  if (/^a\s+(beginner|intermediate|advanced)-friendly\s+/i.test(d)) return true;
+  if (/^a\s+\w+-friendly\s+(strength|mobility|endurance|rehab)\s+move/i.test(d)) return true;
+  if (d.includes('This is a') && d.includes('that uses')) return true;
+  return false;
+}
+
 function buildAutoRoutinesFromCatalog(allExercises, existingRoutines) {
   const existingIds = new Set((existingRoutines || []).map((r) => String(r?.id || '').toLowerCase()));
   const ex = Array.isArray(allExercises) ? allExercises : [];
@@ -599,14 +632,14 @@ function buildAutoRoutinesFromCatalog(allExercises, existingRoutines) {
   const calisthenicsLike = ex.filter((e) => isBodyweightOnly(e) && ['strength', 'endurance', 'mobility'].includes(normalizeFilterValue(e.category)));
 
   const templates = [
-    { id: 'auto-mobility-flow-20', name: 'Mobility Flow (20 min)', minutes: 20, goals: ['mobility', 'stretching'], pool: mobility.concat(rehab).concat(yogaLike), count: 7 },
-    { id: 'auto-yoga-reset-30', name: 'Yoga Reset (30 min)', minutes: 30, goals: ['mobility', 'stretching'], pool: yogaLike, count: 10 },
-    { id: 'auto-endurance-cardio-25', name: 'Cardio Endurance (25 min)', minutes: 25, goals: ['endurance', 'cardio'], pool: endurance.length ? endurance : ex, count: 8 },
-    { id: 'auto-strength-fullbody-30', name: 'Full Body Strength (30 min)', minutes: 30, goals: ['strength', 'full body'], pool: strength, count: 8 },
-    { id: 'auto-hypertrophy-upper-35', name: 'Upper Body Hypertrophy (35 min)', minutes: 35, goals: ['hypertrophy', 'upper body'], pool: hypertrophy.filter((e) => upperLike.includes(e)), count: 8 },
-    { id: 'auto-strength-lower-35', name: 'Lower Body Strength (35 min)', minutes: 35, goals: ['strength', 'lower body'], pool: strength.filter((e) => lowerLike.includes(e)), count: 8 },
-    { id: 'auto-core-builder-15', name: 'Core Builder (15 min)', minutes: 15, goals: ['strength', 'core'], pool: coreLike.length ? coreLike : strength, count: 6 },
-    { id: 'auto-calisthenics-30', name: 'Calisthenics Circuit (30 min)', minutes: 30, goals: ['strength', 'endurance', 'calisthenics'], pool: calisthenicsLike, count: 9 },
+    { id: 'auto-mobility-flow-20', name: 'Mobility Flow (20 min)', minutes: 20, goals: ['mobility', 'stretching'], pool: mobility.concat(rehab).concat(yogaLike), count: 7, description: 'A joint-friendly flow to loosen hips/hamstrings/shoulders and prep you for training (or unwind after).' },
+    { id: 'auto-yoga-reset-30', name: 'Yoga Reset (30 min)', minutes: 30, goals: ['mobility', 'stretching'], pool: yogaLike, count: 10, description: 'A longer reset session: breathing, stretches, and gentle holds to downshift and recover.' },
+    { id: 'auto-endurance-cardio-25', name: 'Cardio Endurance (25 min)', minutes: 25, goals: ['endurance', 'cardio'], pool: endurance.length ? endurance : ex, count: 8, description: 'Keep moving. This session favors steady pace, shorter rests, and repeatable reps to build stamina.' },
+    { id: 'auto-strength-fullbody-30', name: 'Full Body Strength (30 min)', minutes: 30, goals: ['strength', 'full body'], pool: strength, count: 8, description: 'A balanced strength session covering legs, push, pull, and core with clean, controlled reps.' },
+    { id: 'auto-hypertrophy-upper-35', name: 'Upper Body Hypertrophy (35 min)', minutes: 35, goals: ['hypertrophy', 'upper body'], pool: hypertrophy.filter((e) => upperLike.includes(e)), count: 8, description: 'Upper body volume work for chest/back/shoulders/arms. Slow reps, solid pump, repeatable sets.' },
+    { id: 'auto-strength-lower-35', name: 'Lower Body Strength (35 min)', minutes: 35, goals: ['strength', 'lower body'], pool: strength.filter((e) => lowerLike.includes(e)), count: 8, description: 'Lower-body focused strength: squats/lunges/hinges and glute work with longer rests.' },
+    { id: 'auto-core-builder-15', name: 'Core Builder (15 min)', minutes: 15, goals: ['strength', 'core'], pool: coreLike.length ? coreLike : strength, count: 6, description: 'Quick core session to build bracing and control. Great as a finisher or a stand-alone mini-workout.' },
+    { id: 'auto-calisthenics-30', name: 'Calisthenics Circuit (30 min)', minutes: 30, goals: ['strength', 'endurance', 'calisthenics'], pool: calisthenicsLike, count: 9, description: 'Bodyweight circuit that blends strength + conditioning. Minimal equipment, easy to do anywhere.' },
   ];
 
   const out = [];
@@ -623,7 +656,7 @@ function buildAutoRoutinesFromCatalog(allExercises, existingRoutines) {
       goals: t.goals,
       equipment: ['none'],
       constraints: ['apartment/no jumping'],
-      description: 'Auto-generated from your current exercise library (updates as you add more exercises).',
+      description: t.description || 'Auto-generated from your current exercise library (updates as you add more exercises).',
       blocks: [{ title: 'Session', items }],
       auto: true,
     });
@@ -661,6 +694,7 @@ function renderDailyWorkout() {
     <div class="daily-actions">
       <a href="${href}" class="btn-primary btn-link">Start with timer</a>
       <a href="${getBaseUrl()}workouts.html?routine=${encodeURIComponent(r.id)}" class="btn-secondary btn-link">Load into builder</a>
+      <button type="button" class="btn-secondary btn-link" onclick="document.getElementById('dailyExerciseContent')?.scrollIntoView({ behavior: 'smooth', block: 'start' })">Exercise of the Day</button>
     </div>
   `;
 }
@@ -1422,6 +1456,7 @@ async function loadExercises() {
           return {
             ...ex,
             inferredConstraints: hasExplicit ? [] : inferConstraintsForExercise(ex),
+            description: shouldRegenerateDescription(ex?.description) ? generateExerciseDescription(ex) : (ex?.description || ''),
           };
         });
         const withVideo = exercises.filter((e) => e.previewVideo && /^https?:\/\//i.test(e.previewVideo)).length;
@@ -1442,6 +1477,7 @@ async function loadExercises() {
     return {
       ...ex,
       inferredConstraints: hasExplicit ? [] : inferConstraintsForExercise(ex),
+      description: shouldRegenerateDescription(ex?.description) ? generateExerciseDescription(ex) : (ex?.description || ''),
     };
   });
 }
@@ -1469,6 +1505,8 @@ function setupEventListeners() {
   // Navigation
   const learnMoveBtn = document.getElementById('learnMoveBtn');
   const workoutOfDayBtn = document.getElementById('workoutOfDayBtn');
+  const jumpDailyExerciseBtn = document.getElementById('jumpDailyExerciseBtn');
+  const jumpDailyWorkoutBtn = document.getElementById('jumpDailyWorkoutBtn');
   
   if (learnMoveBtn) {
     learnMoveBtn.addEventListener('click', () => {
@@ -1486,6 +1524,20 @@ function setupEventListeners() {
         return;
       }
       window.location.href = getBaseUrl() + 'workouts.html';
+    });
+  }
+
+  if (jumpDailyExerciseBtn) {
+    jumpDailyExerciseBtn.addEventListener('click', () => {
+      document.getElementById('dailyExerciseContent')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      announceToScreenReader('Navigated to exercise of the day');
+    });
+  }
+
+  if (jumpDailyWorkoutBtn) {
+    jumpDailyWorkoutBtn.addEventListener('click', () => {
+      document.getElementById('dailyWorkoutContent')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      announceToScreenReader('Navigated to workout of the day');
     });
   }
   
@@ -2336,6 +2388,7 @@ function setDailyExercise() {
     <div class="daily-actions">
       <a href="${exerciseUrl}" class="btn-primary btn-link">Try It Now</a>
       <a href="${exerciseUrl}" class="btn-secondary btn-link">View details</a>
+      <button type="button" class="btn-secondary btn-link" onclick="document.getElementById('dailyWorkoutContent')?.scrollIntoView({ behavior: 'smooth', block: 'start' })">Workout of the Day</button>
     </div>
   `;
 }

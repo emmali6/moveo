@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Moveo - Learn exercises through playful, inclusive animations. Making fitness accessible and less intimidating for everyone.">
+    <meta name="description" content="Moveo - Learn exercise form with clear cues and slow motion, then run a Workout of the Day with an in-app timer. Beginner-friendly, mobile-first fitness.">
     <meta name="theme-color" content="#1a1d28">
     <title>Moveo - Movement Made Simple</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=responsive-mobile-20260430c">
+    <link rel="stylesheet" href="css/styles.css?v=copy-desc-buttons-20260430d">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme">
@@ -45,7 +45,7 @@
                     <p class="hero-blurb-text">
                         Unlike crowded fitness apps or intimidating gym videos, Moveo is built for <strong>beginners and anyone who feels unsure about form</strong>.
                         We use <strong>friendly animations</strong> instead of harsh live footage, so you can learn <strong>how and why</strong> each move works—without judgment.
-                        Short, clear cues, muscle highlights, and slow-motion controls help you train <strong>safely and confidently</strong>, whether you’re at home, in a dorm, or between meetings.
+                        Short, clear cues and slow-motion controls help you train <strong>safely and confidently</strong>, whether you’re at home, in a dorm, or between meetings.
                         Moveo is your low-pressure entry point to moving more—<strong>inclusive, visual, and made to feel doable</strong>.
                     </p>
                 </div>
@@ -71,6 +71,10 @@
         <section class="section-light" aria-labelledby="daily-heading">
             <div class="container">
                 <div class="daily-grid" role="region" aria-label="Daily picks">
+                    <div class="daily-pick-actions" role="group" aria-label="Jump to daily picks">
+                        <button type="button" class="btn-secondary btn-link" id="jumpDailyExerciseBtn">Exercise of the Day</button>
+                        <button type="button" class="btn-secondary btn-link" id="jumpDailyWorkoutBtn">Workout of the Day</button>
+                    </div>
                     <div class="daily-exercise">
                         <span class="section-label section-label-dark" role="status" aria-live="polite">Exercise of the Day</span>
                         <div id="dailyExerciseContent" role="region" aria-labelledby="daily-heading">
@@ -189,6 +193,6 @@
         </div>
     </footer>
 
-    <script src="js/app.js?v=responsive-mobile-20260430c"></script>
+    <script src="js/app.js?v=copy-desc-buttons-20260430d"></script>
 </body>
 </html>
