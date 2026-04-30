@@ -1898,6 +1898,64 @@ button:focus-visible {
   font-weight: 600;
 }
 
+/* Responsive Design - Mobile */
+@media (max-width: 480px) {
+  .site-header {
+    padding: 0.65rem 0;
+  }
+
+  .nav-inner {
+    padding: 0 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.35rem;
+  }
+
+  .nav-link {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .hero {
+    padding: 3rem 1rem 4rem;
+  }
+
+  .hero-blurb {
+    padding: 1.1rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .action-buttons {
+    margin: 1.25rem 0 0;
+    gap: 0.75rem;
+  }
+
+  .action-buttons button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .section-light {
+    padding: 2rem 0;
+  }
+
+  .section-dark {
+    padding: 2.5rem 0;
+  }
+
+  .daily-exercise {
+    padding: 1.25rem;
+  }
+
+  .exercise-search-wrap {
+    max-width: none;
+  }
+}
+
 /* Responsive Design - Tablet */
 @media (min-width: 768px) {
   .container {
