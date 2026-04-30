@@ -1012,6 +1012,22 @@ button:focus-visible {
   animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
+.daily-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .daily-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+
+  .daily-grid .daily-exercise {
+    height: 100%;
+  }
+}
+
 .daily-workout-card {
   margin-bottom: 1.25rem;
 }

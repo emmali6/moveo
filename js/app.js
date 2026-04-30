@@ -87,6 +87,7 @@ let isPlaying = false;
 let showMuscleHighlight = false;
 let visibleHomeCount = 6;
 let visibleExercisesCount = 12;
+let visibleRoutinesCount = 6;
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
@@ -668,7 +669,20 @@ function setupRoutineFilters() {
   const sel = document.getElementById('routineMinutes');
   if (!sel || sel.dataset.bound === 'true') return;
   sel.dataset.bound = 'true';
-  sel.addEventListener('change', renderRoutineGrid);
+  sel.addEventListener('change', () => {
+    visibleRoutinesCount = 6;
+    renderRoutineGrid();
+  });
+
+  const btn = document.getElementById('showMoreRoutinesBtn');
+  if (btn && btn.dataset.bound !== 'true') {
+    btn.dataset.bound = 'true';
+    btn.addEventListener('click', () => {
+      visibleRoutinesCount += 6;
+      renderRoutineGrid();
+      btn.focus();
+    });
+  }
 }
 
 function renderRoutineGrid() {
@@ -679,9 +693,12 @@ function renderRoutineGrid() {
   const filtered = minutes ? routines.filter((r) => String(r.minutes) === String(minutes)) : routines;
   if (!filtered.length) {
     grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No routines match yet.</p>';
+    updateShowMoreRoutinesVisibility(0);
     return;
   }
-  grid.innerHTML = filtered.map((r) => {
+  const view = filtered.slice(0, visibleRoutinesCount);
+  updateShowMoreRoutinesVisibility(filtered.length);
+  grid.innerHTML = view.map((r) => {
     const blocks = (r.blocks || []).map((b) => `${b.title}: ${(b.items || []).length} move(s)`).join(' · ');
     return `
       <article class="routine-card" role="listitem">
@@ -1139,6 +1156,13 @@ function resetPagination() {
   visibleHomeCount = anyFilters ? 18 : 6;
   visibleExercisesCount = anyFilters ? 36 : 12;
   updateShowMoreVisibility();
+}
+
+function updateShowMoreRoutinesVisibility(total) {
+  const btn = document.getElementById('showMoreRoutinesBtn');
+  if (!btn) return;
+  const shouldShow = total > visibleRoutinesCount;
+  btn.style.display = shouldShow ? 'inline-block' : 'none';
 }
 
 function updateResultsMeta({ total, shown }) {
