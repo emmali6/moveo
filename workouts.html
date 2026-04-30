@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=runner-preview-20260429g">
+    <link rel="stylesheet" href="css/styles.css?v=workout-of-day-20260430a">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme" data-page="workouts">
@@ -37,6 +37,12 @@
 
                 <div class="workouts-layout">
                     <div class="workout-builder" aria-label="Workout builder">
+                        <div class="daily-exercise daily-workout-card">
+                            <span class="section-label section-label-light" role="status" aria-live="polite">Workout of the Day</span>
+                            <div id="dailyWorkoutContent" role="region" aria-label="Workout of the day">
+                                <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading today’s workout…</p>
+                            </div>
+                        </div>
                         <h2 class="workout-subheading">Your workout</h2>
                         <p class="workout-help">Drag to reorder. Remove items you don’t want. Your workout is saved automatically.</p>
                         <div class="workout-controls" role="group" aria-label="Workout settings">
@@ -119,7 +125,7 @@
         </div>
     </footer>
 
-    <script src="js/app.js?v=runner-preview-20260429g"></script>
+    <script src="js/app.js?v=workout-of-day-20260430a"></script>
 </body>
 </html>
 

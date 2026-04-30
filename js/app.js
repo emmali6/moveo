@@ -144,6 +144,7 @@ async function initWorkoutsPage() {
   await loadExercises();
   renderWorkoutBuilderList();
   await loadRoutines();
+  renderDailyWorkout();
   setupRoutineFilters();
   setupWorkoutGoalAndEstimate();
   setupSaveWorkoutToAccount();
@@ -155,6 +156,17 @@ async function initWorkoutsPage() {
   document.getElementById('startWorkoutBtn')?.addEventListener('click', () => {
     startWorkoutSession();
   });
+
+  // Deep link support: workouts.html?routine=<id>&start=1
+  try {
+    const params = new URLSearchParams(window.location.search || '');
+    const routineId = params.get('routine');
+    const shouldStart = params.get('start') === '1';
+    if (routineId) {
+      loadRoutineToWorkout(routineId);
+      if (shouldStart) startWorkoutSession();
+    }
+  } catch {}
 }
 
 function setWorkoutSaveMessage(msg, isError) {
@@ -511,12 +523,145 @@ async function loadRoutines() {
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('Failed routines');
-    window.moveoRoutines = await res.json();
+    const baseRoutines = await res.json();
+    const autoRoutines = buildAutoRoutinesFromCatalog(exercises, baseRoutines);
+    window.moveoRoutines = baseRoutines.concat(autoRoutines);
   } catch (e) {
     console.warn('Moveo: routines load error', e);
     window.moveoRoutines = [];
   }
   renderRoutineGrid();
+}
+
+function seededRandom(seedStr) {
+  let h = 2166136261;
+  const s = String(seedStr || '');
+  for (let i = 0; i < s.length; i += 1) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return () => {
+    // xorshift-ish
+    h += 0x6D2B79F5;
+    let t = h;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function pickUnique(list, count, rand) {
+  const pool = (Array.isArray(list) ? list : []).slice();
+  // Fisher–Yates shuffle
+  for (let i = pool.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(rand() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, Math.max(0, count));
+}
+
+function isBodyweightOnly(ex) {
+  const eq = (ex?.equipment || []).map(normalizeFilterValue);
+  return !eq.length || eq.includes('none');
+}
+
+function buildAutoRoutinesFromCatalog(allExercises, existingRoutines) {
+  const existingIds = new Set((existingRoutines || []).map((r) => String(r?.id || '').toLowerCase()));
+  const ex = Array.isArray(allExercises) ? allExercises : [];
+  if (!ex.length) return [];
+
+  const byCategory = (cat) => ex.filter((e) => normalizeFilterValue(e.category) === normalizeFilterValue(cat));
+  const byNameIncludes = (re) => ex.filter((e) => re.test(String(e?.name || '').toLowerCase()));
+
+  const strength = byCategory('strength');
+  const hypertrophy = byCategory('hypertrophy').length ? byCategory('hypertrophy') : strength;
+  const endurance = byCategory('endurance');
+  const mobility = byCategory('mobility');
+  const rehab = byCategory('rehab');
+
+  const coreLike = ex.filter((e) => {
+    const mg = (e.muscleGroups || []).map(normalizeFilterValue);
+    return mg.includes('abdominals') || mg.includes('core');
+  });
+
+  const upperLike = ex.filter((e) => {
+    const mg = (e.muscleGroups || []).map(normalizeFilterValue);
+    return mg.includes('chest') || mg.includes('back') || mg.includes('shoulders') || mg.includes('arms');
+  });
+
+  const lowerLike = ex.filter((e) => {
+    const mg = (e.muscleGroups || []).map(normalizeFilterValue);
+    return mg.includes('quadriceps') || mg.includes('glutes') || mg.includes('hamstrings') || mg.includes('hips');
+  });
+
+  const yogaLike = byNameIncludes(/\byoga\b/).concat(byNameIncludes(/\bstretch\b/)).concat(mobility);
+  const calisthenicsLike = ex.filter((e) => isBodyweightOnly(e) && ['strength', 'endurance', 'mobility'].includes(normalizeFilterValue(e.category)));
+
+  const templates = [
+    { id: 'auto-mobility-flow-20', name: 'Mobility Flow (20 min)', minutes: 20, goals: ['mobility', 'stretching'], pool: mobility.concat(rehab).concat(yogaLike), count: 7 },
+    { id: 'auto-yoga-reset-30', name: 'Yoga Reset (30 min)', minutes: 30, goals: ['mobility', 'stretching'], pool: yogaLike, count: 10 },
+    { id: 'auto-endurance-cardio-25', name: 'Cardio Endurance (25 min)', minutes: 25, goals: ['endurance', 'cardio'], pool: endurance.length ? endurance : ex, count: 8 },
+    { id: 'auto-strength-fullbody-30', name: 'Full Body Strength (30 min)', minutes: 30, goals: ['strength', 'full body'], pool: strength, count: 8 },
+    { id: 'auto-hypertrophy-upper-35', name: 'Upper Body Hypertrophy (35 min)', minutes: 35, goals: ['hypertrophy', 'upper body'], pool: hypertrophy.filter((e) => upperLike.includes(e)), count: 8 },
+    { id: 'auto-strength-lower-35', name: 'Lower Body Strength (35 min)', minutes: 35, goals: ['strength', 'lower body'], pool: strength.filter((e) => lowerLike.includes(e)), count: 8 },
+    { id: 'auto-core-builder-15', name: 'Core Builder (15 min)', minutes: 15, goals: ['strength', 'core'], pool: coreLike.length ? coreLike : strength, count: 6 },
+    { id: 'auto-calisthenics-30', name: 'Calisthenics Circuit (30 min)', minutes: 30, goals: ['strength', 'endurance', 'calisthenics'], pool: calisthenicsLike, count: 9 },
+  ];
+
+  const out = [];
+  templates.forEach((t) => {
+    const id = String(t.id).toLowerCase();
+    if (existingIds.has(id)) return;
+    const rand = seededRandom(id);
+    const items = pickUnique(t.pool, t.count, rand).map((e) => e.id);
+    if (items.length < Math.min(4, t.count)) return;
+    out.push({
+      id,
+      name: t.name,
+      minutes: t.minutes,
+      goals: t.goals,
+      equipment: ['none'],
+      constraints: ['apartment/no jumping'],
+      description: 'Auto-generated from your current exercise library (updates as you add more exercises).',
+      blocks: [{ title: 'Session', items }],
+      auto: true,
+    });
+  });
+
+  return out;
+}
+
+function getDailyRoutine(routines) {
+  const list = Array.isArray(routines) ? routines : [];
+  if (!list.length) return null;
+  const d = new Date();
+  const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const rand = seededRandom(`daily-routine:${key}`);
+  const idx = Math.floor(rand() * list.length);
+  return list[idx] || list[0];
+}
+
+function renderDailyWorkout() {
+  const container = document.getElementById('dailyWorkoutContent');
+  if (!container) return;
+  const routines = Array.isArray(window.moveoRoutines) ? window.moveoRoutines : [];
+  const r = getDailyRoutine(routines);
+  if (!r) {
+    container.innerHTML = `<h2>Workout of the Day</h2><p>No routines available yet.</p>`;
+    return;
+  }
+  const goals = Array.isArray(r.goals) ? r.goals : [];
+  const meta = `${r.minutes} min${goals.length ? ` · ${goals.join(' / ')}` : ''}`;
+  const href = getBaseUrl() + `workouts.html?routine=${encodeURIComponent(r.id)}&start=1`;
+  container.innerHTML = `
+    <h2>${r.name}</h2>
+    <p>${r.description || 'A daily session picked from your routine library.'}</p>
+    <p class="routine-meta">${meta}</p>
+    <div class="daily-actions">
+      <a href="${href}" class="btn-primary btn-link">Start with timer</a>
+      <a href="${getBaseUrl()}workouts.html?routine=${encodeURIComponent(r.id)}" class="btn-secondary btn-link">Load into builder</a>
+    </div>
+  `;
 }
 
 function setupRoutineFilters() {
@@ -558,6 +703,7 @@ function loadRoutineToWorkout(routineId) {
   (r.blocks || []).forEach((b) => (b.items || []).forEach((id) => ids.push(id)));
   saveWorkoutBuilder(ids);
   renderWorkoutBuilderList();
+  setWorkoutSaveMessage('Loaded routine into builder.');
   announceToScreenReader('Routine loaded into workout builder');
 }
 window.loadRoutineToWorkout = loadRoutineToWorkout;
@@ -957,6 +1103,10 @@ async function initializeApp() {
   
   // Load bookmarks from localStorage
   loadBookmarks();
+
+  // Load routines and render workout of the day (uses the full catalog, including Supabase-added exercises)
+  await loadRoutines();
+  renderDailyWorkout();
   
   // Set up event listeners
   setupEventListeners();
@@ -1305,10 +1455,13 @@ function setupEventListeners() {
   
   if (workoutOfDayBtn) {
     workoutOfDayBtn.addEventListener('click', () => {
-      const dailyExercise = getDailyExercise();
-      if (dailyExercise) {
-        window.location.href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(dailyExercise.id);
+      const dailyWorkout = document.getElementById('dailyWorkoutContent');
+      if (dailyWorkout) {
+        dailyWorkout.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        announceToScreenReader('Navigated to workout of the day');
+        return;
       }
+      window.location.href = getBaseUrl() + 'workouts.html';
     });
   }
   

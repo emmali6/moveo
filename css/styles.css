@@ -1012,6 +1012,27 @@ button:focus-visible {
   animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
+.daily-workout-card {
+  margin-bottom: 1.25rem;
+}
+
+/* Dark variant when used inside dark panels (e.g. Workouts page builder) */
+.workout-builder .daily-exercise {
+  background: rgba(0, 0, 0, 0.18);
+  border-left-color: var(--accent);
+  box-shadow: none;
+}
+
+.workout-builder .daily-exercise .section-label {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.workout-builder .daily-exercise h2,
+.workout-builder .daily-exercise p,
+.workout-builder .daily-exercise a {
+  color: rgba(255, 255, 255, 0.92);
+}
+
 .daily-exercise-link {
   color: var(--dark);
   text-decoration: none;
