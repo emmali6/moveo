@@ -1669,7 +1669,7 @@ function createExerciseCard(exercise) {
         <div class="exercise-meta">
           <span>⏱️ ${exercise.duration} min</span>
           <span class="difficulty-badge ${exercise.difficulty}">${exercise.difficulty}</span>
-          <span>${getCategoryIcon(exercise.category)} ${exercise.category}</span>
+          <span aria-label="Category">${getCategoryIcon(exercise.category)}</span>
         </div>
         <button
           class="btn-secondary btn-link"
@@ -1795,7 +1795,7 @@ function renderExerciseDetail(exercise, options = {}) {
         <div class="exercise-meta">
           <span>⏱️ Duration: ${exercise.duration} minutes</span>
           <span class="difficulty-badge ${exercise.difficulty}">${exercise.difficulty}</span>
-          <span>${getCategoryIcon(exercise.category)} ${exercise.category}</span>
+          <span aria-label="Category">${getCategoryIcon(exercise.category)}</span>
         </div>
 
         <button
@@ -2154,7 +2154,7 @@ function setDailyExercise() {
     <div class="exercise-meta">
       <span>⏱️ ${dailyExercise.duration} min</span>
       <span class="difficulty-badge ${dailyExercise.difficulty}">${dailyExercise.difficulty}</span>
-      <span>${getCategoryIcon(dailyExercise.category)} ${dailyExercise.category}</span>
+      <span aria-label="Category">${getCategoryIcon(dailyExercise.category)}</span>
     </div>
     <div class="daily-actions">
       <a href="${exerciseUrl}" class="btn-primary btn-link">Try It Now</a>
