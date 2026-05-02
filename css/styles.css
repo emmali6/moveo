@@ -1111,6 +1111,26 @@ button:focus-visible {
   margin: 2rem 0;
 }
 
+.exercise-section-heading {
+  grid-column: 1 / -1;
+  margin: 0.25rem 0 0.15rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.96);
+  letter-spacing: 0.02em;
+}
+
+.exercise-section-heading-muted {
+  margin-top: 1.75rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.exercise-section-subdued {
+  font-weight: 600;
+  font-size: 0.88em;
+  opacity: 0.85;
+}
+
 .exercise-card {
   background: white;
   border-radius: 16px;

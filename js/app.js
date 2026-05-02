@@ -77,6 +77,76 @@ function resolveExerciseVideoUrl(sb, row) {
   return null;
 }
 
+/**
+ * True when the exercise has a playable preview URL from JSON or Supabase merge.
+ * Automatically reflects new uploads when the catalog is re-fetched or merged.
+ */
+function exerciseHasPlayableVideo(ex) {
+  const v = ex?.previewVideo;
+  return typeof v === 'string' && v.trim().length > 0;
+}
+
+/** Whether the list contains both moves with and without video (section UI only when mixed). */
+function exercisesMixVideoAndPlain(fullList) {
+  if (!Array.isArray(fullList) || fullList.length === 0) return false;
+  let anyVideo = false;
+  let anyPlain = false;
+  for (const ex of fullList) {
+    if (exerciseHasPlayableVideo(ex)) anyVideo = true;
+    else anyPlain = true;
+    if (anyVideo && anyPlain) return true;
+  }
+  return false;
+}
+
+/**
+ * Builds gallery inner HTML: optional section headings + cards.
+ * When every match has a video (or none do), headings are omitted — same as a full library with videos.
+ */
+function buildExerciseGridMarkup(view, fullFilteredList) {
+  if (!Array.isArray(view) || view.length === 0) return '';
+  if (!exercisesMixVideoAndPlain(fullFilteredList)) {
+    return view.map((ex) => createExerciseCard(ex)).join('');
+  }
+  const withVideo = [];
+  const withoutVideo = [];
+  for (const ex of view) {
+    if (exerciseHasPlayableVideo(ex)) withVideo.push(ex);
+    else withoutVideo.push(ex);
+  }
+  const parts = [];
+  if (withVideo.length) {
+    parts.push('<h3 class="exercise-section-heading">With demonstration video</h3>');
+    parts.push(withVideo.map((ex) => createExerciseCard(ex)).join(''));
+  }
+  if (withoutVideo.length) {
+    parts.push(
+      '<h3 class="exercise-section-heading exercise-section-heading-muted">More exercises <span class="exercise-section-subdued">(videos added over time)</span></h3>'
+    );
+    parts.push(withoutVideo.map((ex) => createExerciseCard(ex)).join(''));
+  }
+  return parts.join('');
+}
+
+function bindExerciseGridCardNav(container, orderedExercises, { setDataHref = false } = {}) {
+  const cards = container.querySelectorAll('.exercise-card');
+  cards.forEach((card, index) => {
+    const exercise = orderedExercises[index];
+    if (!exercise) return;
+    const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
+    if (setDataHref) card.setAttribute('data-href', href);
+    card.addEventListener('click', () => {
+      window.location.href = href;
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.location.href = href;
+      }
+    });
+  });
+}
+
 // State management
 let exercises = [];
 let bookmarkedExercises = [];
@@ -1592,12 +1662,24 @@ function getFilteredExercises() {
       const sa = score(a);
       const sb = score(b);
       if (sa !== sb) return sa - sb;
+      // Within same text match tier: video first, then non-video.
+      const va = exerciseHasPlayableVideo(a) ? 0 : 1;
+      const vb = exerciseHasPlayableVideo(b) ? 0 : 1;
+      if (va !== vb) return va - vb;
       return sortAlpha(a, b);
     });
   }
 
-  // No search term: keep alphabetical browsing.
-  return filtered.slice().sort(sortAlpha);
+  // No search: videos first (A–Z), then exercises without video (A–Z). When all have video, order is just A–Z.
+  const withVideo = [];
+  const withoutVideo = [];
+  for (const ex of filtered) {
+    if (exerciseHasPlayableVideo(ex)) withVideo.push(ex);
+    else withoutVideo.push(ex);
+  }
+  withVideo.sort(sortAlpha);
+  withoutVideo.sort(sortAlpha);
+  return [...withVideo, ...withoutVideo];
 }
 
 function normalizeFilterValue(v) {
@@ -1801,19 +1883,9 @@ function renderExercisesPageGrid() {
     return;
   }
   const view = list.slice(0, visibleExercisesCount);
-  grid.innerHTML = view.map((ex) => createExerciseCard(ex)).join('');
+  grid.innerHTML = buildExerciseGridMarkup(view, list);
   updateResultsMeta({ total: list.length, shown: view.length });
-  grid.querySelectorAll('.exercise-card').forEach((card, index) => {
-    const exercise = view[index];
-    const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
-    card.addEventListener('click', () => { window.location.href = href; });
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        window.location.href = href;
-      }
-    });
-  });
+  bindExerciseGridCardNav(grid, view, { setDataHref: false });
   updateShowMoreVisibility();
 }
 
@@ -1854,22 +1926,9 @@ function renderExerciseGallery() {
   }
   
   const view = list.slice(0, visibleHomeCount);
-  gallery.innerHTML = view.map(exercise => createExerciseCard(exercise)).join('');
+  gallery.innerHTML = buildExerciseGridMarkup(view, list);
   updateResultsMeta({ total: list.length, shown: view.length });
-  
-  // Add click handlers - navigate to exercise page
-  gallery.querySelectorAll('.exercise-card').forEach((card, index) => {
-    const exercise = view[index];
-    const href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exercise.id);
-    card.setAttribute('data-href', href);
-    card.addEventListener('click', () => { window.location.href = href; });
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        window.location.href = href;
-      }
-    });
-  });
+  bindExerciseGridCardNav(gallery, view, { setDataHref: true });
   updateShowMoreVisibility();
 }
 
