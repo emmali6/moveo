@@ -1017,20 +1017,6 @@ button:focus-visible {
   gap: 1.25rem;
 }
 
-.daily-pick-actions {
-  grid-column: 1 / -1;
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
-.daily-pick-actions .btn-link {
-  border-radius: 999px;
-  padding: 0.65rem 1rem;
-  font-weight: 800;
-}
-
 @media (min-width: 768px) {
   .daily-grid {
     grid-template-columns: 1fr 1fr;

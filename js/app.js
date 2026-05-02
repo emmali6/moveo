@@ -694,7 +694,6 @@ function renderDailyWorkout() {
     <div class="daily-actions">
       <a href="${href}" class="btn-primary btn-link">Start with timer</a>
       <a href="${getBaseUrl()}workouts.html?routine=${encodeURIComponent(r.id)}" class="btn-secondary btn-link">Load into builder</a>
-      <button type="button" class="btn-secondary btn-link" onclick="document.getElementById('dailyExerciseContent')?.scrollIntoView({ behavior: 'smooth', block: 'start' })">Exercise of the Day</button>
     </div>
   `;
 }
@@ -1504,14 +1503,23 @@ function saveBookmarks() {
 function setupEventListeners() {
   // Navigation
   const learnMoveBtn = document.getElementById('learnMoveBtn');
+  const exerciseOfDayBtn = document.getElementById('exerciseOfDayBtn');
   const workoutOfDayBtn = document.getElementById('workoutOfDayBtn');
-  const jumpDailyExerciseBtn = document.getElementById('jumpDailyExerciseBtn');
-  const jumpDailyWorkoutBtn = document.getElementById('jumpDailyWorkoutBtn');
   
   if (learnMoveBtn) {
     learnMoveBtn.addEventListener('click', () => {
       document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
       announceToScreenReader('Navigated to exercise gallery');
+    });
+  }
+
+  if (exerciseOfDayBtn) {
+    exerciseOfDayBtn.addEventListener('click', () => {
+      const dailyExercise = document.getElementById('dailyExerciseContent');
+      if (dailyExercise) {
+        dailyExercise.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        announceToScreenReader('Navigated to exercise of the day');
+      }
     });
   }
   
@@ -1524,20 +1532,6 @@ function setupEventListeners() {
         return;
       }
       window.location.href = getBaseUrl() + 'workouts.html';
-    });
-  }
-
-  if (jumpDailyExerciseBtn) {
-    jumpDailyExerciseBtn.addEventListener('click', () => {
-      document.getElementById('dailyExerciseContent')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      announceToScreenReader('Navigated to exercise of the day');
-    });
-  }
-
-  if (jumpDailyWorkoutBtn) {
-    jumpDailyWorkoutBtn.addEventListener('click', () => {
-      document.getElementById('dailyWorkoutContent')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      announceToScreenReader('Navigated to workout of the day');
     });
   }
   
@@ -2388,7 +2382,6 @@ function setDailyExercise() {
     <div class="daily-actions">
       <a href="${exerciseUrl}" class="btn-primary btn-link">Try It Now</a>
       <a href="${exerciseUrl}" class="btn-secondary btn-link">View details</a>
-      <button type="button" class="btn-secondary btn-link" onclick="document.getElementById('dailyWorkoutContent')?.scrollIntoView({ behavior: 'smooth', block: 'start' })">Workout of the Day</button>
     </div>
   `;
 }

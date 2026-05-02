@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=copy-desc-buttons-20260430d">
+    <link rel="stylesheet" href="css/styles.css?v=hero-daily-jump-20260205">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme">
@@ -57,10 +57,16 @@
                         aria-label="Navigate to exercise gallery">
                         Learn a Move
                     </button>
+                    <button
+                        id="exerciseOfDayBtn"
+                        class="btn-secondary btn-cta btn-cta-outline"
+                        aria-label="Jump to Exercise of the Day">
+                        Exercise of the Day
+                    </button>
                     <button 
                         id="workoutOfDayBtn" 
                         class="btn-secondary btn-cta btn-cta-outline"
-                        aria-label="View today's workout">
+                        aria-label="Jump to Workout of the Day">
                         Workout of the Day
                     </button>
                 </div>
@@ -71,10 +77,6 @@
         <section class="section-light" aria-labelledby="daily-heading">
             <div class="container">
                 <div class="daily-grid" role="region" aria-label="Daily picks">
-                    <div class="daily-pick-actions" role="group" aria-label="Jump to daily picks">
-                        <button type="button" class="btn-secondary btn-link" id="jumpDailyExerciseBtn">Exercise of the Day</button>
-                        <button type="button" class="btn-secondary btn-link" id="jumpDailyWorkoutBtn">Workout of the Day</button>
-                    </div>
                     <div class="daily-exercise">
                         <span class="section-label section-label-dark" role="status" aria-live="polite">Exercise of the Day</span>
                         <div id="dailyExerciseContent" role="region" aria-labelledby="daily-heading">
@@ -193,6 +195,6 @@
         </div>
     </footer>
 
-    <script src="js/app.js?v=copy-desc-buttons-20260430d"></script>
+    <script src="js/app.js?v=hero-daily-jump-20260205"></script>
 </body>
 </html>
