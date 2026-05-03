@@ -1125,6 +1125,19 @@ button:focus-visible {
   border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+/* Shown when the first page lists only demos but more no-video cards exist past “Show more” */
+.exercise-gallery-plain-hint {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
 .exercise-section-heading {
   grid-column: 1 / -1;
   margin: 0.25rem 0 0.15rem;

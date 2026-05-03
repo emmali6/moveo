@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
-const EXERCISE_CATALOG_VERSION = '2026-04-29-1';
+const EXERCISE_CATALOG_VERSION = '2026-02-08-1';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -129,8 +129,30 @@ function buildExerciseGridMarkup(view, fullFilteredList) {
     );
     parts.push(withoutVideo.map((ex) => createExerciseCard(ex)).join(''));
     parts.push('</div>');
+  } else if (withVideo.length > 0) {
+    const plainTotal = fullFilteredList.filter((ex) => !exerciseHasPlayableVideo(ex)).length;
+    // First slice is often all demos when many moves have videos; second section loads after Show more.
+    if (plainTotal > 0) {
+      parts.push(
+        `<p class="exercise-gallery-plain-hint" role="status">` +
+          `<strong>${plainTotal}</strong> more exercise${plainTotal === 1 ? '' : 's'} without a demo video yet load next — tap <strong>Show more</strong> (you’ll see the separate section below the video demos).` +
+          `</p>`
+      );
+    }
   }
   return parts.join('');
+}
+
+function logExerciseVideoMix() {
+  if (!Array.isArray(exercises) || exercises.length === 0) return;
+  const withV = exercises.filter(exerciseHasPlayableVideo).length;
+  const without = exercises.length - withV;
+  console.info(
+    `Moveo: ${withV} exercise(s) have a preview video, ${without} do not. ` +
+      (withV > 0 && without > 0
+        ? 'You should see two sections (or a hint to use Show more).'
+        : 'Only one group — no split headings (all have video, or none yet).')
+  );
 }
 
 function bindExerciseGridCardNav(container, orderedExercises, { setDataHref = false } = {}) {
@@ -1535,6 +1557,7 @@ async function loadExercises() {
         });
         const withVideo = exercises.filter((e) => e.previewVideo && /^https?:\/\//i.test(e.previewVideo)).length;
         console.info('Moveo: merged', rows.length, 'Supabase exercise row(s);', withVideo, 'exercise(s) now have https video URLs.');
+        logExerciseVideoMix();
         return;
       } else {
         console.warn('Moveo: Supabase exercises query returned 0 rows. Enable SELECT on public.exercises for the anon role, or add rows.');
@@ -1554,6 +1577,7 @@ async function loadExercises() {
       description: shouldRegenerateDescription(ex?.description) ? generateExerciseDescription(ex) : (ex?.description || ''),
     };
   });
+  logExerciseVideoMix();
 }
 
 // Load bookmarks from localStorage
