@@ -101,7 +101,8 @@ function exercisesMixVideoAndPlain(fullList) {
 
 /**
  * Builds gallery inner HTML: optional section headings + cards.
- * When every match has a video (or none do), headings are omitted — same as a full library with videos.
+ * Layout: always "with video" block first (subgrid), then "without video" below (divider + subgrid).
+ * When the filtered catalog has only one kind, section wrappers/headings are omitted (nothing to separate).
  */
 function buildExerciseGridMarkup(view, fullFilteredList) {
   if (!Array.isArray(view) || view.length === 0) return '';
@@ -116,14 +117,18 @@ function buildExerciseGridMarkup(view, fullFilteredList) {
   }
   const parts = [];
   if (withVideo.length) {
-    parts.push('<h3 class="exercise-section-heading">With demonstration video</h3>');
+    parts.push('<div class="exercise-gallery-stack exercise-gallery-stack--video" role="region" aria-labelledby="exerciseGalleryVideoHeading">');
+    parts.push('<h3 class="exercise-section-heading" id="exerciseGalleryVideoHeading">With demonstration video</h3>');
     parts.push(withVideo.map((ex) => createExerciseCard(ex)).join(''));
+    parts.push('</div>');
   }
   if (withoutVideo.length) {
+    parts.push('<div class="exercise-gallery-stack exercise-gallery-stack--plain" role="region" aria-labelledby="exerciseGalleryPlainHeading">');
     parts.push(
-      '<h3 class="exercise-section-heading exercise-section-heading-muted">More exercises <span class="exercise-section-subdued">(videos added over time)</span></h3>'
+      '<h3 class="exercise-section-heading exercise-section-heading-muted" id="exerciseGalleryPlainHeading">Exercises without a demo video yet <span class="exercise-section-subdued">(shown below; they move up when a video is added)</span></h3>'
     );
     parts.push(withoutVideo.map((ex) => createExerciseCard(ex)).join(''));
+    parts.push('</div>');
   }
   return parts.join('');
 }
@@ -1658,16 +1663,16 @@ function getFilteredExercises() {
       return 3;
     };
 
-    return filtered.slice().sort((a, b) => {
+    // Rank by text match first; then partition: all matches with video, then all without (below in UI).
+    const sortBySearchRank = (a, b) => {
       const sa = score(a);
       const sb = score(b);
       if (sa !== sb) return sa - sb;
-      // Within same text match tier: video first, then non-video.
-      const va = exerciseHasPlayableVideo(a) ? 0 : 1;
-      const vb = exerciseHasPlayableVideo(b) ? 0 : 1;
-      if (va !== vb) return va - vb;
       return sortAlpha(a, b);
-    });
+    };
+    const withVideoSearch = filtered.filter(exerciseHasPlayableVideo).sort(sortBySearchRank);
+    const withoutVideoSearch = filtered.filter((ex) => !exerciseHasPlayableVideo(ex)).sort(sortBySearchRank);
+    return [...withVideoSearch, ...withoutVideoSearch];
   }
 
   // No search: videos first (A–Z), then exercises without video (A–Z). When all have video, order is just A–Z.

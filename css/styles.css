@@ -1111,6 +1111,20 @@ button:focus-visible {
   margin: 2rem 0;
 }
 
+.exercise-gallery-stack {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-content: start;
+}
+
+.exercise-gallery-stack--plain {
+  margin-top: 0.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
 .exercise-section-heading {
   grid-column: 1 / -1;
   margin: 0.25rem 0 0.15rem;
@@ -1121,7 +1135,7 @@ button:focus-visible {
 }
 
 .exercise-section-heading-muted {
-  margin-top: 1.75rem;
+  margin-top: 0;
   color: rgba(255, 255, 255, 0.72);
 }
 
@@ -1129,6 +1143,18 @@ button:focus-visible {
   font-weight: 600;
   font-size: 0.88em;
   opacity: 0.85;
+}
+
+@media (min-width: 768px) {
+  .exercise-gallery-stack {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .exercise-gallery-stack {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .exercise-card {
