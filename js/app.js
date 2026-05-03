@@ -208,6 +208,259 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const WORKOUT_STORAGE_KEY = 'moveoWorkoutBuilder';
+const WORKOUT_NOTES_KEY = 'moveoWorkoutNotes';
+const LOAD_PROFILE_KEY = 'moveoExerciseLoadProfile';
+const LOAD_PROFILE_VERSION = 1;
+
+/** Short plain-text snippet safe for injecting into HTML (not for attributes). */
+function escapeHtmlBody(s, maxLen) {
+  let t = String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  if (maxLen && t.length > maxLen) t = `${t.slice(0, maxLen)}…`;
+  return t.replace(/\n/g, '<br>');
+}
+
+function loadWorkoutNotesText() {
+  try {
+    return localStorage.getItem(WORKOUT_NOTES_KEY) || '';
+  } catch {
+    return '';
+  }
+}
+
+function saveWorkoutNotesText(text) {
+  try {
+    localStorage.setItem(WORKOUT_NOTES_KEY, text || '');
+  } catch (_) {}
+}
+
+function loadLoadProfileDoc() {
+  try {
+    const raw = localStorage.getItem(LOAD_PROFILE_KEY);
+    if (!raw)
+      return { v: LOAD_PROFILE_VERSION, byExercise: {} };
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object' || !parsed.byExercise) return { v: LOAD_PROFILE_VERSION, byExercise: {} };
+    return parsed;
+  } catch {
+    return { v: LOAD_PROFILE_VERSION, byExercise: {} };
+  }
+}
+
+function saveLoadProfileDoc(doc) {
+  try {
+    localStorage.setItem(LOAD_PROFILE_KEY, JSON.stringify(doc));
+  } catch (_) {}
+}
+
+function medianInt(samples) {
+  if (!samples.length) return 0;
+  const s = [...samples].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : Math.round((s[m - 1] + s[m]) / 2);
+}
+
+/**
+ * Infer rep delta from last reps-in-reserve readings (median of last up to 8).
+ * Conservative: requires at least 2 logged sets before adapting.
+ */
+function computeRepDeltaFromSamples(samples) {
+  if (!Array.isArray(samples) || samples.length < 2) return 0;
+  const use = samples.slice(-8);
+  const med = medianInt(use);
+  if (med >= 5) return 2;
+  if (med >= 3) return 1;
+  if (med <= 0) return -1;
+  return 0;
+}
+
+function recordRepsAfterSample(exerciseId, goal, repsAfter) {
+  if (!exerciseId || !goal || repsAfter == null) return;
+  const doc = loadLoadProfileDoc();
+  if (!doc.byExercise[exerciseId]) doc.byExercise[exerciseId] = {};
+  if (!doc.byExercise[exerciseId][goal]) doc.byExercise[exerciseId][goal] = { samples: [] };
+  const arr = doc.byExercise[exerciseId][goal].samples;
+  arr.push(Number(repsAfter));
+  while (arr.length > 14) arr.shift();
+  saveLoadProfileDoc(doc);
+}
+
+function getRepAdjustmentForExercise(exerciseId, goal, baseReps) {
+  const br = Math.max(1, Math.round(Number(baseReps) || 1));
+  const doc = loadLoadProfileDoc();
+  const samples = doc.byExercise?.[exerciseId]?.[goal]?.samples || [];
+  const delta = computeRepDeltaFromSamples(samples);
+  let target = br + delta;
+  target = Math.max(1, Math.min(target, Math.round(br * 1.35) + 2));
+  let reason = '';
+  if (samples.length >= 2) {
+    if (target > br) reason = 'Recent sets felt lighter — bumped reps.';
+    else if (target < br) reason = 'Recent sets felt heavy — eased reps.';
+  }
+  return { baseReps: br, targetReps: target, delta: target - br, samplesUsed: samples.length, reason };
+}
+
+function estimateExerciseSecondsForId(exerciseId, goal) {
+  const presets = {
+    strength: { sets: 4, reps: 5, rest: 150 },
+    hypertrophy: { sets: 3, reps: 10, rest: 75 },
+    endurance: { sets: 3, reps: 15, rest: 45 },
+  };
+  const p = presets[goal] || presets.strength;
+  const adj = getRepAdjustmentForExercise(exerciseId, goal, p.reps);
+  const repSeconds = 4;
+  const setWork = p.sets * (adj.targetReps * repSeconds);
+  const totalRest = (p.sets - 1) * p.rest;
+  return setWork + totalRest + 30;
+}
+
+async function mergeLoadProfilesFromRemote(user) {
+  const sb = getSupabase();
+  if (!sb || !user?.id) return;
+  try {
+    const { data, error } = await sb
+      .from('user_exercise_load_profiles')
+      .select('*')
+      .eq('user_id', user.id);
+    if (error || !data?.length) return;
+    const doc = loadLoadProfileDoc();
+    data.forEach((row) => {
+      const exId = row.exercise_id != null ? String(row.exercise_id) : '';
+      const goal = row.goal != null ? String(row.goal).toLowerCase() : '';
+      if (!exId || !goal) return;
+      const remote = Array.isArray(row.reps_after_samples) ? row.reps_after_samples.map((n) => Number(n)).filter(Number.isFinite) : [];
+      if (!doc.byExercise[exId]) doc.byExercise[exId] = {};
+      if (!doc.byExercise[exId][goal]) doc.byExercise[exId][goal] = { samples: [] };
+      const local = doc.byExercise[exId][goal].samples || [];
+      const merged = [...local, ...remote].slice(-14);
+      doc.byExercise[exId][goal].samples = merged;
+    });
+    saveLoadProfileDoc(doc);
+  } catch (e) {
+    console.warn('Moveo: could not merge load profiles (table may need migration — see docs/supabase-workout-adaptation.sql)', e);
+  }
+}
+
+async function pushLoadProfilesToRemote(user) {
+  const sb = getSupabase();
+  if (!sb || !user?.id) return;
+  const doc = loadLoadProfileDoc();
+  const rows = [];
+  Object.entries(doc.byExercise || {}).forEach(([exId, goalsObj]) => {
+    Object.entries(goalsObj || {}).forEach(([goal, blob]) => {
+      const samples = Array.isArray(blob?.samples)
+        ? blob.samples.map((n) => Math.min(99, Math.max(0, Math.round(Number(n))))).filter((n) => Number.isFinite(n))
+        : [];
+      if (!samples.length) return;
+      rows.push({
+        user_id: user.id,
+        exercise_id: exId,
+        goal: goal.toLowerCase(),
+        reps_after_samples: samples,
+        updated_at: new Date().toISOString(),
+      });
+    });
+  });
+  if (!rows.length) return;
+  try {
+    const { error } = await sb.from('user_exercise_load_profiles').upsert(rows, {
+      onConflict: 'user_id,exercise_id,goal',
+    });
+    if (error) console.warn('Moveo: load profile upsert — run docs/supabase-workout-adaptation.sql if missing table:', error.message);
+  } catch (e) {
+    console.warn('Moveo: load profile upsert exception', e);
+  }
+}
+
+async function insertUserWorkoutSessionRow(user, summary) {
+  const sb = getSupabase();
+  if (!sb || !user?.id) return;
+
+  const baseRow = {
+    user_id: user.id,
+    title: summary.title,
+    goal: summary.goal,
+    duration_seconds: summary.duration_seconds,
+    ended_at: summary.ended_at,
+    exercises: summary.exercises,
+    session_notes: summary.notes || null,
+    set_feedback: summary.feedback || [],
+  };
+
+  let { error } = await sb.from('user_workout_sessions').insert(baseRow);
+  const msg = error?.message || '';
+  // Missing optional columns — retry without extras (deploy docs/supabase-workout-adaptation.sql for full fidelity).
+  if (
+    error &&
+    (msg.includes('session_notes') ||
+      msg.includes('set_feedback') ||
+      /Could not find the .* column/i.test(msg))
+  ) {
+    delete baseRow.session_notes;
+    delete baseRow.set_feedback;
+    const retry = await sb.from('user_workout_sessions').insert(baseRow);
+    error = retry.error;
+    console.warn(
+      'Moveo: session saved without notes/feedback columns. Add docs/supabase-workout-adaptation.sql in Supabase for full persistence.'
+    );
+  }
+  if (error) console.warn('Moveo: workout session log error:', error);
+}
+
+function setupWorkoutBuilderNotesUI() {
+  const ta = document.getElementById('workoutBuilderNotes');
+  if (!ta || ta.dataset.bound === 'true') return;
+  ta.dataset.bound = 'true';
+  ta.value = loadWorkoutNotesText();
+  let t = null;
+  ta.addEventListener('input', () => {
+    saveWorkoutNotesText(ta.value);
+    const el = document.getElementById('workoutNotesSaveHint');
+    if (el) {
+      window.clearTimeout(t);
+      el.textContent = 'Saved locally (this browser). Signed-in sessions also attach notes.';
+      t = window.setTimeout(() => {
+        el.textContent = '';
+      }, 4200);
+    }
+    try {
+      const rt = document.getElementById('runnerSessionNotes');
+      if (rt && !document.getElementById('workoutRunner')?.classList.contains('hidden')) rt.value = ta.value;
+    } catch (_) {}
+  });
+}
+
+/** Sync runner textarea with builder notes on first interaction with runner. */
+function bindRunnerNotesFieldOnce() {
+  const rt = document.getElementById('runnerSessionNotes');
+  if (!rt || rt.dataset.bound === 'true') return;
+  rt.dataset.bound = 'true';
+  rt.addEventListener('input', () => {
+    saveWorkoutNotesText(rt.value);
+    const ta = document.getElementById('workoutBuilderNotes');
+    if (ta) ta.value = rt.value;
+  });
+}
+
+function updateWorkoutAdaptationHintForBuilder() {
+  const el = document.getElementById('workoutAdaptHint');
+  const idsEl = loadWorkoutBuilder();
+  if (!el) return;
+  if (!idsEl.length) {
+    el.textContent = '';
+    return;
+  }
+  const goal = getWorkoutGoal();
+  const doc = loadLoadProfileDoc();
+  let n = 0;
+  idsEl.forEach((id) => {
+    const s = doc.byExercise?.[id]?.[goal]?.samples?.length || 0;
+    if (s >= 2) n += 1;
+  });
+  el.textContent =
+    n > 0
+      ? `Rep targets adapt for ${n} exercise(s) in this list based on recent “extra reps left” logs (${goal}). Log a number after tough sets below for best results — works without an account; sign in to sync.`
+      : `After tough sets during a session, log how many more good‑form reps you had left (below in the runner). Moveo adjusts future rep targets locally; sign in to sync across devices once you apply the SQL in docs/supabase-workout-adaptation.sql.`;
+}
 
 function loadWorkoutBuilder() {
   const raw = localStorage.getItem(WORKOUT_STORAGE_KEY);
@@ -240,7 +493,16 @@ function removeFromWorkoutAt(index) {
 
 async function initWorkoutsPage() {
   await loadExercises();
+  setupWorkoutBuilderNotesUI();
+  bindRunnerNotesFieldOnce();
   renderWorkoutBuilderList();
+  updateWorkoutAdaptationHintForBuilder();
+  const u = await getCurrentUser();
+  if (u) {
+    await mergeLoadProfilesFromRemote(u);
+    renderWorkoutBuilderList();
+    updateWorkoutAdaptationHintForBuilder();
+  }
   await loadRoutines();
   renderDailyWorkout();
   setupRoutineFilters();
@@ -318,7 +580,10 @@ function setupWorkoutGoalAndEstimate() {
   const sel = document.getElementById('workoutGoal');
   if (sel && sel.dataset.bound !== 'true') {
     sel.dataset.bound = 'true';
-    sel.addEventListener('change', () => updateWorkoutEstimate());
+    sel.addEventListener('change', () => {
+      updateWorkoutEstimate();
+      updateWorkoutAdaptationHintForBuilder();
+    });
   }
   updateWorkoutEstimate();
 }
@@ -360,10 +625,7 @@ function updateWorkoutEstimate() {
     return;
   }
   const goal = getWorkoutGoal();
-  const seconds = ids
-    .map((id) => exercises.find((e) => e.id === id))
-    .filter(Boolean)
-    .reduce((sum, ex) => sum + estimateExerciseSeconds(ex, goal), 0);
+  const seconds = ids.reduce((sum, id) => sum + estimateExerciseSecondsForId(id, goal), 0);
   el.textContent = `${Math.max(1, Math.round(seconds / 60))} min`;
 }
 
@@ -396,13 +658,18 @@ function startWorkoutSession() {
     restInterval: null,
     tickInterval: null,
     activeExerciseIndex: 0,
+    setFeedback: [],
     exercises: ids.map((id) => {
       const ex = exercises.find((e) => e.id === id) || { id, name: id };
+      const adj = getRepAdjustmentForExercise(id, goal, p.reps);
       return {
         id,
         name: ex.name || id,
         sets: p.sets,
-        reps: p.reps,
+        reps: adj.targetReps,
+        baseReps: adj.baseReps,
+        repDelta: adj.targetReps - adj.baseReps,
+        adaptationHint: adj.reason || '',
         rest: p.rest,
         completedSets: 0,
       };
@@ -410,6 +677,16 @@ function startWorkoutSession() {
   };
 
   runner.classList.remove('hidden');
+
+  try {
+    const rt = document.getElementById('runnerSessionNotes');
+    const bd = document.getElementById('workoutBuilderNotes');
+    const notes = bd?.value ?? loadWorkoutNotesText();
+    if (rt) rt.value = notes;
+    const rin = document.getElementById('runnerRepsAfterSet');
+    if (rin) rin.value = '';
+  } catch (_) {}
+
   renderRunnerExercises();
   bindRunnerControls();
   updateRunnerUI();
@@ -461,6 +738,26 @@ function completeSetAndRest() {
   if (!runnerState) return;
   const ex = runnerState.exercises[runnerState.activeExerciseIndex];
   if (!ex) return;
+
+  try {
+    const input = document.getElementById('runnerRepsAfterSet');
+    if (input && String(input.value).trim() !== '') {
+      const n = parseInt(input.value, 10);
+      const nextSetNum = ex.completedSets + 1;
+      if (Number.isFinite(n) && n >= 0 && n <= 99) {
+        recordRepsAfterSample(ex.id, runnerState.goal, n);
+        runnerState.setFeedback.push({
+          exercise_id: ex.id,
+          exercise_name: ex.name,
+          set_number: nextSetNum,
+          reps_after: n,
+          at: new Date().toISOString(),
+        });
+      }
+      input.value = '';
+    }
+  } catch (_) {}
+
   if (ex.completedSets < ex.sets) ex.completedSets += 1;
   runnerState.restRemaining = ex.completedSets >= ex.sets ? 0 : ex.rest;
 
@@ -474,16 +771,25 @@ function completeSetAndRest() {
 
 function endRunnerSession() {
   if (!runnerState) return;
+  const notes =
+    document.getElementById('runnerSessionNotes')?.value ??
+    loadWorkoutNotesText() ??
+    '';
+  saveWorkoutNotesText(notes);
+
   const summary = {
     title: 'Workout session',
     goal: runnerState.goal,
     duration_seconds: runnerState.elapsedSeconds,
     ended_at: new Date().toISOString(),
+    notes,
+    feedback: [...(runnerState.setFeedback || [])],
     exercises: runnerState.exercises.map((e) => ({
       id: e.id,
       name: e.name,
       sets: e.sets,
       reps: e.reps,
+      base_reps: e.baseReps != null ? e.baseReps : e.reps,
       completed_sets: e.completedSets,
     })),
   };
@@ -498,23 +804,15 @@ function endRunnerSession() {
     localStorage.setItem(key, JSON.stringify(next.slice(0, 50)));
   } catch {}
 
-  // If signed in, also log to Supabase.
-  getCurrentUser().then((user) => {
-    const sb = getSupabase();
-    if (!user || !sb) return;
-    sb.from('user_workout_sessions')
-      .insert({
-        user_id: user.id,
-        title: summary.title,
-        goal: summary.goal,
-        duration_seconds: summary.duration_seconds,
-        ended_at: summary.ended_at,
-        exercises: summary.exercises,
-      })
-      .then(({ error }) => {
-        if (error) console.warn('Moveo: workout session log error:', error);
-      });
+  // Signed-in users: richer row + synced load profiles
+  getCurrentUser().then(async (user) => {
+    if (!user) return;
+    await insertUserWorkoutSessionRow(user, summary);
+    await pushLoadProfilesToRemote(user);
   });
+
+  renderWorkoutBuilderList();
+  updateWorkoutAdaptationHintForBuilder();
 
   if (runnerState.tickInterval) clearInterval(runnerState.tickInterval);
   runnerState = null;
@@ -548,7 +846,7 @@ function renderRunnerExercises() {
       <div class="runner-ex" role="button" tabindex="0" data-runner-idx="${idx}" aria-label="Show video for ${ex.name}"${active}>
         <div class="runner-ex-top">
           <div class="runner-ex-name">${ex.name}</div>
-          <div class="runner-ex-prescription">${ex.sets} × ${ex.reps} · rest ${Math.round(ex.rest / 60)}m</div>
+          <div class="runner-ex-prescription">${ex.sets} × ${ex.reps}${ex.baseReps != null && ex.reps !== ex.baseReps ? ` <span class="runner-rep-base">(${ex.baseReps} base)</span>` : ''} · rest ${Math.round(ex.rest / 60)}m</div>
         </div>
         <div class="runner-ex-sets">${pills}</div>
       </div>
@@ -591,7 +889,13 @@ function renderRunnerNowPlaying() {
   const full = exercises.find((e) => e.id === ex.id);
   const videoUrl = full?.previewVideo || '';
 
-  metaEl.textContent = `${ex.sets} × ${ex.reps} · rest ${Math.round(ex.rest / 60)}m`;
+  const prescrip =
+    `${ex.sets} × ${ex.reps}` +
+    (ex.baseReps != null && ex.reps !== ex.baseReps ? ` (${ex.baseReps} base)` : '') +
+    ` · rest ${Math.round(ex.rest / 60)}m`;
+  metaEl.innerHTML =
+    `<span>${prescrip}</span>` +
+    (ex.adaptationHint ? ` <span class="runner-meta-hint">${escapeHtmlBody(ex.adaptationHint, 160)}</span>` : '');
 
   if (videoUrl) {
     mediaEl.innerHTML = `
@@ -861,6 +1165,8 @@ function renderWorkoutBuilderList() {
   const ids = loadWorkoutBuilder();
   if (!ids.length) {
     list.innerHTML = '<p class="loading-message">No exercises yet. Add from the Exercises tab.</p>';
+    updateWorkoutEstimate();
+    updateWorkoutAdaptationHintForBuilder();
     return;
   }
   list.innerHTML = ids.map((id, idx) => {
@@ -883,6 +1189,7 @@ function renderWorkoutBuilderList() {
 
   setupWorkoutDragAndDrop(list);
   updateWorkoutEstimate();
+  updateWorkoutAdaptationHintForBuilder();
 }
 
 function removeWorkoutIndex(idx) {
@@ -953,7 +1260,7 @@ async function initAccountPage() {
   const currentUser = await getCurrentUser();
   if (currentUser) {
     await loadExercises();
-    showAccountDashboard(currentUser);
+    await showAccountDashboard(currentUser);
     hideAuthForm();
   } else {
     showAuthForm();
@@ -989,11 +1296,12 @@ function hideAuthForm() {
   document.getElementById('accountAuthSection')?.classList.add('hidden');
 }
 
-function showAccountDashboard(user) {
+async function showAccountDashboard(user) {
   document.getElementById('accountDashboardSection')?.classList.remove('hidden');
   document.getElementById('accountUserName').textContent = user.name || user.email;
   renderSavedExercisesList();
-  loadAccountWorkoutsAndHistory(user);
+  await mergeLoadProfilesFromRemote(user);
+  await loadAccountWorkoutsAndHistory(user);
 }
 
 function hideAccountDashboard() {
@@ -1059,7 +1367,7 @@ async function handleSignIn(e) {
   setAuthMessage('');
   hideAuthForm();
   await loadExercises();
-  showAccountDashboard({ id: user.id, email: user.email, name });
+  await showAccountDashboard({ id: user.id, email: user.email, name });
 }
 
 async function handleSignUp(e) {
@@ -1096,7 +1404,7 @@ async function handleSignUp(e) {
     setAuthMessage('');
     hideAuthForm();
     await loadExercises();
-    showAccountDashboard({ id: user.id, email: user.email, name: displayName });
+    await showAccountDashboard({ id: user.id, email: user.email, name: displayName });
   } else {
     setAuthMessage('Account created! Please check your email to confirm, then sign in.', false);
     document.getElementById('tabSignIn')?.click();
@@ -1233,11 +1541,18 @@ async function loadWorkoutHistory(user) {
   list.innerHTML = data.map((s) => {
     const mins = s.duration_seconds ? Math.round(s.duration_seconds / 60) : null;
     const when = s.ended_at ? new Date(s.ended_at).toLocaleDateString() : '';
+    const fb = Array.isArray(s.set_feedback) ? s.set_feedback : [];
+    const note = String(s.session_notes || '').trim();
+    let noteHtml = '';
+    if (note)
+      noteHtml = `<div class="history-note-preview">${escapeHtmlBody(note, 180)}</div>`;
+    const fbLine = fb.length ? ` · ${fb.length} set log(s)` : '';
     return `
-      <article class="saved-exercise-item" role="listitem">
+      <article class="saved-exercise-item workout-history-item" role="listitem">
         <div>
-          <div class="saved-exercise-name">${s.title || 'Workout session'}</div>
-          <div class="saved-exercise-meta">${when}${mins ? ` · ${mins} min` : ''} · ${s.goal || 'mixed'}</div>
+          <div class="saved-exercise-name">${escapeHtmlBody(s.title || 'Workout session', 120)}</div>
+          <div class="saved-exercise-meta">${when}${mins ? ` · ${mins} min` : ''} · ${escapeHtmlBody(String(s.goal || 'mixed'), 32)}${fbLine}</div>
+          ${noteHtml}
         </div>
       </article>
     `;

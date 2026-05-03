@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=visibility-hint-20260208">
+    <link rel="stylesheet" href="css/styles.css?v=workout-notes-adapt-20260209">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme" data-page="workouts">
@@ -59,6 +59,12 @@
                                 <div id="workoutEstimate" class="workout-estimate-value">—</div>
                             </div>
                         </div>
+                        <p id="workoutAdaptHint" class="workout-help workout-adapt-hint" aria-live="polite"></p>
+                        <div class="workout-notes-field filter-field filter-field-wide">
+                            <label for="workoutBuilderNotes" class="filter-label">Session notes <span class="optional-label">(optional)</span></label>
+                            <textarea id="workoutBuilderNotes" name="workout-notes" class="workout-notes-input" rows="4" maxlength="4000" placeholder="Warm-up ideas, equipment limits, anything your future self should remember… Saved on this device; signed-in users also get notes stored with completed sessions."></textarea>
+                            <span id="workoutNotesSaveHint" class="runner-hint" aria-live="polite"></span>
+                        </div>
                         <div id="workoutList" class="workout-list" role="list" aria-label="Workout exercises"></div>
                         <div class="workout-actions">
                             <button type="button" class="btn-primary btn-link" id="startWorkoutBtn">Start workout</button>
@@ -83,6 +89,17 @@
                                 <button type="button" class="btn-secondary btn-link" id="runnerNextSetBtn">Complete set → Rest</button>
                                 <button type="button" class="btn-secondary btn-link" id="runnerEndBtn">End session</button>
                             </div>
+                            <div class="runner-notes-field filter-field filter-field-wide">
+                                <label for="runnerSessionNotes" class="filter-label">Session notes</label>
+                                <textarea id="runnerSessionNotes" class="workout-notes-input" rows="3" maxlength="4000" aria-describedby="runnerNotesSyncHint" placeholder="Editable during your session…"></textarea>
+                                <span id="runnerNotesSyncHint" class="runner-hint">Same notes as above — saves automatically.</span>
+                            </div>
+                            <fieldset class="runner-feedback-fieldset">
+                                <legend class="runner-feedback-legend">After each set (optional)</legend>
+                                <label for="runnerRepsAfterSet">How many more <strong>good‑form</strong> reps could you do?</label>
+                                <input type="number" id="runnerRepsAfterSet" name="reps-after-set" class="runner-reps-input" min="0" max="99" step="1" inputmode="numeric" autocomplete="off" aria-describedby="runnerRepsHint">
+                                <p id="runnerRepsHint" class="runner-hint">Leave blank to skip. <strong>0</strong> = maximally hard today. Higher numbers tell Moveo you had extra reps “in reserve” — future sessions may bump targets slightly for this move.</p>
+                            </fieldset>
                             <details id="runnerNowPlaying" class="runner-now-playing" aria-label="Current exercise video">
                                 <summary class="runner-now-summary">
                                     <span class="runner-now-kicker">Current exercise</span>
@@ -128,7 +145,7 @@
         </div>
     </footer>
 
-    <script src="js/app.js?v=visibility-hint-20260208"></script>
+    <script src="js/app.js?v=workout-notes-adapt-20260209"></script>
 </body>
 </html>
 
