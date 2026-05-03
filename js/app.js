@@ -458,8 +458,8 @@ function updateWorkoutAdaptationHintForBuilder() {
   });
   el.textContent =
     n > 0
-      ? `Rep targets adapt for ${n} exercise(s) in this list based on recent “extra reps left” logs (${goal}). Log a number after tough sets below for best results — works without an account; sign in to sync.`
-      : `After tough sets during a session, log how many more good‑form reps you had left (below in the runner). Moveo adjusts future rep targets locally; sign in to sync across devices once you apply the SQL in docs/supabase-workout-adaptation.sql.`;
+      ? `Rep targets adapt for ${n} exercise(s) in this list based on recent “extra reps left” logs (${goal}). After tough sets, enter that number in the runner — works signed out; sign in to sync across devices.`
+      : `After tough sets, log how many more good‑form reps you could still do (runner below). Moveo adjusts future targets on this device; sign in to sync notes, history, and adaptations across devices.`;
 }
 
 function loadWorkoutBuilder() {
