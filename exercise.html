@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=adapt-hint-copy-20260210">
+    <link rel="stylesheet" href="css/styles.css?v=nav-dd-20260211">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme" data-page="exercise">
@@ -20,8 +20,35 @@
             <a href="index.html" class="logo" aria-label="Moveo home">moveo</a>
             <ul class="nav-links" role="list">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="exercises.html" class="nav-link">Exercises</a></li>
-                <li><a href="workouts.html" class="nav-link">Workouts</a></li>
+                <li class="nav-dropdown">
+                    <div class="nav-dropdown-head">
+                        <a href="exercises.html" class="nav-link">Exercises</a>
+                        <button type="button" class="nav-dropdown-touch-toggle" aria-expanded="false" aria-label="Toggle Exercises menu"><span aria-hidden="true">▾</span></button>
+                    </div>
+                    <ul class="nav-dropdown-menu" role="list">
+                        <li role="listitem"><a href="exercises.html" class="nav-dropdown-link">All exercises</a></li>
+                        <li role="listitem"><a href="exercises.html?category=strength" class="nav-dropdown-link">Strength</a></li>
+                        <li role="listitem"><a href="exercises.html?category=hypertrophy" class="nav-dropdown-link">Hypertrophy</a></li>
+                        <li role="listitem"><a href="exercises.html?category=endurance" class="nav-dropdown-link">Endurance</a></li>
+                        <li role="listitem"><a href="exercises.html?category=mobility" class="nav-dropdown-link">Mobility</a></li>
+                        <li role="listitem"><a href="exercises.html?category=rehab" class="nav-dropdown-link">Rehab</a></li>
+                        <li role="listitem"><a href="exercises.html?level=beginner" class="nav-dropdown-link">Beginner</a></li>
+                        <li role="listitem"><a href="exercises.html?equipment=none" class="nav-dropdown-link">Bodyweight</a></li>
+                    </ul>
+                </li>
+                <li class="nav-dropdown">
+                    <div class="nav-dropdown-head">
+                        <a href="workouts.html" class="nav-link">Workouts</a>
+                        <button type="button" class="nav-dropdown-touch-toggle" aria-expanded="false" aria-label="Toggle Workouts menu"><span aria-hidden="true">▾</span></button>
+                    </div>
+                    <ul class="nav-dropdown-menu" role="list">
+                        <li role="listitem"><a href="workouts.html" class="nav-dropdown-link">Build &amp; run</a></li>
+                        <li role="listitem"><a href="workouts.html?goal=strength" class="nav-dropdown-link">Strength focus</a></li>
+                        <li role="listitem"><a href="workouts.html?goal=hypertrophy" class="nav-dropdown-link">Hypertrophy focus</a></li>
+                        <li role="listitem"><a href="workouts.html?goal=endurance" class="nav-dropdown-link">Endurance focus</a></li>
+                        <li role="listitem"><a href="workouts.html#prebuilt-routines" class="nav-dropdown-link">Prebuilt routines</a></li>
+                    </ul>
+                </li>
                 <li><a href="about.html" class="nav-link">About</a></li>
                 <li><a href="account.html" class="nav-link">Account</a></li>
             </ul>
@@ -43,6 +70,7 @@
         </div>
     </footer>
 
-    <script src="js/app.js?v=adapt-hint-copy-20260210"></script>
+    <script defer src="js/nav-dropdown.js?v=nav-dd-20260211"></script>
+    <script src="js/app.js?v=nav-dd-20260211"></script>
 </body>
 </html>

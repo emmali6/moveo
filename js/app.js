@@ -491,8 +491,18 @@ function removeFromWorkoutAt(index) {
   saveWorkoutBuilder(ids);
 }
 
+function applyWorkoutsQueryParams() {
+  const p = new URLSearchParams(window.location.search || '');
+  const goal = normalizeFilterValue(p.get('goal'));
+  const sel = document.getElementById('workoutGoal');
+  if (sel && goal && ['strength', 'hypertrophy', 'endurance'].includes(goal)) {
+    sel.value = goal;
+  }
+}
+
 async function initWorkoutsPage() {
   await loadExercises();
+  applyWorkoutsQueryParams();
   setupWorkoutBuilderNotesUI();
   bindRunnerNotesFieldOnce();
   renderWorkoutBuilderList();
@@ -527,6 +537,12 @@ async function initWorkoutsPage() {
       if (shouldStart) startWorkoutSession();
     }
   } catch {}
+
+  if (window.location.hash === '#prebuilt-routines') {
+    requestAnimationFrame(() => {
+      document.getElementById('prebuilt-routines')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 }
 
 function setWorkoutSaveMessage(msg, isError) {
@@ -1247,9 +1263,40 @@ async function initExercisePage() {
   renderExerciseDetail(exercise, { containerId: 'exercisePageContent', backHref: 'index.html', baseUrl: getBaseUrl() });
 }
 
+function applyExerciseCatalogQueryParams() {
+  const p = new URLSearchParams(window.location.search || '');
+  const setIf = (id, val) => {
+    if (val == null || String(val).trim() === '') return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    const want = normalizeFilterValue(val);
+    const opts = Array.from(el.options || []);
+    const match = opts.find((o) => normalizeFilterValue(o.value) === want);
+    if (match) el.value = match.value;
+  };
+  setIf('filterLevel', p.get('level'));
+  setIf('filterCategory', p.get('category') || p.get('type'));
+  setIf('filterEquipment', p.get('equipment'));
+  setIf('filterMuscle', p.get('muscle'));
+  const letter = (p.get('letter') || p.get('alpha') || '').trim().toUpperCase();
+  if (letter && /^[A-Z]$/.test(letter)) {
+    const el = document.getElementById('filterAlpha');
+    if (el) {
+      const hit = Array.from(el.options).find((o) => o.value === letter);
+      if (hit) el.value = letter;
+    }
+  }
+  const q = p.get('q') || p.get('search');
+  if (q) {
+    const input = document.getElementById('exerciseSearch');
+    if (input) input.value = q;
+  }
+}
+
 async function initExercisesPage() {
   await loadExercises();
   loadBookmarks();
+  applyExerciseCatalogQueryParams();
   renderExercisesPageGrid();
   setupExerciseSearch();
   setupPaginationButtons();
@@ -1572,6 +1619,7 @@ async function initializeApp() {
   
   // Set up event listeners
   setupEventListeners();
+  applyExerciseCatalogQueryParams();
   setupExerciseSearch();
   
   // Set daily exercise
@@ -1592,6 +1640,7 @@ function resetPagination() {
   const anyFilters =
     !!q ||
     !!f.level ||
+    !!f.category ||
     !!f.equipment ||
     !!f.muscle ||
     !!f.alpha ||
@@ -2102,10 +2151,11 @@ function getActiveFilters() {
   const level = normalizeFilterValue(document.getElementById('filterLevel')?.value);
   const equipment = normalizeFilterValue(document.getElementById('filterEquipment')?.value);
   const muscle = normalizeFilterValue(document.getElementById('filterMuscle')?.value);
+  const category = normalizeFilterValue(document.getElementById('filterCategory')?.value);
   const alpha = String(document.getElementById('filterAlpha')?.value || '').trim().toUpperCase();
   const constraints = Array.from(document.querySelectorAll('.filter-constraint:checked'))
     .map((el) => normalizeFilterValue(el.value));
-  return { level, equipment, muscle, alpha, constraints };
+  return { level, equipment, muscle, category, alpha, constraints };
 }
 
 function exerciseMuscleBuckets(ex) {
@@ -2136,6 +2186,8 @@ function matchesFilters(ex, filters) {
     const bucketHit = primary.includes(filters.muscle) || secondary.includes(filters.muscle) || legacy.includes(filters.muscle);
     if (!bucketHit) return false;
   }
+
+  if (filters.category && normalizeFilterValue(ex.category) !== filters.category) return false;
 
   if (filters.constraints?.length) {
     const cs = getExerciseConstraintTags(ex);
@@ -2186,7 +2238,7 @@ function setupExerciseSearch() {
 }
 
 function bindFilterControls(onChange) {
-  const ids = ['filterLevel', 'filterEquipment', 'filterMuscle', 'filterAlpha'];
+  const ids = ['filterLevel', 'filterCategory', 'filterEquipment', 'filterMuscle', 'filterAlpha'];
   ids.forEach((id) => {
     const el = document.getElementById(id);
     if (!el || el.dataset.bound === 'true') return;
