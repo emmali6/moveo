@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=home-dual-paginate-20260212">
+    <link rel="stylesheet" href="css/styles.css?v=exercises-dual-paginate-20260213">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme" data-page="exercises">
@@ -148,8 +148,16 @@
                 <div id="exercisesPageGrid" class="exercises-grid" aria-label="Exercise library">
                     <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading exercises...</p>
                 </div>
-                <div class="pagination-row">
+                <div id="paginationExercisesSingle" class="pagination-row">
                     <button type="button" class="btn-secondary btn-link" id="showMoreExercisesBtn">Show more</button>
+                </div>
+                <div id="paginationExercisesDual" class="home-pagination-dual hidden" aria-label="Load more exercises by section">
+                    <div class="pagination-row">
+                        <button type="button" class="btn-secondary btn-link" id="showMoreExercisesVideoBtn">Show more — with video</button>
+                    </div>
+                    <div class="pagination-row">
+                        <button type="button" class="btn-secondary btn-link" id="showMoreExercisesPlainBtn">Show more — without video yet</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -163,6 +171,6 @@
     </footer>
 
     <script defer src="js/nav-dropdown.js?v=nav-dd-20260211"></script>
-    <script src="js/app.js?v=home-dual-paginate-20260212"></script>
+    <script src="js/app.js?v=exercises-dual-paginate-20260213"></script>
 </body>
 </html>

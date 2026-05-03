@@ -216,6 +216,9 @@ let visibleHomeCount = 6;
 let visibleHomeVideoCount = 6;
 let visibleHomePlainCount = 6;
 let visibleExercisesCount = 12;
+/** Exercises page: separate pagination when mixed video / no-video catalog. */
+let visibleExercisesVideoCount = 6;
+let visibleExercisesPlainCount = 6;
 let visibleRoutinesCount = 6;
 
 // Initialize app
@@ -1683,6 +1686,8 @@ function resetPagination() {
   visibleHomeVideoCount = anyFilters ? 18 : 6;
   visibleHomePlainCount = 6;
   visibleExercisesCount = anyFilters ? 36 : 12;
+  visibleExercisesVideoCount = anyFilters ? 24 : 6;
+  visibleExercisesPlainCount = 6;
   updateShowMoreVisibility();
 }
 
@@ -1751,6 +1756,28 @@ function setupPaginationButtons() {
     });
   }
 
+  const exVideoBtn = document.getElementById('showMoreExercisesVideoBtn');
+  if (exVideoBtn && exVideoBtn.dataset.bound !== 'true') {
+    exVideoBtn.dataset.bound = 'true';
+    exVideoBtn.addEventListener('click', () => {
+      visibleExercisesVideoCount += 6;
+      renderExercisesPageGrid();
+      updateShowMoreVisibility();
+      exVideoBtn.focus();
+    });
+  }
+
+  const exPlainBtn = document.getElementById('showMoreExercisesPlainBtn');
+  if (exPlainBtn && exPlainBtn.dataset.bound !== 'true') {
+    exPlainBtn.dataset.bound = 'true';
+    exPlainBtn.addEventListener('click', () => {
+      visibleExercisesPlainCount += 6;
+      renderExercisesPageGrid();
+      updateShowMoreVisibility();
+      exPlainBtn.focus();
+    });
+  }
+
   const exBtn = document.getElementById('showMoreExercisesBtn');
   if (exBtn && exBtn.dataset.bound !== 'true') {
     exBtn.dataset.bound = 'true';
@@ -1767,6 +1794,9 @@ function setupPaginationButtons() {
 
 function updateShowMoreVisibility() {
   const list = getFilteredExercises();
+  const mix = exercisesMixVideoAndPlain(list);
+  const { withVideo: allV, withoutVideo: allP } = mix ? splitHomeListVideoPlain(list) : { withVideo: [], withoutVideo: [] };
+
   const gallery = document.getElementById('exercisesGrid');
   const dualWrap = document.getElementById('paginationHomeDual');
   const singleWrap = document.getElementById('paginationHomeSingle');
@@ -1774,32 +1804,47 @@ function updateShowMoreVisibility() {
   const homeVideoBtn = document.getElementById('showMoreHomeVideoBtn');
   const homePlainBtn = document.getElementById('showMoreHomePlainBtn');
 
-  if (gallery && dualWrap && singleWrap && exercisesMixVideoAndPlain(list)) {
-    const { withVideo: allV, withoutVideo: allP } = splitHomeListVideoPlain(list);
-    dualWrap.classList.remove('hidden');
-    singleWrap.classList.add('hidden');
-    if (homeBtn) homeBtn.style.display = 'none';
-    if (homeVideoBtn) {
-      homeVideoBtn.style.display = allV.length > visibleHomeVideoCount ? 'inline-block' : 'none';
-    }
-    if (homePlainBtn) {
-      homePlainBtn.style.display = allP.length > visibleHomePlainCount ? 'inline-block' : 'none';
-    }
-  } else {
-    if (dualWrap) dualWrap.classList.add('hidden');
-    if (singleWrap) singleWrap.classList.remove('hidden');
-    if (homeVideoBtn) homeVideoBtn.style.display = 'none';
-    if (homePlainBtn) homePlainBtn.style.display = 'none';
-    if (homeBtn) {
-      const shouldShow = document.getElementById('exercisesGrid') && list.length > visibleHomeCount;
-      homeBtn.style.display = shouldShow ? 'inline-block' : 'none';
+  if (gallery && dualWrap && singleWrap) {
+    if (mix) {
+      dualWrap.classList.remove('hidden');
+      singleWrap.classList.add('hidden');
+      if (homeBtn) homeBtn.style.display = 'none';
+      if (homeVideoBtn) homeVideoBtn.style.display = allV.length > visibleHomeVideoCount ? 'inline-block' : 'none';
+      if (homePlainBtn) homePlainBtn.style.display = allP.length > visibleHomePlainCount ? 'inline-block' : 'none';
+    } else {
+      dualWrap.classList.add('hidden');
+      singleWrap.classList.remove('hidden');
+      if (homeVideoBtn) homeVideoBtn.style.display = 'none';
+      if (homePlainBtn) homePlainBtn.style.display = 'none';
+      if (homeBtn) {
+        homeBtn.style.display = gallery && list.length > visibleHomeCount ? 'inline-block' : 'none';
+      }
     }
   }
 
+  const exGrid = document.getElementById('exercisesPageGrid');
+  const exDual = document.getElementById('paginationExercisesDual');
+  const exSingle = document.getElementById('paginationExercisesSingle');
   const exBtn = document.getElementById('showMoreExercisesBtn');
-  if (exBtn) {
-    const shouldShow = document.getElementById('exercisesPageGrid') && list.length > visibleExercisesCount;
-    exBtn.style.display = shouldShow ? 'inline-block' : 'none';
+  const exVideoBtn = document.getElementById('showMoreExercisesVideoBtn');
+  const exPlainBtn = document.getElementById('showMoreExercisesPlainBtn');
+
+  if (exGrid && exDual && exSingle) {
+    if (mix) {
+      exDual.classList.remove('hidden');
+      exSingle.classList.add('hidden');
+      if (exBtn) exBtn.style.display = 'none';
+      if (exVideoBtn) exVideoBtn.style.display = allV.length > visibleExercisesVideoCount ? 'inline-block' : 'none';
+      if (exPlainBtn) exPlainBtn.style.display = allP.length > visibleExercisesPlainCount ? 'inline-block' : 'none';
+    } else {
+      exDual.classList.add('hidden');
+      exSingle.classList.remove('hidden');
+      if (exVideoBtn) exVideoBtn.style.display = 'none';
+      if (exPlainBtn) exPlainBtn.style.display = 'none';
+      if (exBtn) {
+        exBtn.style.display = list.length > visibleExercisesCount ? 'inline-block' : 'none';
+      }
+    }
   }
 }
 
@@ -2352,16 +2397,30 @@ function renderExercisesPageGrid() {
   const list = getFilteredExercises();
   if (exercises.length === 0) {
     grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No exercises available.</p>';
+    updateResultsMeta({ total: 0, shown: 0 });
+    updateShowMoreVisibility();
     return;
   }
   if (list.length === 0) {
     grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No exercises match your search. Try different words.</p>';
+    updateResultsMeta({ total: 0, shown: 0 });
+    updateShowMoreVisibility();
     return;
   }
-  const view = list.slice(0, visibleExercisesCount);
-  grid.innerHTML = buildExerciseGridMarkup(view, list);
-  updateResultsMeta({ total: list.length, shown: view.length });
-  bindExerciseGridCardNav(grid, view, { setDataHref: false });
+  if (exercisesMixVideoAndPlain(list)) {
+    const { withVideo: allV, withoutVideo: allP } = splitHomeListVideoPlain(list);
+    const viewV = allV.slice(0, visibleExercisesVideoCount);
+    const viewP = allP.slice(0, visibleExercisesPlainCount);
+    const ordered = [...viewV, ...viewP];
+    grid.innerHTML = buildHomeDualSectionMarkup(viewV, viewP, list);
+    updateResultsMeta({ total: list.length, shown: ordered.length });
+    bindExerciseGridCardNav(grid, ordered, { setDataHref: false });
+  } else {
+    const view = list.slice(0, visibleExercisesCount);
+    grid.innerHTML = buildExerciseGridMarkup(view, list);
+    updateResultsMeta({ total: list.length, shown: view.length });
+    bindExerciseGridCardNav(grid, view, { setDataHref: false });
+  }
   updateShowMoreVisibility();
 }
 
