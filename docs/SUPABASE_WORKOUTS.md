@@ -2,7 +2,18 @@
 
 Moveo can run without accounts using `localStorage`, but if you want workouts + history synced to accounts, create these tables and policies.
 
-### 1) Tables
+### Quick path (recommended)
+
+Run **`docs/supabase-workout-adaptation.sql`** in the Supabase SQL Editor. It:
+
+- Creates **`user_workout_sessions`** if missing (fixes `42P01: relation ... does not exist`)
+- Adds **`session_notes`** and **`set_feedback`**
+- Creates **`user_exercise_load_profiles`** for adaptive reps (signed-in sync)
+- Sets **RLS** on both
+
+Then run the **`user_workouts`** block below if you use **Save to account** and that table is not created yet.
+
+### 1) Tables (manual / reference)
 
 Run in Supabase SQL editor:
 
