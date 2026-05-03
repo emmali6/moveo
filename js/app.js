@@ -143,6 +143,35 @@ function buildExerciseGridMarkup(view, fullFilteredList) {
   return parts.join('');
 }
 
+/** Split filtered list into [with video…][without video…] (order preserved). */
+function splitHomeListVideoPlain(list) {
+  if (!Array.isArray(list)) return { withVideo: [], withoutVideo: [] };
+  const i = list.findIndex((ex) => !exerciseHasPlayableVideo(ex));
+  if (i === -1) return { withVideo: [...list], withoutVideo: [] };
+  return { withVideo: list.slice(0, i), withoutVideo: list.slice(i) };
+}
+
+/** Home page: two sections always visible when catalog is mixed (each has its own Show more). */
+function buildHomeDualSectionMarkup(viewWithVideo, viewPlain, fullList) {
+  const { withVideo: allV, withoutVideo: allP } = splitHomeListVideoPlain(fullList);
+  const parts = [];
+  if (allV.length) {
+    parts.push('<div class="exercise-gallery-stack exercise-gallery-stack--video" role="region" aria-labelledby="exerciseGalleryVideoHeading">');
+    parts.push('<h3 class="exercise-section-heading" id="exerciseGalleryVideoHeading">With demonstration video</h3>');
+    parts.push(viewWithVideo.map((ex) => createExerciseCard(ex)).join(''));
+    parts.push('</div>');
+  }
+  if (allP.length) {
+    parts.push('<div class="exercise-gallery-stack exercise-gallery-stack--plain" role="region" aria-labelledby="exerciseGalleryPlainHeading">');
+    parts.push(
+      '<h3 class="exercise-section-heading exercise-section-heading-muted" id="exerciseGalleryPlainHeading">Exercises without a demo video yet <span class="exercise-section-subdued">(shown here too; they move up when a video is added)</span></h3>'
+    );
+    parts.push(viewPlain.map((ex) => createExerciseCard(ex)).join(''));
+    parts.push('</div>');
+  }
+  return parts.join('');
+}
+
 function logExerciseVideoMix() {
   if (!Array.isArray(exercises) || exercises.length === 0) return;
   const withV = exercises.filter(exerciseHasPlayableVideo).length;
@@ -150,7 +179,7 @@ function logExerciseVideoMix() {
   console.info(
     `Moveo: ${withV} exercise(s) have a preview video, ${without} do not. ` +
       (withV > 0 && without > 0
-        ? 'You should see two sections (or a hint to use Show more).'
+        ? 'You should see two sections on Home (each with its own Show more when mixed).'
         : 'Only one group — no split headings (all have video, or none yet).')
   );
 }
@@ -183,6 +212,9 @@ let isPlaying = false;
 // Kept for backward compatibility with older cached HTML/JS; no UI uses this anymore.
 let showMuscleHighlight = false;
 let visibleHomeCount = 6;
+/** Home gallery only: separate pagination when mixed video / no-video catalog. */
+let visibleHomeVideoCount = 6;
+let visibleHomePlainCount = 6;
 let visibleExercisesCount = 12;
 let visibleRoutinesCount = 6;
 
@@ -1648,6 +1680,8 @@ function resetPagination() {
 
   // When filters are active, show more upfront so changes are obvious.
   visibleHomeCount = anyFilters ? 18 : 6;
+  visibleHomeVideoCount = anyFilters ? 18 : 6;
+  visibleHomePlainCount = 6;
   visibleExercisesCount = anyFilters ? 36 : 12;
   updateShowMoreVisibility();
 }
@@ -1695,6 +1729,28 @@ function setupPaginationButtons() {
     });
   }
 
+  const homeVideoBtn = document.getElementById('showMoreHomeVideoBtn');
+  if (homeVideoBtn && homeVideoBtn.dataset.bound !== 'true') {
+    homeVideoBtn.dataset.bound = 'true';
+    homeVideoBtn.addEventListener('click', () => {
+      visibleHomeVideoCount += 6;
+      renderExerciseGallery();
+      updateShowMoreVisibility();
+      homeVideoBtn.focus();
+    });
+  }
+
+  const homePlainBtn = document.getElementById('showMoreHomePlainBtn');
+  if (homePlainBtn && homePlainBtn.dataset.bound !== 'true') {
+    homePlainBtn.dataset.bound = 'true';
+    homePlainBtn.addEventListener('click', () => {
+      visibleHomePlainCount += 6;
+      renderExerciseGallery();
+      updateShowMoreVisibility();
+      homePlainBtn.focus();
+    });
+  }
+
   const exBtn = document.getElementById('showMoreExercisesBtn');
   if (exBtn && exBtn.dataset.bound !== 'true') {
     exBtn.dataset.bound = 'true';
@@ -1711,11 +1767,35 @@ function setupPaginationButtons() {
 
 function updateShowMoreVisibility() {
   const list = getFilteredExercises();
+  const gallery = document.getElementById('exercisesGrid');
+  const dualWrap = document.getElementById('paginationHomeDual');
+  const singleWrap = document.getElementById('paginationHomeSingle');
   const homeBtn = document.getElementById('showMoreHomeBtn');
-  if (homeBtn) {
-    const shouldShow = document.getElementById('exercisesGrid') && list.length > visibleHomeCount;
-    homeBtn.style.display = shouldShow ? 'inline-block' : 'none';
+  const homeVideoBtn = document.getElementById('showMoreHomeVideoBtn');
+  const homePlainBtn = document.getElementById('showMoreHomePlainBtn');
+
+  if (gallery && dualWrap && singleWrap && exercisesMixVideoAndPlain(list)) {
+    const { withVideo: allV, withoutVideo: allP } = splitHomeListVideoPlain(list);
+    dualWrap.classList.remove('hidden');
+    singleWrap.classList.add('hidden');
+    if (homeBtn) homeBtn.style.display = 'none';
+    if (homeVideoBtn) {
+      homeVideoBtn.style.display = allV.length > visibleHomeVideoCount ? 'inline-block' : 'none';
+    }
+    if (homePlainBtn) {
+      homePlainBtn.style.display = allP.length > visibleHomePlainCount ? 'inline-block' : 'none';
+    }
+  } else {
+    if (dualWrap) dualWrap.classList.add('hidden');
+    if (singleWrap) singleWrap.classList.remove('hidden');
+    if (homeVideoBtn) homeVideoBtn.style.display = 'none';
+    if (homePlainBtn) homePlainBtn.style.display = 'none';
+    if (homeBtn) {
+      const shouldShow = document.getElementById('exercisesGrid') && list.length > visibleHomeCount;
+      homeBtn.style.display = shouldShow ? 'inline-block' : 'none';
+    }
   }
+
   const exBtn = document.getElementById('showMoreExercisesBtn');
   if (exBtn) {
     const shouldShow = document.getElementById('exercisesPageGrid') && list.length > visibleExercisesCount;
@@ -2321,10 +2401,20 @@ function renderExerciseGallery() {
     return;
   }
   
-  const view = list.slice(0, visibleHomeCount);
-  gallery.innerHTML = buildExerciseGridMarkup(view, list);
-  updateResultsMeta({ total: list.length, shown: view.length });
-  bindExerciseGridCardNav(gallery, view, { setDataHref: true });
+  if (exercisesMixVideoAndPlain(list)) {
+    const { withVideo: allV, withoutVideo: allP } = splitHomeListVideoPlain(list);
+    const viewV = allV.slice(0, visibleHomeVideoCount);
+    const viewP = allP.slice(0, visibleHomePlainCount);
+    const ordered = [...viewV, ...viewP];
+    gallery.innerHTML = buildHomeDualSectionMarkup(viewV, viewP, list);
+    updateResultsMeta({ total: list.length, shown: ordered.length });
+    bindExerciseGridCardNav(gallery, ordered, { setDataHref: true });
+  } else {
+    const view = list.slice(0, visibleHomeCount);
+    gallery.innerHTML = buildExerciseGridMarkup(view, list);
+    updateResultsMeta({ total: list.length, shown: view.length });
+    bindExerciseGridCardNav(gallery, view, { setDataHref: true });
+  }
   updateShowMoreVisibility();
 }
 
