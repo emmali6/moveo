@@ -151,14 +151,22 @@ function splitHomeListVideoPlain(list) {
   return { withVideo: list.slice(0, i), withoutVideo: list.slice(i) };
 }
 
-/** Home page: two sections always visible when catalog is mixed (each has its own Show more). */
-function buildHomeDualSectionMarkup(viewWithVideo, viewPlain, fullList) {
+/** Home / exercises: two sections when catalog is mixed. Optional videoMoreButtonId = show-more at end of video block. */
+function buildHomeDualSectionMarkup(viewWithVideo, viewPlain, fullList, options = {}) {
+  const { videoMoreButtonId } = options;
   const { withVideo: allV, withoutVideo: allP } = splitHomeListVideoPlain(fullList);
   const parts = [];
   if (allV.length) {
     parts.push('<div class="exercise-gallery-stack exercise-gallery-stack--video" role="region" aria-labelledby="exerciseGalleryVideoHeading">');
     parts.push('<h3 class="exercise-section-heading" id="exerciseGalleryVideoHeading">With demonstration video</h3>');
     parts.push(viewWithVideo.map((ex) => createExerciseCard(ex)).join(''));
+    if (videoMoreButtonId) {
+      parts.push(
+        '<div class="pagination-row gallery-stack-more">' +
+          `<button type="button" class="btn-secondary btn-link" id="${videoMoreButtonId}">Show more — with video</button>` +
+          '</div>'
+      );
+    }
     parts.push('</div>');
   }
   if (allP.length) {
@@ -1733,14 +1741,16 @@ function setupPaginationButtons() {
     });
   }
 
-  const homeVideoBtn = document.getElementById('showMoreHomeVideoBtn');
-  if (homeVideoBtn && homeVideoBtn.dataset.bound !== 'true') {
-    homeVideoBtn.dataset.bound = 'true';
-    homeVideoBtn.addEventListener('click', () => {
+  const homeGallery = document.getElementById('exercisesGrid');
+  if (homeGallery && homeGallery.dataset.videoMoreDelegated !== 'true') {
+    homeGallery.dataset.videoMoreDelegated = 'true';
+    homeGallery.addEventListener('click', (e) => {
+      const btn = e.target.closest('#showMoreHomeVideoBtn');
+      if (!btn) return;
       visibleHomeVideoCount += 6;
       renderExerciseGallery();
       updateShowMoreVisibility();
-      homeVideoBtn.focus();
+      btn.focus();
     });
   }
 
@@ -1755,14 +1765,16 @@ function setupPaginationButtons() {
     });
   }
 
-  const exVideoBtn = document.getElementById('showMoreExercisesVideoBtn');
-  if (exVideoBtn && exVideoBtn.dataset.bound !== 'true') {
-    exVideoBtn.dataset.bound = 'true';
-    exVideoBtn.addEventListener('click', () => {
+  const exGrid = document.getElementById('exercisesPageGrid');
+  if (exGrid && exGrid.dataset.videoMoreDelegated !== 'true') {
+    exGrid.dataset.videoMoreDelegated = 'true';
+    exGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('#showMoreExercisesVideoBtn');
+      if (!btn) return;
       visibleExercisesVideoCount += 6;
       renderExercisesPageGrid();
       updateShowMoreVisibility();
-      exVideoBtn.focus();
+      btn.focus();
     });
   }
 
@@ -2387,7 +2399,9 @@ function renderExercisesPageGrid() {
     const viewV = allV.slice(0, visibleExercisesVideoCount);
     const viewP = allP.slice(0, visibleExercisesPlainCount);
     const ordered = [...viewV, ...viewP];
-    grid.innerHTML = buildHomeDualSectionMarkup(viewV, viewP, list);
+    grid.innerHTML = buildHomeDualSectionMarkup(viewV, viewP, list, {
+      videoMoreButtonId: 'showMoreExercisesVideoBtn',
+    });
     updateResultsMeta({ total: list.length, shown: ordered.length });
     bindExerciseGridCardNav(grid, ordered, { setDataHref: false });
   } else {
@@ -2440,7 +2454,9 @@ function renderExerciseGallery() {
     const viewV = allV.slice(0, visibleHomeVideoCount);
     const viewP = allP.slice(0, visibleHomePlainCount);
     const ordered = [...viewV, ...viewP];
-    gallery.innerHTML = buildHomeDualSectionMarkup(viewV, viewP, list);
+    gallery.innerHTML = buildHomeDualSectionMarkup(viewV, viewP, list, {
+      videoMoreButtonId: 'showMoreHomeVideoBtn',
+    });
     updateResultsMeta({ total: list.length, shown: ordered.length });
     bindExerciseGridCardNav(gallery, ordered, { setDataHref: true });
   } else {

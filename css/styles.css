@@ -1381,6 +1381,12 @@ button:focus-visible {
   border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+/* “Show more — with video” lives at end of video stack (full-width row in grid) */
+.exercise-gallery-stack .gallery-stack-more.pagination-row {
+  grid-column: 1 / -1;
+  margin: 0.75rem 0 1rem;
+}
+
 /* Shown when the first page lists only demos but more no-video cards exist past “Show more” */
 .exercise-gallery-plain-hint {
   grid-column: 1 / -1;
