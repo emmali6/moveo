@@ -273,6 +273,28 @@ a:hover, a:focus {
   }
 }
 
+/* Mobile / small screens: stack logo, then primary nav links underneath */
+@media (max-width: 900px) {
+  .nav-inner {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.65rem;
+  }
+
+  .nav-inner .logo {
+    text-align: center;
+  }
+
+  .nav-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    row-gap: 0.35rem;
+  }
+}
+
 .logo {
   font-family: var(--font-heading);
   font-size: clamp(1.5rem, 4vw, 2rem);
@@ -724,6 +746,11 @@ button:focus-visible {
   background: #ffd84d;
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+}
+
+.pagination-row--routines-more {
+  margin-top: 1.75rem;
+  padding-top: 0.25rem;
 }
 
 /* Home: two Show more rows (video block / no-video block) */
@@ -1982,6 +2009,20 @@ button:focus-visible {
   margin-top: 1.5rem;
 }
 
+.about-explore-wrap {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.about-explore-btn {
+  display: inline-block;
+  font-size: clamp(1.1rem, 2.8vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1rem 2.25rem;
+}
+
 /* Account page */
 .account-form-container {
   max-width: 420px;
@@ -2056,6 +2097,37 @@ button:focus-visible {
 
 .auth-panel {
   margin-bottom: 1rem;
+}
+
+/* Home hero: same pill control look as Sign in / Sign up (account page) */
+.hero-quick-tabs {
+  max-width: min(100%, 40rem);
+  margin: 2rem auto 0;
+  width: 100%;
+}
+
+.hero-quick-tabs .auth-tab {
+  white-space: normal;
+  line-height: 1.25;
+  min-height: 2.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  hyphens: auto;
+  font-size: clamp(0.72rem, 2.4vw, 0.95rem);
+  padding: 0.65rem 0.5rem;
+}
+
+@media (min-width: 600px) {
+  .hero-quick-tabs {
+    max-width: min(100%, 48rem);
+  }
+
+  .hero-quick-tabs .auth-tab {
+    padding: 0.85rem 0.75rem;
+    font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+  }
 }
 
 .account-form label {
@@ -2206,7 +2278,7 @@ button:focus-visible {
 
   .nav-links {
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 0.35rem;
   }
 

@@ -179,7 +179,7 @@ function logExerciseVideoMix() {
   console.info(
     `Moveo: ${withV} exercise(s) have a preview video, ${without} do not. ` +
       (withV > 0 && without > 0
-        ? 'You should see two sections on Home (each with its own Show more when mixed).'
+        ? 'You should see two sections on the Exercises page when mixed (each with its own Show more).'
         : 'Only one group — no split headings (all have video, or none yet).')
   );
 }
@@ -2096,8 +2096,8 @@ function setupEventListeners() {
   
   if (learnMoveBtn) {
     learnMoveBtn.addEventListener('click', () => {
-      document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
-      announceToScreenReader('Navigated to exercise gallery');
+      window.location.href = getBaseUrl() + 'exercises.html';
+      announceToScreenReader('Opening exercise library');
     });
   }
 
@@ -2529,13 +2529,19 @@ function viewExercise(exerciseId) {
   
   currentExercise = exercise;
   
+  const gallery = document.getElementById('gallery');
+  const detail = document.getElementById('exerciseDetail');
+  if (!gallery || !detail) {
+    window.location.href = getBaseUrl() + 'exercise.html?id=' + encodeURIComponent(exerciseId);
+    return;
+  }
+
   // Update URL without page reload
   window.history.pushState({ exerciseId }, '', `?exercise=${exerciseId}`);
-  
-  // Hide gallery, show detail
-  document.getElementById('gallery').classList.add('hidden');
-  document.getElementById('exerciseDetail').classList.remove('hidden');
-  
+
+  gallery.classList.add('hidden');
+  detail.classList.remove('hidden');
+
   renderExerciseDetail(exercise);
   
   // Scroll to top
@@ -2952,11 +2958,14 @@ function toggleTipsOverlay() {
   }
 }
 
-// Back to gallery
+// Back to gallery (legacy inline home view; no-op when gallery/detail are not on the page)
 function backToGallery() {
-  document.getElementById('gallery').classList.remove('hidden');
-  document.getElementById('exerciseDetail').classList.add('hidden');
-  window.history.pushState({}, '', '/');
+  const gallery = document.getElementById('gallery');
+  const detail = document.getElementById('exerciseDetail');
+  if (!gallery || !detail) return;
+  gallery.classList.remove('hidden');
+  detail.classList.add('hidden');
+  window.history.pushState({}, '', getBaseUrl());
   announceToScreenReader('Returned to exercise gallery');
 }
 
