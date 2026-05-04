@@ -2106,6 +2106,11 @@ button:focus-visible {
   width: 100%;
 }
 
+/* Single CTA (Learn a Move only): don’t stretch one tab across the full hero width */
+.hero-quick-tabs:has(> .auth-tab:only-of-type) {
+  max-width: min(100%, 22rem);
+}
+
 .hero-quick-tabs .auth-tab {
   white-space: normal;
   line-height: 1.25;
@@ -2122,6 +2127,10 @@ button:focus-visible {
 @media (min-width: 600px) {
   .hero-quick-tabs {
     max-width: min(100%, 48rem);
+  }
+
+  .hero-quick-tabs:has(> .auth-tab:only-of-type) {
+    max-width: min(100%, 26rem);
   }
 
   .hero-quick-tabs .auth-tab {

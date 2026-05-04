@@ -1144,8 +1144,7 @@ function renderDailyWorkout() {
     <p>${r.description || 'A daily session picked from your routine library.'}</p>
     <p class="routine-meta">${meta}</p>
     <div class="daily-actions">
-      <a href="${href}" class="btn-primary btn-link">Start with timer</a>
-      <a href="${getBaseUrl()}workouts.html?routine=${encodeURIComponent(r.id)}" class="btn-secondary btn-link">Load into builder</a>
+      <a href="${href}" class="btn-primary btn-link">Start workout</a>
     </div>
   `;
 }
@@ -2091,9 +2090,7 @@ function saveBookmarks() {
 function setupEventListeners() {
   // Navigation
   const learnMoveBtn = document.getElementById('learnMoveBtn');
-  const exerciseOfDayBtn = document.getElementById('exerciseOfDayBtn');
-  const workoutOfDayBtn = document.getElementById('workoutOfDayBtn');
-  
+
   if (learnMoveBtn) {
     learnMoveBtn.addEventListener('click', () => {
       window.location.href = getBaseUrl() + 'exercises.html';
@@ -2101,28 +2098,6 @@ function setupEventListeners() {
     });
   }
 
-  if (exerciseOfDayBtn) {
-    exerciseOfDayBtn.addEventListener('click', () => {
-      const dailyExercise = document.getElementById('dailyExerciseContent');
-      if (dailyExercise) {
-        dailyExercise.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        announceToScreenReader('Navigated to exercise of the day');
-      }
-    });
-  }
-  
-  if (workoutOfDayBtn) {
-    workoutOfDayBtn.addEventListener('click', () => {
-      const dailyWorkout = document.getElementById('dailyWorkoutContent');
-      if (dailyWorkout) {
-        dailyWorkout.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        announceToScreenReader('Navigated to workout of the day');
-        return;
-      }
-      window.location.href = getBaseUrl() + 'workouts.html';
-    });
-  }
-  
   // Keyboard navigation
   document.addEventListener('keydown', handleKeyboardNavigation);
 }
@@ -2993,8 +2968,7 @@ function setDailyExercise() {
       <span aria-label="Category">${getCategoryIcon(dailyExercise.category)}</span>
     </div>
     <div class="daily-actions">
-      <a href="${exerciseUrl}" class="btn-primary btn-link">Try It Now</a>
-      <a href="${exerciseUrl}" class="btn-secondary btn-link">View details</a>
+      <a href="${exerciseUrl}" class="btn-primary btn-link">Open exercise page</a>
     </div>
   `;
 }
