@@ -1286,23 +1286,51 @@ function setupWorkoutDragAndDrop(container) {
   });
 }
 
+/** Resolve exercise from ?id= slug (case/spacing/hyphen tolerant). */
+function findExerciseByQueryId(rawId) {
+  if (!rawId || !Array.isArray(exercises)) return null;
+  const decoded = decodeURIComponent(String(rawId).trim());
+  const variants = new Set([
+    decoded,
+    decoded.toLowerCase(),
+    decoded.toLowerCase().replace(/\s+/g, '-'),
+    decoded.toLowerCase().replace(/-/g, ''),
+  ]);
+  for (const q of variants) {
+    const hit = exercises.find((e) => String(e.id).toLowerCase() === String(q).toLowerCase());
+    if (hit) return hit;
+  }
+  const nk = nameKeyForMatch(decoded.replace(/-/g, ' '));
+  if (nk) {
+    const byName = exercises.find((e) => nameKeyForMatch(e.name) === nk);
+    if (byName) return byName;
+  }
+  return null;
+}
+
 async function initExercisePage() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
   const container = document.getElementById('exercisePageContent');
   if (!container) return;
   if (!id) {
-    container.innerHTML = '<p class="no-exercises">No exercise selected.</p><a href="index.html" class="btn-secondary">← Back to Gallery</a>';
+    container.innerHTML =
+      '<p class="no-exercises">No exercise selected.</p><a href="exercises.html" class="btn-secondary btn-link">← Back to exercise library</a>';
     return;
   }
   await loadExercises();
-  const exercise = exercises.find(ex => ex.id === id);
+  const exercise = findExerciseByQueryId(id);
   if (!exercise) {
-    container.innerHTML = '<p class="no-exercises">Exercise not found.</p><a href="index.html" class="btn-secondary">← Back to Gallery</a>';
+    container.innerHTML =
+      '<p class="no-exercises">Exercise not found.</p><a href="exercises.html" class="btn-secondary btn-link">← Back to exercise library</a>';
     return;
   }
   loadBookmarks();
-  renderExerciseDetail(exercise, { containerId: 'exercisePageContent', backHref: 'index.html', baseUrl: getBaseUrl() });
+  renderExerciseDetail(exercise, {
+    containerId: 'exercisePageContent',
+    backHref: 'exercises.html',
+    baseUrl: getBaseUrl(),
+  });
 }
 
 function applyExerciseCatalogQueryParams() {
@@ -2619,6 +2647,93 @@ function muscleHighlightSpans(exercise) {
   return raw.map((muscle) => `<span class="muscle-highlight">${escapeHtmlBody(String(muscle), 80)}</span>`).join('');
 }
 
+const SUGGESTION_CARD_COUNT = 3;
+
+/** Default cue bullets when JSON/Supabase omits optional arrays (keeps every exercise page section-aligned). */
+function defaultWhatYouShouldFeelLines(exercise) {
+  const cat = String(exercise.category || 'strength').toLowerCase();
+  const muscles = (exercise.muscleGroups || exercise.primaryMuscles || []).map((m) => String(m).toLowerCase());
+  const coreish = muscles.some((m) => m.includes('core') || m.includes('ab'));
+  if (coreish || cat === 'mobility')
+    return [
+      'Muscles around the midsection should feel engaged without holding your breath.',
+      'Neck and jaw stay relaxed; stop if you feel sharp pain or dizziness.',
+    ];
+  if (cat === 'rehab')
+    return [
+      'A manageable challenge in the target area without sharp or spreading pain.',
+      'Range of motion and control matter more than speed or reps.',
+    ];
+  return [
+    'Working muscles should feel challenged, not sharp or joint-specific.',
+    'Stop if form breaks down; reset and use a smaller range or lighter variation.',
+  ];
+}
+
+function defaultBreathingLines(exercise) {
+  const cat = String(exercise.category || 'strength').toLowerCase();
+  if (cat === 'endurance' || cat === 'hypertrophy')
+    return ['Find a rhythm you can maintain across sets.', 'Avoid holding your breath for long periods during hard reps.'];
+  if (cat === 'mobility' || cat === 'rehab') return ['Smooth nasal breathing when possible.', 'Exhale on the more difficult phase if it helps you stay controlled.'];
+  return ['Brace lightly on hard efforts; breathe steadily between reps.', 'If you feel dizzy, slow down and reset your breathing pattern.'];
+}
+
+function defaultLimitedMobilityLines() {
+  return [
+    'Reduce range, use a stable support, or shorten the lever if a joint feels limited.',
+    'Prioritize pain-free motion over depth or speed.',
+  ];
+}
+
+function defaultWorkoutRoleLine(exercise) {
+  const cat = String(exercise.category || 'strength').toLowerCase();
+  if (cat === 'mobility' || cat === 'rehab') return 'Warm-up primer, active recovery, or low-fatigue filler between heavier moves.';
+  if (cat === 'endurance') return 'Main conditioning block or longer circuit segment.';
+  if (cat === 'hypertrophy') return 'Primary compound or accessory volume, often paired with complementary patterns.';
+  return 'Main strength work, accessory lift, or finisher depending on load and programming.';
+}
+
+function defaultPairingLines(exercise) {
+  const cat = String(exercise.category || 'strength').toLowerCase();
+  const muscles = exercise.muscleGroups || exercise.primaryMuscles || [];
+  const m = Array.isArray(muscles) && muscles.length ? String(muscles[0]) : 'related muscles';
+  if (cat === 'mobility' || cat === 'rehab') return [`Pair with a gentle stability move for ${m}, or follow with light cardio.`];
+  return [`Pair with an opposing pattern or a complementary move for ${m}.`, 'Alternate with a lower-back friendly choice if you need more rest between sets.'];
+}
+
+function defaultSetsRepsBlock(exercise) {
+  if (hasSetsRepsData(exercise.setsReps)) return '';
+  const cat = String(exercise.category || 'strength').toLowerCase();
+  if (cat === 'endurance')
+    return `
+              <ul class="cue-list">
+                <li><strong>Strength:</strong> 3 x 6-8, controlled tempo</li>
+                <li><strong>Hypertrophy:</strong> 3 x 10-15</li>
+                <li><strong>Endurance:</strong> 2-4 x 15+ or timed intervals</li>
+              </ul>
+              <p class="cue-fallback">Starting points; adjust for your level and program.</p>`;
+  if (cat === 'hypertrophy')
+    return `
+              <ul class="cue-list">
+                <li><strong>Strength:</strong> 4-5 x 4-6</li>
+                <li><strong>Hypertrophy:</strong> 3-4 x 8-12</li>
+                <li><strong>Endurance:</strong> 2-3 x 15-20</li>
+              </ul>
+              <p class="cue-fallback">Starting points; adjust for your level and program.</p>`;
+  return `
+              <ul class="cue-list">
+                <li><strong>Strength:</strong> 3-5 x 3-6</li>
+                <li><strong>Hypertrophy:</strong> 3 x 8-12</li>
+                <li><strong>Endurance:</strong> 2-3 x 15+</li>
+              </ul>
+              <p class="cue-fallback">Starting points; adjust for your level and program.</p>`;
+}
+
+function listOrFallback(arr, fallbacks) {
+  const a = Array.isArray(arr) && arr.length ? arr : fallbacks;
+  return `<ul class="cue-list">${a.map((c) => `<li>${typeof c === 'string' ? c : escapeHtmlBody(String(c), 400)}</li>`).join('')}</ul>`;
+}
+
 // Render exercise detail
 function renderExerciseDetail(exercise, options = {}) {
   const containerId =
@@ -2632,7 +2747,9 @@ function renderExerciseDetail(exercise, options = {}) {
   const baseUrl = options.baseUrl || getBaseUrl();
   const backHref = options.backHref || 'index.html';
   const backUrl = /^https?:\/\//i.test(backHref) ? backHref : baseUrl + backHref;
-  const backMarkup = `<a href="${backUrl}" class="btn-secondary btn-link">← Back to Gallery</a>`;
+  const backLabel =
+    containerId === 'exercisePageContent' ? '← Back to exercise library' : '← Back to gallery';
+  const backMarkup = `<a href="${backUrl}" class="btn-secondary btn-link">${backLabel}</a>`;
   
   const isBookmarked = bookmarkedExercises.includes(exercise.id);
 
@@ -2694,6 +2811,7 @@ function renderExerciseDetail(exercise, options = {}) {
         <div class="exercise-meta">
           <span>⏱️ Duration: ${exercise.duration} minutes</span>
           <span class="difficulty-badge ${exercise.difficulty}">${exercise.difficulty}</span>
+          <span class="exercise-meta-category">${escapeHtmlBody(String(exercise.category || 'general'), 28)}</span>
           <span aria-label="Category">${getCategoryIcon(exercise.category)}</span>
         </div>
 
@@ -2704,21 +2822,19 @@ function renderExerciseDetail(exercise, options = {}) {
           Add to workout
         </button>
         
-        ${Array.isArray(exercise.modifications) && exercise.modifications.length ? `
-          <div class="mod-ampl-block">
-            <h3>Modifications</h3>
-            <ul class="mod-list">
-              ${exercise.modifications.map(m => `<li>${m}</li>`).join('')}
-            </ul>
-          </div>` : ''}
+        <div class="mod-ampl-block">
+          <h3>Modifications</h3>
+          ${Array.isArray(exercise.modifications) && exercise.modifications.length
+            ? `<ul class="mod-list">${exercise.modifications.map((m) => `<li>${m}</li>`).join('')}</ul>`
+            : `<p class="cue-fallback">Use less range, fewer reps, longer rest, or a shorter lever if the full movement feels too demanding.</p>`}
+        </div>
         
-        ${Array.isArray(exercise.amplifications) && exercise.amplifications.length ? `
-          <div class="mod-ampl-block">
-            <h3>Amplifications</h3>
-            <ul class="mod-list">
-              ${exercise.amplifications.map(a => `<li>${a}</li>`).join('')}
-            </ul>
-          </div>` : ''}
+        <div class="mod-ampl-block">
+          <h3>Amplifications</h3>
+          ${Array.isArray(exercise.amplifications) && exercise.amplifications.length
+            ? `<ul class="mod-list">${exercise.amplifications.map((a) => `<li>${a}</li>`).join('')}</ul>`
+            : `<p class="cue-fallback">Add tempo work, pauses, or small load progressions only after the base pattern feels smooth and controlled.</p>`}
+        </div>
         
         <div class="muscle-groups">
           <h3>Target Muscles</h3>
@@ -2727,53 +2843,54 @@ function renderExerciseDetail(exercise, options = {}) {
           </div>
         </div>
 
-        ${Array.isArray(exercise.whatYouShouldFeel) && exercise.whatYouShouldFeel.length ? `
-          <div class="cue-block">
-            <h3>What you should feel</h3>
-            <ul class="cue-list">${exercise.whatYouShouldFeel.map((c) => `<li>${c}</li>`).join('')}</ul>
-          </div>` : ''}
+        <div class="cue-block">
+          <h3>What you should feel</h3>
+          ${listOrFallback(exercise.whatYouShouldFeel, defaultWhatYouShouldFeelLines(exercise))}
+        </div>
 
-        ${Array.isArray(exercise.breathingTips) && exercise.breathingTips.length ? `
-          <div class="cue-block">
-            <h3>Breathing</h3>
-            <ul class="cue-list">${exercise.breathingTips.map((c) => `<li>${c}</li>`).join('')}</ul>
-          </div>` : ''}
+        <div class="cue-block">
+          <h3>Breathing</h3>
+          ${listOrFallback(exercise.breathingTips, defaultBreathingLines(exercise))}
+        </div>
 
-        ${shouldShowNoEquipmentAlternatives(exercise) ? `
-          <div class="cue-block">
-            <h3>No equipment alternatives</h3>
-            <ul class="cue-list">
-              ${(exercise.noEquipmentAlternatives || []).map((c) => `<li>${c}</li>`).join('')}
-            </ul>
-          </div>` : ''}
+        <div class="cue-block">
+          <h3>No equipment alternatives</h3>
+          ${shouldShowNoEquipmentAlternatives(exercise)
+            ? `<ul class="cue-list">${(exercise.noEquipmentAlternatives || []).map((c) => `<li>${c}</li>`).join('')}</ul>`
+            : `<p class="cue-fallback">${(() => {
+              const eq = (exercise.equipment || []).map((x) => String(x).toLowerCase());
+              const onlyNone = eq.length === 0 || (eq.length === 1 && eq[0] === 'none');
+              return onlyNone
+                ? 'This pattern works with minimal or bodyweight setup.'
+                : 'If equipment is limited, swap in similar patterns using bodyweight, bands, or lighter loads you have on hand.';
+            })()}</p>`}
+        </div>
 
-        ${Array.isArray(exercise.limitedMobilityAlternatives) && exercise.limitedMobilityAlternatives.length ? `
-          <div class="cue-block">
-            <h3>Limited mobility alternatives</h3>
-            <ul class="cue-list">${exercise.limitedMobilityAlternatives.map((c) => `<li>${c}</li>`).join('')}</ul>
-          </div>` : ''}
+        <div class="cue-block">
+          <h3>Limited mobility alternatives</h3>
+          ${listOrFallback(exercise.limitedMobilityAlternatives, defaultLimitedMobilityLines())}
+        </div>
 
-        ${hasSetsRepsData(exercise.setsReps) ? `
-          <div class="cue-block">
-            <h3>Suggested sets & reps</h3>
-              <ul class="cue-list">
+        <div class="cue-block">
+          <h3>Suggested sets & reps</h3>
+          ${hasSetsRepsData(exercise.setsReps)
+            ? `<ul class="cue-list">
                 ${exercise.setsReps.strength ? `<li><strong>Strength:</strong> ${exercise.setsReps.strength}</li>` : ''}
                 ${exercise.setsReps.hypertrophy ? `<li><strong>Hypertrophy:</strong> ${exercise.setsReps.hypertrophy}</li>` : ''}
                 ${exercise.setsReps.endurance ? `<li><strong>Endurance:</strong> ${exercise.setsReps.endurance}</li>` : ''}
-              </ul>
-          </div>` : ''}
+              </ul>`
+            : defaultSetsRepsBlock(exercise)}
+        </div>
 
-        ${Array.isArray(exercise.workoutRole) && exercise.workoutRole.length ? `
-          <div class="cue-block">
-            <h3>Where it fits in a workout</h3>
-            <p class="cue-inline">${exercise.workoutRole.join(' · ')}</p>
-          </div>` : ''}
+        <div class="cue-block">
+          <h3>Where it fits in a workout</h3>
+          <p class="cue-inline">${Array.isArray(exercise.workoutRole) && exercise.workoutRole.length ? exercise.workoutRole.join(' · ') : defaultWorkoutRoleLine(exercise)}</p>
+        </div>
 
-        ${Array.isArray(exercise.pairingSuggestions) && exercise.pairingSuggestions.length ? `
-          <div class="cue-block">
-            <h3>Pairing ideas</h3>
-            <ul class="cue-list">${exercise.pairingSuggestions.map((c) => `<li>${c}</li>`).join('')}</ul>
-          </div>` : ''}
+        <div class="cue-block">
+          <h3>Pairing ideas</h3>
+          ${listOrFallback(exercise.pairingSuggestions, defaultPairingLines(exercise))}
+        </div>
         
         ${hasFormTipsContent(exercise) ? `
         <button 
@@ -2862,19 +2979,49 @@ function exerciseSuggestScore(base, cand) {
   return primary * 3 + secondary + goals * 2;
 }
 
+/** Full pool ranked by similarity (score may be 0; tie-break category + name). */
+function buildRankedSuggestions(base, pool) {
+  return pool
+    .map((cand) => ({ cand, score: exerciseSuggestScore(base, cand) }))
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      const catb = String(base.category || '').toLowerCase();
+      const ac = String(a.cand.category || '').toLowerCase() === catb ? 1 : 0;
+      const bc = String(b.cand.category || '').toLowerCase() === catb ? 1 : 0;
+      if (bc !== ac) return bc - ac;
+      return String(a.cand.name).localeCompare(String(b.cand.name));
+    });
+}
+
+/** Merge ordered candidate lists until we have up to `max` unique ids (excluding base exercise). */
+function mergeSuggestionPicks(baseExerciseId, max, ...lists) {
+  const out = [];
+  const seen = new Set([baseExerciseId]);
+  for (const list of lists) {
+    if (!Array.isArray(list)) continue;
+    for (const c of list) {
+      if (!c || seen.has(c.id)) continue;
+      out.push(c);
+      seen.add(c.id);
+      if (out.length >= max) return out;
+    }
+  }
+  return out;
+}
+
 function renderSuggestionRow(title, list) {
   if (!list?.length) return '';
   const base = getBaseUrl();
   return `
     <div class="suggest-row">
       <h3>${title}</h3>
-      <div class="suggest-grid" role="list">
+      <div class="suggest-grid suggest-grid--fixed" role="list">
         ${list.map((ex) => `
           <a class="suggest-card" role="listitem" href="${base}exercise.html?id=${encodeURIComponent(ex.id)}">
             <div class="suggest-name">${ex.name}</div>
             <div class="suggest-meta">
               <span class="difficulty-badge ${ex.difficulty}">${ex.difficulty}</span>
-              <span class="suggest-small">${(ex.primaryMuscles || ex.muscleGroups || []).slice(0, 2).join(' · ')}</span>
+              <span class="suggest-small">${(ex.primaryMuscles || ex.muscleGroups || []).slice(0, 2).join(' · ') || escapeHtmlBody(String(ex.category || ''), 24)}</span>
             </div>
           </a>
         `).join('')}
@@ -2885,34 +3032,75 @@ function renderSuggestionRow(title, list) {
 
 function renderSmartSuggestions(exercise) {
   if (!Array.isArray(exercises) || exercises.length < 2) return '';
-  const baseRank = difficultyRank(exercise.difficulty);
   const pool = exercises.filter((e) => e && e.id && e.id !== exercise.id);
+  if (!pool.length) return '';
 
-  const scored = pool
-    .map((cand) => ({ cand, score: exerciseSuggestScore(exercise, cand) }))
-    .filter((x) => x.score > 0)
-    .sort((a, b) => b.score - a.score);
+  const baseRank = difficultyRank(exercise.difficulty);
+  const cat = String(exercise.category || '').toLowerCase();
+  const ranked = buildRankedSuggestions(exercise, pool);
+  const allByScore = ranked.map((r) => r.cand);
 
-  const similar = scored.slice(0, 3).map((x) => x.cand);
+  const sameCategory = pool
+    .filter((c) => String(c.category || '').toLowerCase() === cat)
+    .sort((a, b) => exerciseSuggestScore(exercise, b) - exerciseSuggestScore(exercise, a));
+  const alpha = [...pool].sort((a, b) => String(a.name).localeCompare(String(b.name)));
 
-  const regressions = scored
-    .filter((x) => difficultyRank(x.cand.difficulty) < baseRank)
-    .slice(0, 3)
-    .map((x) => x.cand);
+  const similar = mergeSuggestionPicks(
+    exercise.id,
+    SUGGESTION_CARD_COUNT,
+    allByScore,
+    sameCategory,
+    alpha
+  );
 
-  const progressions = scored
-    .filter((x) => difficultyRank(x.cand.difficulty) > baseRank)
-    .slice(0, 3)
-    .map((x) => x.cand);
+  const muscleSet = new Set((exercise.primaryMuscles || exercise.muscleGroups || []).map((m) => String(m).toLowerCase()));
+  const strictlyEasier = ranked.filter((r) => difficultyRank(r.cand.difficulty) < baseRank).map((r) => r.cand);
+  const easierByRank = pool
+    .filter((c) => difficultyRank(c.difficulty) < baseRank)
+    .sort((a, b) => exerciseSuggestScore(exercise, b) - exerciseSuggestScore(exercise, a));
+  const beginnerSameMuscle = pool
+    .filter((c) => {
+      if (difficultyRank(c.difficulty) !== 1) return false;
+      return (c.primaryMuscles || c.muscleGroups || []).some((m) => muscleSet.has(String(m).toLowerCase()));
+    })
+    .sort((a, b) => exerciseSuggestScore(exercise, b) - exerciseSuggestScore(exercise, a));
+  const allBeginners = pool
+    .filter((c) => difficultyRank(c.difficulty) === 1)
+    .sort((a, b) => exerciseSuggestScore(exercise, b) - exerciseSuggestScore(exercise, a));
 
-  if (!similar.length && !regressions.length && !progressions.length) return '';
+  let regressions = mergeSuggestionPicks(
+    exercise.id,
+    SUGGESTION_CARD_COUNT,
+    strictlyEasier,
+    easierByRank,
+    baseRank === 1 ? beginnerSameMuscle : [],
+    baseRank === 1 ? allBeginners : []
+  );
+  if (regressions.length < SUGGESTION_CARD_COUNT) {
+    regressions = mergeSuggestionPicks(
+      exercise.id,
+      SUGGESTION_CARD_COUNT,
+      regressions,
+      pool
+        .filter((c) => difficultyRank(c.difficulty) < baseRank)
+        .sort((a, b) => exerciseSuggestScore(exercise, b) - exerciseSuggestScore(exercise, a)),
+      allByScore
+    );
+  }
+
+  const progressions = mergeSuggestionPicks(
+    exercise.id,
+    SUGGESTION_CARD_COUNT,
+    ranked.filter((r) => difficultyRank(r.cand.difficulty) > baseRank).map((r) => r.cand),
+    allByScore
+  );
 
   return `
-    <section class="suggestions" aria-label="Suggested exercises">
+    <section class="suggestions exercise-suggestions" aria-label="Suggested exercises">
       <h2 class="suggestions-heading">If you like this, try…</h2>
       ${renderSuggestionRow('Similar moves', similar)}
       ${renderSuggestionRow('Make it easier', regressions)}
-      ${renderSuggestionRow('Level up', progressions)}
+      ${progressions.length ? renderSuggestionRow('Level up', progressions) : ''}
     </section>
   `;
 }

@@ -1700,6 +1700,24 @@ button:focus-visible {
   font-weight: 600;
 }
 
+.cue-fallback {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.exercise-meta-category {
+  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.exercise-detail .exercise-meta-category {
+  color: var(--dark);
+}
+
 /* Suggestions */
 .suggestions {
   margin-top: 2rem;
@@ -1726,6 +1744,10 @@ button:focus-visible {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.75rem;
+}
+
+.suggest-grid--fixed {
+  min-height: 0;
 }
 
 .suggest-card {
