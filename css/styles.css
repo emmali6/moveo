@@ -1381,7 +1381,7 @@ button:focus-visible {
   border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-/* “Show more — with video” lives at end of video stack (full-width row in grid) */
+/* "Show more (with video)" lives at end of video stack (full-width row in grid) */
 .exercise-gallery-stack .gallery-stack-more.pagination-row {
   grid-column: 1 / -1;
   margin: 0.75rem 0 1rem;
@@ -1519,7 +1519,7 @@ button:focus-visible {
   border: 1px solid #C05621;
 }
 
-/* Deep indigo — distinct from bookmark (primary pink) and intermediate orange */
+/* Deep indigo, distinct from bookmark (primary pink) and intermediate orange */
 .difficulty-badge.advanced {
   background: #4c51bf;
   color: #f7fafc;
@@ -1813,7 +1813,7 @@ button:focus-visible {
 
 /* (Removed) Highlight-muscles toggle states */
 
-/* Bookmark — distinct from beginner badge (mint green); use brand pink */
+/* Bookmark: distinct from beginner badge (mint green); use brand pink */
 .bookmark-btn {
   background: var(--primary);
   color: white;

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=moveo-assets-20260215">
+    <link rel="stylesheet" href="css/styles.css?v=site-no-emdash-20260216">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme" data-page="workouts">
@@ -83,7 +83,7 @@
                             </div>
                             <div class="workout-estimate" aria-live="polite">
                                 <span class="filter-label">Estimated time</span>
-                                <div id="workoutEstimate" class="workout-estimate-value">—</div>
+                                <div id="workoutEstimate" class="workout-estimate-value">-</div>
                             </div>
                         </div>
                         <p id="workoutAdaptHint" class="workout-help workout-adapt-hint" aria-live="polite"></p>
@@ -108,7 +108,7 @@
                                 </div>
                                 <div class="runner-timer" aria-live="polite">
                                     <span class="runner-label">Rest</span>
-                                    <span id="runnerRest" class="runner-value">—</span>
+                                    <span id="runnerRest" class="runner-value">-</span>
                                 </div>
                             </div>
                             <div class="runner-actions">
@@ -119,18 +119,18 @@
                             <div class="runner-notes-field filter-field filter-field-wide">
                                 <label for="runnerSessionNotes" class="filter-label">Session notes</label>
                                 <textarea id="runnerSessionNotes" class="workout-notes-input" rows="3" maxlength="4000" aria-describedby="runnerNotesSyncHint" placeholder="Editable during your session…"></textarea>
-                                <span id="runnerNotesSyncHint" class="runner-hint">Same notes as above — saves automatically.</span>
+                                <span id="runnerNotesSyncHint" class="runner-hint">Same notes as above; saves automatically.</span>
                             </div>
                             <fieldset class="runner-feedback-fieldset">
                                 <legend class="runner-feedback-legend">After each set (optional)</legend>
                                 <label for="runnerRepsAfterSet">How many more <strong>good‑form</strong> reps could you do?</label>
                                 <input type="number" id="runnerRepsAfterSet" name="reps-after-set" class="runner-reps-input" min="0" max="99" step="1" inputmode="numeric" autocomplete="off" aria-describedby="runnerRepsHint">
-                                <p id="runnerRepsHint" class="runner-hint">Leave blank to skip. <strong>0</strong> = maximally hard today. Higher numbers tell Moveo you had extra reps “in reserve” — future sessions may bump targets slightly for this move.</p>
+                                <p id="runnerRepsHint" class="runner-hint">Leave blank to skip. <strong>0</strong> = maximally hard today. Higher numbers tell Moveo you had extra reps “in reserve”; future sessions may bump targets slightly for this move.</p>
                             </fieldset>
                             <details id="runnerNowPlaying" class="runner-now-playing" aria-label="Current exercise video">
                                 <summary class="runner-now-summary">
                                     <span class="runner-now-kicker">Current exercise</span>
-                                    <span id="runnerNowTitle" class="runner-now-title">—</span>
+                                    <span id="runnerNowTitle" class="runner-now-title">-</span>
                                     <span class="runner-now-hint">Tap to expand</span>
                                 </summary>
                                 <div class="runner-now-body">
@@ -173,7 +173,7 @@
     </footer>
 
     <script defer src="js/nav-dropdown.js?v=nav-dd-20260211"></script>
-    <script src="js/app.js?v=moveo-assets-20260215"></script>
+    <script src="js/app.js?v=site-no-emdash-20260216"></script>
 </body>
 </html>
 

@@ -11,7 +11,7 @@ Moveo calls **`auth.signUp()`** (`js/app.js` → `handleSignUp`). That creates a
   - a **database trigger** on `auth.users`, or  
   - an **Edge Function** / server route that inserts after sign-up.
 
-There is **no** insert into a custom table in the current Moveo code—only `signUp` with `user_metadata` (`full_name`).
+There is **no** insert into a custom table in the current Moveo code, only `signUp` with `user_metadata` (`full_name`).
 
 ---
 

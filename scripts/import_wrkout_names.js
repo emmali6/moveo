@@ -87,7 +87,7 @@ function defaultWhatFeel(primary) {
   if (p.includes('quadriceps')) return ['Quads and glutes working (not knee pain).', 'Feet stable and knees tracking over toes.'];
   if (p.includes('chest')) return ['Chest and triceps working (not shoulders shrugging).', 'Core braced so your body stays solid.'];
   if (p.includes('back') || p.includes('lats')) return ['Upper back/lats pulling (not just arms).', 'Shoulders down away from ears.'];
-  return ['Target muscles doing the work.', 'Movement feels controlled—not rushed.'];
+  return ['Target muscles doing the work.', 'Movement feels controlled, not rushed.'];
 }
 
 function defaultProgramming() {

@@ -1,14 +1,14 @@
 // Moveo - Movement Made Simple
 // Main application JavaScript
 
-// Supabase – account auth (script loaded on account.html)
+// Supabase: account auth (script loaded on account.html)
 // Replace with your project URL and anon/publishable key from Supabase Dashboard > Project Settings > API
 const SUPABASE_URL = 'https://lydlimchauawqmjxprip.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
-const EXERCISE_CATALOG_VERSION = '2026-02-08-1';
+const EXERCISE_CATALOG_VERSION = '2026-02-16-no-emdash';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -135,7 +135,7 @@ function buildExerciseGridMarkup(view, fullFilteredList) {
     if (plainTotal > 0) {
       parts.push(
         `<p class="exercise-gallery-plain-hint" role="status">` +
-          `<strong>${plainTotal}</strong> more exercise${plainTotal === 1 ? '' : 's'} without a demo video yet load next — tap <strong>Show more</strong> (you’ll see the separate section below the video demos).` +
+          `<strong>${plainTotal}</strong> more exercise${plainTotal === 1 ? '' : 's'} without a demo video yet load next. Tap <strong>Show more</strong> (you’ll see the separate section below the video demos).` +
           `</p>`
       );
     }
@@ -163,7 +163,7 @@ function buildHomeDualSectionMarkup(viewWithVideo, viewPlain, fullList, options 
     if (videoMoreButtonId) {
       parts.push(
         '<div class="pagination-row gallery-stack-more">' +
-          `<button type="button" class="btn-secondary btn-link" id="${videoMoreButtonId}">Show more — with video</button>` +
+          `<button type="button" class="btn-secondary btn-link" id="${videoMoreButtonId}">Show more (with video)</button>` +
           '</div>'
       );
     }
@@ -188,7 +188,7 @@ function logExerciseVideoMix() {
     `Moveo: ${withV} exercise(s) have a preview video, ${without} do not. ` +
       (withV > 0 && without > 0
         ? 'You should see two sections on the Exercises page when mixed (each with its own Show more).'
-        : 'Only one group — no split headings (all have video, or none yet).')
+        : 'Only one group: no split headings (all have video, or none yet).')
   );
 }
 
@@ -336,8 +336,8 @@ function getRepAdjustmentForExercise(exerciseId, goal, baseReps) {
   target = Math.max(1, Math.min(target, Math.round(br * 1.35) + 2));
   let reason = '';
   if (samples.length >= 2) {
-    if (target > br) reason = 'Recent sets felt lighter — bumped reps.';
-    else if (target < br) reason = 'Recent sets felt heavy — eased reps.';
+    if (target > br) reason = 'Recent sets felt lighter, so reps bumped slightly.';
+    else if (target < br) reason = 'Recent sets felt heavier, so reps eased slightly.';
   }
   return { baseReps: br, targetReps: target, delta: target - br, samplesUsed: samples.length, reason };
 }
@@ -379,7 +379,7 @@ async function mergeLoadProfilesFromRemote(user) {
     });
     saveLoadProfileDoc(doc);
   } catch (e) {
-    console.warn('Moveo: could not merge load profiles (table may need migration — see docs/supabase-workout-adaptation.sql)', e);
+    console.warn('Moveo: could not merge load profiles (table may need migration; see docs/supabase-workout-adaptation.sql)', e);
   }
 }
 
@@ -408,7 +408,7 @@ async function pushLoadProfilesToRemote(user) {
     const { error } = await sb.from('user_exercise_load_profiles').upsert(rows, {
       onConflict: 'user_id,exercise_id,goal',
     });
-    if (error) console.warn('Moveo: load profile upsert — run docs/supabase-workout-adaptation.sql if missing table:', error.message);
+    if (error) console.warn('Moveo: load profile upsert; run docs/supabase-workout-adaptation.sql if missing table:', error.message);
   } catch (e) {
     console.warn('Moveo: load profile upsert exception', e);
   }
@@ -431,7 +431,7 @@ async function insertUserWorkoutSessionRow(user, summary) {
 
   let { error } = await sb.from('user_workout_sessions').insert(baseRow);
   const msg = error?.message || '';
-  // Missing optional columns — retry without extras (deploy docs/supabase-workout-adaptation.sql for full fidelity).
+  // Missing optional columns: retry without extras (deploy docs/supabase-workout-adaptation.sql for full fidelity).
   if (
     error &&
     (msg.includes('session_notes') ||
@@ -501,7 +501,7 @@ function updateWorkoutAdaptationHintForBuilder() {
   });
   el.textContent =
     n > 0
-      ? `Rep targets adapt for ${n} exercise(s) in this list based on recent “extra reps left” logs (${goal}). After tough sets, enter that number in the runner — works signed out; sign in to sync across devices.`
+      ? `Rep targets adapt for ${n} exercise(s) in this list based on recent “extra reps left” logs (${goal}). After tough sets, enter that number in the runner. Works signed out; sign in to sync across devices.`
       : `After tough sets, log how many more good‑form reps you could still do (runner below). Moveo adjusts future targets on this device; sign in to sync notes, history, and adaptations across devices.`;
 }
 
@@ -680,7 +680,7 @@ function updateWorkoutEstimate() {
   if (!el) return;
   const ids = loadWorkoutBuilder();
   if (!ids.length) {
-    el.textContent = '—';
+    el.textContent = '-';
     return;
   }
   const goal = getWorkoutGoal();
@@ -877,7 +877,7 @@ function endRunnerSession() {
   runnerState = null;
   document.getElementById('workoutRunner')?.classList.add('hidden');
   document.getElementById('runnerElapsed').textContent = '00:00';
-  document.getElementById('runnerRest').textContent = '—';
+  document.getElementById('runnerRest').textContent = '-';
   announceToScreenReader('Workout ended');
 }
 
@@ -886,7 +886,7 @@ function updateRunnerUI() {
   const elapsed = document.getElementById('runnerElapsed');
   const rest = document.getElementById('runnerRest');
   if (elapsed) elapsed.textContent = formatMMSS(runnerState.elapsedSeconds);
-  if (rest) rest.textContent = runnerState.restRemaining > 0 ? formatMMSS(runnerState.restRemaining) : '—';
+  if (rest) rest.textContent = runnerState.restRemaining > 0 ? formatMMSS(runnerState.restRemaining) : '-';
 }
 
 function renderRunnerExercises() {
@@ -943,7 +943,7 @@ function renderRunnerNowPlaying() {
 
   const ex = runnerState.exercises[runnerState.activeExerciseIndex];
   if (!ex) return;
-  titleEl.textContent = ex.name || '—';
+  titleEl.textContent = ex.name || '-';
 
   const full = exercises.find((e) => e.id === ex.id);
   const videoUrl = full?.previewVideo || '';
@@ -1013,7 +1013,7 @@ function seededRandom(seedStr) {
 
 function pickUnique(list, count, rand) {
   const pool = (Array.isArray(list) ? list : []).slice();
-  // Fisher–Yates shuffle
+  // Fisher-Yates shuffle
   for (let i = pool.length - 1; i > 0; i -= 1) {
     const j = Math.floor(rand() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
@@ -1043,9 +1043,9 @@ function generateExerciseDescription(ex) {
   const base = muscle ? `${name} targets ${muscle}.` : `${name} is a simple movement you can repeat with good form.`;
 
   if (category === 'mobility') return `${base} Use it to open up range of motion and feel looser before or after training.`;
-  if (category === 'rehab') return `${base} Keep reps controlled and pain-free—think stability, control, and joint-friendly range.`;
+  if (category === 'rehab') return `${base} Keep reps controlled and pain-free: think stability, control, and joint-friendly range.`;
   if (category === 'endurance') return `${base} Keep breathing steady and aim for smooth reps to build stamina and conditioning.`;
-  if (category === 'hypertrophy') return `${base} Slow the tempo and chase a solid pump—great for muscle-building sets.`;
+  if (category === 'hypertrophy') return `${base} Slow the tempo and chase a solid pump, great for muscle-building sets.`;
   return `${base} A strong pick for building strength with ${equipment}.`;
 }
 
@@ -1894,13 +1894,63 @@ function normalizeExerciseFromSupabase(row) {
     limitedMobilityAlternatives: Array.isArray(row.limited_mobility_alternatives || row.limitedMobilityAlternatives)
       ? (row.limited_mobility_alternatives || row.limitedMobilityAlternatives)
       : [],
+    noEquipmentAlternatives: Array.isArray(row.no_equipment_alternatives || row.noEquipmentAlternatives)
+      ? (row.no_equipment_alternatives || row.noEquipmentAlternatives)
+      : [],
     modifications: Array.isArray(row.modifications) ? row.modifications : [],
     amplifications: Array.isArray(row.amplifications) ? row.amplifications : [],
-    tips: Array.isArray(row.tips) ? row.tips : [],
-    commonMistakes: row.common_mistakes || row.commonMistakes || [],
-    progression: row.progression || [],
+    tips: Array.isArray(row.tips)
+      ? row.tips
+      : Array.isArray(row.form_tips)
+        ? row.form_tips
+        : [],
+    commonMistakes: Array.isArray(row.common_mistakes)
+      ? row.common_mistakes
+      : Array.isArray(row.commonMistakes)
+        ? row.commonMistakes
+        : [],
+    progression: Array.isArray(row.progression) ? row.progression : [],
     rhythm: row.rhythm || null,
   };
+}
+
+/** Merge Supabase row onto an existing catalog exercise when IDs match (fill empty fields). */
+function mergeRemoteExercisePatch(localEx, normalizedFromRow, previewVideoUrl) {
+  const out = { ...localEx };
+  if (previewVideoUrl) out.previewVideo = previewVideoUrl;
+  const emptyArr = (v) => !Array.isArray(v) || v.length === 0;
+  const takeArr = (key) => {
+    if (emptyArr(out[key]) && !emptyArr(normalizedFromRow[key])) out[key] = normalizedFromRow[key];
+  };
+  takeArr('whatYouShouldFeel');
+  takeArr('breathingTips');
+  takeArr('limitedMobilityAlternatives');
+  takeArr('noEquipmentAlternatives');
+  takeArr('pairingSuggestions');
+  takeArr('workoutRole');
+  takeArr('modifications');
+  takeArr('amplifications');
+  takeArr('tips');
+  takeArr('commonMistakes');
+  if (emptyArr(out.muscleGroups) && !emptyArr(normalizedFromRow.muscleGroups)) {
+    out.muscleGroups = normalizedFromRow.muscleGroups;
+  }
+  if (emptyArr(out.primaryMuscles) && !emptyArr(normalizedFromRow.primaryMuscles)) {
+    out.primaryMuscles = normalizedFromRow.primaryMuscles;
+  }
+  if (emptyArr(out.secondaryMuscles) && !emptyArr(normalizedFromRow.secondaryMuscles)) {
+    out.secondaryMuscles = normalizedFromRow.secondaryMuscles;
+  }
+  if ((!out.description || !String(out.description).trim()) && normalizedFromRow.description) {
+    out.description = normalizedFromRow.description;
+  }
+  if (!out.setsReps && normalizedFromRow.setsReps) out.setsReps = normalizedFromRow.setsReps;
+  if (emptyArr(out.tips) && !emptyArr(normalizedFromRow.tips)) out.tips = normalizedFromRow.tips;
+  if (emptyArr(out.progression) && !emptyArr(normalizedFromRow.progression)) {
+    out.progression = normalizedFromRow.progression;
+  }
+  if (!out.rhythm && normalizedFromRow.rhythm) out.rhythm = normalizedFromRow.rhythm;
+  return out;
 }
 
 /** For matching "Push Up" / "Push-Up" to push-up */
@@ -1959,7 +2009,8 @@ function mergeSupabaseVideosIntoExercises(localList, supabaseRows, sb) {
     }
 
     if (idx != null) {
-      if (url) out[idx] = { ...out[idx], previewVideo: url };
+      const normalized = normalizeExerciseFromSupabase(row);
+      out[idx] = mergeRemoteExercisePatch(out[idx], normalized, url || null);
       return;
     }
 
@@ -2066,7 +2117,7 @@ async function loadExercises() {
       console.warn('Moveo: Supabase exercises error:', e);
     }
   } else {
-    console.warn('Moveo: Supabase client not initialized — videos from Storage will not load. Ensure @supabase/supabase-js loads before app.js.');
+    console.warn('Moveo: Supabase client not initialized; videos from Storage will not load. Ensure @supabase/supabase-js loads before app.js.');
   }
 
   exercises = mergedLocal.map((ex) => {
@@ -2175,7 +2226,7 @@ function getFilteredExercises() {
     return [...withVideoSearch, ...withoutVideoSearch];
   }
 
-  // No search: videos first (A–Z), then exercises without video (A–Z). When all have video, order is just A–Z.
+  // No search: videos first (A-Z), then exercises without video (A-Z). When all have video, order is just A-Z.
   const withVideo = [];
   const withoutVideo = [];
   for (const ex of filtered) {
@@ -2328,7 +2379,7 @@ function setupExerciseSearch() {
     if (exact) return;
     if (lastSearchNotFoundNotice === q) return;
     lastSearchNotFoundNotice = q;
-    showError(`“${raw}” isn’t in the library yet — but it could be added soon.`);
+    showError(`“${raw}” isn’t in the library yet, but it could be added soon.`);
   };
   const refresh = () => {
     resetPagination();
@@ -2541,6 +2592,33 @@ function viewExercise(exerciseId) {
   announceToScreenReader(`Viewing ${exercise.name} exercise`);
 }
 
+function hasSetsRepsData(sr) {
+  if (!sr || typeof sr !== 'object') return false;
+  return !!(sr.strength || sr.hypertrophy || sr.endurance);
+}
+
+function hasFormTipsContent(exercise) {
+  if (!exercise) return false;
+  if (Array.isArray(exercise.tips) && exercise.tips.length) return true;
+  if (Array.isArray(exercise.commonMistakes) && exercise.commonMistakes.length) return true;
+  if (Array.isArray(exercise.progression) && exercise.progression.length) return true;
+  if (exercise.rhythm && String(exercise.rhythm).trim()) return true;
+  return false;
+}
+
+function muscleHighlightSpans(exercise) {
+  const raw =
+    (Array.isArray(exercise.muscleGroups) && exercise.muscleGroups.length)
+      ? exercise.muscleGroups
+      : (Array.isArray(exercise.primaryMuscles) && exercise.primaryMuscles.length)
+        ? exercise.primaryMuscles
+        : [];
+  if (!raw.length) {
+    return '<span class="muscle-highlight">See description above</span>';
+  }
+  return raw.map((muscle) => `<span class="muscle-highlight">${escapeHtmlBody(String(muscle), 80)}</span>`).join('');
+}
+
 // Render exercise detail
 function renderExerciseDetail(exercise, options = {}) {
   const containerId =
@@ -2557,10 +2635,7 @@ function renderExerciseDetail(exercise, options = {}) {
   const backMarkup = `<a href="${backUrl}" class="btn-secondary btn-link">← Back to Gallery</a>`;
   
   const isBookmarked = bookmarkedExercises.includes(exercise.id);
-  const showPlaceholders = !!exercise.createdFromSupabase;
-  const placeholderLine = (msg) => `<p class="workout-help" style="margin-top: 0.25rem;">${msg}</p>`;
-  const placeholderList = (msg) => `<ul class="cue-list"><li>${msg}</li></ul>`;
-  
+
   detailContainer.innerHTML = `
     <div class="exercise-detail">
       <header>
@@ -2648,26 +2723,20 @@ function renderExerciseDetail(exercise, options = {}) {
         <div class="muscle-groups">
           <h3>Target Muscles</h3>
           <div id="muscleTags">
-            ${exercise.muscleGroups.map(muscle => 
-              `<span class="muscle-highlight">${muscle}</span>`
-            ).join('')}
+            ${muscleHighlightSpans(exercise)}
           </div>
         </div>
 
-        ${(Array.isArray(exercise.whatYouShouldFeel) && exercise.whatYouShouldFeel.length) || showPlaceholders ? `
+        ${Array.isArray(exercise.whatYouShouldFeel) && exercise.whatYouShouldFeel.length ? `
           <div class="cue-block">
             <h3>What you should feel</h3>
-            ${(Array.isArray(exercise.whatYouShouldFeel) && exercise.whatYouShouldFeel.length)
-              ? `<ul class="cue-list">${exercise.whatYouShouldFeel.map((c) => `<li>${c}</li>`).join('')}</ul>`
-              : placeholderList('Coming soon — add “what you should feel” to this Supabase exercise to show it here.')}
+            <ul class="cue-list">${exercise.whatYouShouldFeel.map((c) => `<li>${c}</li>`).join('')}</ul>
           </div>` : ''}
 
-        ${(Array.isArray(exercise.breathingTips) && exercise.breathingTips.length) || showPlaceholders ? `
+        ${Array.isArray(exercise.breathingTips) && exercise.breathingTips.length ? `
           <div class="cue-block">
             <h3>Breathing</h3>
-            ${(Array.isArray(exercise.breathingTips) && exercise.breathingTips.length)
-              ? `<ul class="cue-list">${exercise.breathingTips.map((c) => `<li>${c}</li>`).join('')}</ul>`
-              : placeholderList('Coming soon — add breathing tips to this Supabase exercise to show them here.')}
+            <ul class="cue-list">${exercise.breathingTips.map((c) => `<li>${c}</li>`).join('')}</ul>
           </div>` : ''}
 
         ${shouldShowNoEquipmentAlternatives(exercise) ? `
@@ -2678,24 +2747,20 @@ function renderExerciseDetail(exercise, options = {}) {
             </ul>
           </div>` : ''}
 
-        ${(Array.isArray(exercise.limitedMobilityAlternatives) && exercise.limitedMobilityAlternatives.length) || showPlaceholders ? `
+        ${Array.isArray(exercise.limitedMobilityAlternatives) && exercise.limitedMobilityAlternatives.length ? `
           <div class="cue-block">
             <h3>Limited mobility alternatives</h3>
-            ${(Array.isArray(exercise.limitedMobilityAlternatives) && exercise.limitedMobilityAlternatives.length)
-              ? `<ul class="cue-list">${exercise.limitedMobilityAlternatives.map((c) => `<li>${c}</li>`).join('')}</ul>`
-              : placeholderList('Coming soon — add limited mobility alternatives to this Supabase exercise to show them here.')}
+            <ul class="cue-list">${exercise.limitedMobilityAlternatives.map((c) => `<li>${c}</li>`).join('')}</ul>
           </div>` : ''}
 
-        ${exercise.setsReps || showPlaceholders ? `
+        ${hasSetsRepsData(exercise.setsReps) ? `
           <div class="cue-block">
             <h3>Suggested sets & reps</h3>
-            ${exercise.setsReps ? `
               <ul class="cue-list">
                 ${exercise.setsReps.strength ? `<li><strong>Strength:</strong> ${exercise.setsReps.strength}</li>` : ''}
                 ${exercise.setsReps.hypertrophy ? `<li><strong>Hypertrophy:</strong> ${exercise.setsReps.hypertrophy}</li>` : ''}
                 ${exercise.setsReps.endurance ? `<li><strong>Endurance:</strong> ${exercise.setsReps.endurance}</li>` : ''}
               </ul>
-            ` : placeholderLine('Coming soon — add a sets/reps preset in Supabase (strength/hypertrophy/endurance) to show it here.')}
           </div>` : ''}
 
         ${Array.isArray(exercise.workoutRole) && exercise.workoutRole.length ? `
@@ -2704,14 +2769,13 @@ function renderExerciseDetail(exercise, options = {}) {
             <p class="cue-inline">${exercise.workoutRole.join(' · ')}</p>
           </div>` : ''}
 
-        ${(Array.isArray(exercise.pairingSuggestions) && exercise.pairingSuggestions.length) || showPlaceholders ? `
+        ${Array.isArray(exercise.pairingSuggestions) && exercise.pairingSuggestions.length ? `
           <div class="cue-block">
             <h3>Pairing ideas</h3>
-            ${(Array.isArray(exercise.pairingSuggestions) && exercise.pairingSuggestions.length)
-              ? `<ul class="cue-list">${exercise.pairingSuggestions.map((c) => `<li>${c}</li>`).join('')}</ul>`
-              : placeholderList('Coming soon — add pairing suggestions to this Supabase exercise to show them here.')}
+            <ul class="cue-list">${exercise.pairingSuggestions.map((c) => `<li>${c}</li>`).join('')}</ul>
           </div>` : ''}
         
+        ${hasFormTipsContent(exercise) ? `
         <button 
           class="btn-primary" 
           onclick="toggleTipsOverlay()"
@@ -2719,36 +2783,37 @@ function renderExerciseDetail(exercise, options = {}) {
           aria-controls="tipsOverlay">
           Show Form Tips
         </button>
+        ` : ''}
       </div>
 
+      ${hasFormTipsContent(exercise) ? `
       <div id="tipsOverlay" class="tips-overlay hidden" role="region" aria-labelledby="tipsHeading">
         <h3 id="tipsHeading">Form Tips</h3>
-        <ul class="tips-list">
-          ${(Array.isArray(exercise.tips) && exercise.tips.length)
-            ? exercise.tips.map(tip => `<li>${tip}</li>`).join('')
-            : (showPlaceholders ? '<li>Add form tips in Supabase to show them here.</li>' : '')}
-        </ul>
+        ${(Array.isArray(exercise.tips) && exercise.tips.length)
+          ? `<ul class="tips-list">${exercise.tips.map((tip) => `<li>${tip}</li>`).join('')}</ul>`
+          : ''}
         
-        ${exercise.commonMistakes ? `
+        ${Array.isArray(exercise.commonMistakes) && exercise.commonMistakes.length ? `
           <h3 style="margin-top: 2rem;">Common Mistakes to Avoid</h3>
           <ul class="tips-list" style="list-style-type: disc;">
-            ${exercise.commonMistakes.map(mistake => `<li style="color: var(--error);">${mistake}</li>`).join('')}
+            ${exercise.commonMistakes.map((mistake) => `<li style="color: var(--error);">${mistake}</li>`).join('')}
           </ul>
         ` : ''}
         
-        ${exercise.progression ? `
+        ${Array.isArray(exercise.progression) && exercise.progression.length ? `
           <h3 style="margin-top: 2rem;">Progression Tips</h3>
           <ul class="tips-list">
-            ${exercise.progression.map(step => `<li>${step}</li>`).join('')}
+            ${exercise.progression.map((step) => `<li>${step}</li>`).join('')}
           </ul>
         ` : ''}
         
         ${exercise.rhythm ? `
           <div style="margin-top: 2rem; padding: 1rem; background: var(--light); border-radius: 8px;">
-            <strong>💡 Rhythm & Timing:</strong> ${exercise.rhythm}
+            <strong>Rhythm & Timing:</strong> ${exercise.rhythm}
           </div>
         ` : ''}
       </div>
+      ` : ''}
 
       ${renderSmartSuggestions(exercise)}
     </div>

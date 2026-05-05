@@ -29,8 +29,8 @@ If the bucket is private, `getPublicUrl` URLs will **403** and the video may spi
 
 The app reads each row from `exercises` and builds a URL in this order:
 
-1. **Full URL** — if `video_url`, `preview_video`, `media_url`, etc. starts with `http://` or `https://`, it is used as-is.
-2. **Storage path** — if the value looks like a path (no `http`), or you use columns such as `storage_path`, `video_path`, `path`, `file_path`, the app calls:
+1. **Full URL:** if `video_url`, `preview_video`, `media_url`, etc. starts with `http://` or `https://`, it is used as-is.
+2. **Storage path:** if the value looks like a path (no `http`), or you use columns such as `storage_path`, `video_path`, `path`, `file_path`, the app calls:
    - `supabase.storage.from('exercise-videos').getPublicUrl(<path>)`
 
 So your table can store either:
