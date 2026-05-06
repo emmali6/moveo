@@ -1293,6 +1293,12 @@ button:focus-visible {
 
 .routine-detail .section-intro {
   margin-bottom: 1.25rem;
+  /* Full width of .container (global .section-intro caps at 42em) */
+  max-width: none;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: clamp(1rem, 0.35vw + 0.92rem, 1.12rem);
+  line-height: clamp(1.5, 0.4vw + 1.45, 1.7);
 }
 
 .routine-block {
