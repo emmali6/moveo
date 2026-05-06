@@ -1328,6 +1328,53 @@ button:focus-visible {
   margin-top: 1.75rem;
 }
 
+/* Routine detail page: same pill CTAs as Workout of the Day / daily cards */
+.routine-detail-actions .btn-link {
+  border-radius: 999px;
+  padding: 0.75rem 1.25rem;
+  font-weight: 800;
+}
+
+.routine-detail-actions .btn-primary.btn-link {
+  border: 2px solid transparent;
+  box-shadow: none;
+}
+
+.routine-detail-actions .btn-primary.btn-link:hover,
+.routine-detail-actions .btn-primary.btn-link:focus {
+  box-shadow: var(--shadow-lg);
+}
+
+.routine-detail-actions .btn-secondary.btn-link {
+  background: var(--secondary);
+  color: var(--dark);
+  border: 2px solid transparent;
+}
+
+.routine-detail-actions .btn-secondary.btn-link:hover,
+.routine-detail-actions .btn-secondary.btn-link:focus {
+  background: #3db8b0;
+  color: var(--dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Tertiary: matches workout “Clear workout” ghost on dark panels */
+.routine-detail-actions .routine-detail-back.btn-link {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba(255, 255, 255, 0.22);
+}
+
+.routine-detail-actions .routine-detail-back.btn-link:hover,
+.routine-detail-actions .routine-detail-back.btn-link:focus {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.96);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
 .preset-filters {
   display: flex;
   flex-wrap: wrap;

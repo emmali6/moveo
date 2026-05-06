@@ -1549,7 +1549,7 @@ async function initRoutinePage() {
   if (!container) return;
   if (!id) {
     container.innerHTML =
-      '<p class="no-exercises">No routine selected.</p><a href="workouts.html" class="btn-secondary btn-link">← Workouts</a>';
+      '<p class="no-exercises">No routine selected.</p><div class="routine-detail-actions"><a href="workouts.html" class="btn-secondary btn-link">← Workouts</a></div>';
     return;
   }
   await loadExercises();
@@ -1558,7 +1558,7 @@ async function initRoutinePage() {
   const r = routines.find((x) => String(x.id).toLowerCase() === String(id).toLowerCase());
   if (!r) {
     container.innerHTML =
-      '<p class="no-exercises">Routine not found.</p><a href="workouts.html" class="btn-secondary btn-link">← Workouts</a>';
+      '<p class="no-exercises">Routine not found.</p><div class="routine-detail-actions"><a href="workouts.html" class="btn-secondary btn-link">← Workouts</a></div>';
     return;
   }
 
@@ -1591,7 +1591,7 @@ async function initRoutinePage() {
       <div class="routine-detail-actions">
         <a class="btn-primary btn-link" href="${startHref}">Start workout</a>
         <a class="btn-secondary btn-link" href="${builderHref}">Open in workout builder</a>
-        <a class="btn-secondary btn-link" href="workouts.html">Back to workouts</a>
+        <a class="btn-link routine-detail-back" href="workouts.html">Back to workouts</a>
       </div>
     </article>
   `;
