@@ -675,10 +675,12 @@ async function initWorkoutsPage() {
   setupRoutineFilters();
   setupWorkoutGoalAndEstimate();
   setupSaveWorkoutToAccount();
-  document.getElementById('clearWorkoutBtn')?.addEventListener('click', () => {
+  const onClearWorkout = () => {
     saveWorkoutBuilder([], { clearRoutineHint: true });
     renderWorkoutBuilderList();
-  });
+  };
+  document.getElementById('clearWorkoutBtn')?.addEventListener('click', onClearWorkout);
+  document.getElementById('clearWorkoutBtnTop')?.addEventListener('click', onClearWorkout);
 
   document.getElementById('startWorkoutBtn')?.addEventListener('click', () => {
     startWorkoutSession();

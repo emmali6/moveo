@@ -903,7 +903,8 @@ button:focus-visible {
 }
 
 .workout-actions #saveWorkoutToAccountBtn,
-.workout-actions #clearWorkoutBtn {
+.workout-actions #clearWorkoutBtn,
+.workout-top-actions #clearWorkoutBtnTop {
   border-radius: 999px;
   padding: 0.85rem 1.1rem;
   font-weight: 800;
@@ -922,18 +923,29 @@ button:focus-visible {
   box-shadow: var(--shadow-lg);
 }
 
-.workout-actions #clearWorkoutBtn {
+.workout-actions #clearWorkoutBtn,
+.workout-top-actions #clearWorkoutBtnTop {
   background: rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.92);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
 .workout-actions #clearWorkoutBtn:hover,
-.workout-actions #clearWorkoutBtn:focus {
+.workout-actions #clearWorkoutBtn:focus,
+.workout-top-actions #clearWorkoutBtnTop:hover,
+.workout-top-actions #clearWorkoutBtnTop:focus {
   background: rgba(255, 255, 255, 0.18);
   border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+}
+
+.workout-top-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 0.65rem;
 }
 
 @media (min-width: 768px) {
