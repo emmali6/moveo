@@ -238,6 +238,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initExercisePage();
     return;
   }
+  if (document.body.dataset.page === 'routine') {
+    initRoutinePage();
+    return;
+  }
   if (document.body.dataset.page === 'exercises') {
     initExercisesPage();
     return;
@@ -254,7 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const WORKOUT_STORAGE_KEY = 'moveoWorkoutBuilder';
-const WORKOUT_ROUTINE_META_KEY = 'moveoWorkoutBuilderRoutineMeta';
 const WORKOUT_NOTES_KEY = 'moveoWorkoutNotes';
 const LOAD_PROFILE_KEY = 'moveoExerciseLoadProfile';
 const LOAD_PROFILE_VERSION = 1;
@@ -509,86 +512,126 @@ function updateWorkoutAdaptationHintForBuilder() {
       : `After tough sets, log how many more good‑form reps you could still do (runner below). Moveo adjusts future targets on this device; sign in to sync notes, history, and adaptations across devices.`;
 }
 
-function loadWorkoutBuilder() {
-  const raw = localStorage.getItem(WORKOUT_STORAGE_KEY);
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveWorkoutBuilder(ids) {
-  localStorage.setItem(WORKOUT_STORAGE_KEY, JSON.stringify(ids || []));
-}
-
-function clearWorkoutRoutineMeta() {
-  try {
-    localStorage.removeItem(WORKOUT_ROUTINE_META_KEY);
-  } catch (_) {}
-}
-
 /** Multiset signature (order-insensitive) for matching builder to last loaded routine. */
 function workoutMultisetSignature(ids) {
   if (!Array.isArray(ids)) return '';
   return [...ids].map(String).sort().join('|');
 }
 
-function loadWorkoutRoutineMeta() {
+/** One-time merge from older split localStorage key into bundled workout payload. */
+function migrateLegacyRoutineMetaIntoStorage() {
+  if (typeof window !== 'undefined' && window.__moveoLegacyRoutineMetaMigrated) return;
+  if (typeof window !== 'undefined') window.__moveoLegacyRoutineMetaMigrated = true;
   try {
-    const raw = localStorage.getItem(WORKOUT_ROUTINE_META_KEY);
-    if (!raw) return null;
+    const LEGACY = 'moveoWorkoutBuilderRoutineMeta';
+    const raw = localStorage.getItem(LEGACY);
+    if (!raw) return;
     const o = JSON.parse(raw);
-    if (!o || typeof o.idsMultisetSignature !== 'string' || !Number.isFinite(Number(o.minutes))) return null;
-    return o;
-  } catch {
-    return null;
-  }
-}
-
-function saveWorkoutRoutineMeta(routine, ids) {
-  if (!routine || !Array.isArray(ids) || !ids.length) {
-    clearWorkoutRoutineMeta();
-    return;
-  }
-  const minutes = Math.max(1, Math.round(Number(routine.minutes) || 30));
-  try {
+    localStorage.removeItem(LEGACY);
+    const rawW = localStorage.getItem(WORKOUT_STORAGE_KEY);
+    if (!rawW) return;
+    let ids = [];
+    try {
+      const p = JSON.parse(rawW);
+      ids = Array.isArray(p) ? p : Array.isArray(p?.ids) ? p.ids : [];
+    } catch {
+      return;
+    }
+    if (!o?.idsMultisetSignature || !Number.isFinite(Number(o.minutes))) return;
+    if (workoutMultisetSignature(ids) !== o.idsMultisetSignature) return;
     localStorage.setItem(
-      WORKOUT_ROUTINE_META_KEY,
+      WORKOUT_STORAGE_KEY,
       JSON.stringify({
-        routineId: routine.id,
-        minutes,
-        name: String(routine.name || ''),
-        idsMultisetSignature: workoutMultisetSignature(ids),
+        ids,
+        routineHint: {
+          minutes: Math.max(1, Math.round(Number(o.minutes))),
+          routineId: String(o.routineId || ''),
+          multisetSignature: String(o.idsMultisetSignature),
+        },
       }),
     );
-  } catch (_) {
-    clearWorkoutRoutineMeta();
+  } catch (_) {}
+}
+
+function parseWorkoutStorage() {
+  migrateLegacyRoutineMetaIntoStorage();
+  const raw = localStorage.getItem(WORKOUT_STORAGE_KEY);
+  if (!raw) return { ids: [], routineHint: null };
+  try {
+    const p = JSON.parse(raw);
+    const ids = Array.isArray(p) ? p : Array.isArray(p?.ids) ? p.ids : [];
+    let hint = null;
+    if (p && !Array.isArray(p) && p.routineHint && typeof p.routineHint === 'object') {
+      const h = p.routineHint;
+      if (h.multisetSignature && Number.isFinite(Number(h.minutes))) {
+        hint = {
+          minutes: Math.max(1, Math.round(Number(h.minutes))),
+          routineId: String(h.routineId || ''),
+          multisetSignature: String(h.multisetSignature),
+        };
+      }
+    }
+    return { ids, routineHint: hint };
+  } catch {
+    return { ids: [], routineHint: null };
   }
 }
 
-function workoutIdsMatchStoredRoutineMeta(ids) {
-  const meta = loadWorkoutRoutineMeta();
-  if (!meta) return false;
-  return workoutMultisetSignature(ids) === meta.idsMultisetSignature;
+function getWorkoutBuilderRoutineHint() {
+  return parseWorkoutStorage().routineHint;
+}
+
+function loadWorkoutBuilder() {
+  return parseWorkoutStorage().ids;
+}
+
+/**
+ * @param {string[]} ids
+ * @param {{ clearRoutineHint?: boolean, routineId?: string, routineMinutes?: number }} [options]
+ */
+function saveWorkoutBuilder(ids, options) {
+  const ida = Array.isArray(ids) ? ids : [];
+  const opt = options && typeof options === 'object' ? options : {};
+  let hint = null;
+
+  if (opt.clearRoutineHint === true) {
+    hint = null;
+  } else if (opt.routineId != null && opt.routineMinutes != null) {
+    hint = {
+      minutes: Math.max(1, Math.round(Number(opt.routineMinutes))),
+      routineId: String(opt.routineId),
+      multisetSignature: workoutMultisetSignature(ida),
+    };
+  } else {
+    const prev = parseWorkoutStorage();
+    if (prev.routineHint && workoutMultisetSignature(ida) === prev.routineHint.multisetSignature) {
+      hint = prev.routineHint;
+    }
+  }
+
+  try {
+    if (hint) {
+      localStorage.setItem(WORKOUT_STORAGE_KEY, JSON.stringify({ ids: ida, routineHint: hint }));
+    } else {
+      localStorage.setItem(WORKOUT_STORAGE_KEY, JSON.stringify(ida));
+    }
+  } catch (e) {
+    console.warn('Moveo: could not save workout builder', e);
+  }
 }
 
 function addToWorkout(exerciseId) {
-  clearWorkoutRoutineMeta();
   const ids = loadWorkoutBuilder();
   ids.push(exerciseId);
-  saveWorkoutBuilder(ids);
+  saveWorkoutBuilder(ids, { clearRoutineHint: true });
   showError('Added to workout');
 }
 window.addToWorkout = addToWorkout;
 
 function removeFromWorkoutAt(index) {
-  clearWorkoutRoutineMeta();
   const ids = loadWorkoutBuilder();
   ids.splice(index, 1);
-  saveWorkoutBuilder(ids);
+  saveWorkoutBuilder(ids, { clearRoutineHint: true });
 }
 
 function applyWorkoutsQueryParams() {
@@ -613,21 +656,8 @@ async function initWorkoutsPage() {
     updateWorkoutAdaptationHintForBuilder();
   }
   await loadRoutines();
-  renderDailyWorkout();
-  setupRoutineFilters();
-  setupWorkoutGoalAndEstimate();
-  setupSaveWorkoutToAccount();
-  document.getElementById('clearWorkoutBtn')?.addEventListener('click', () => {
-    clearWorkoutRoutineMeta();
-    saveWorkoutBuilder([]);
-    renderWorkoutBuilderList();
-  });
 
-  document.getElementById('startWorkoutBtn')?.addEventListener('click', () => {
-    startWorkoutSession();
-  });
-
-  // Deep link support: workouts.html?routine=<id>&start=1
+  // Load ?routine= into builder before first time estimate so duration matches the plan.
   try {
     const params = new URLSearchParams(window.location.search || '');
     const routineId = params.get('routine');
@@ -637,6 +667,19 @@ async function initWorkoutsPage() {
       if (shouldStart) startWorkoutSession();
     }
   } catch {}
+
+  renderDailyWorkout();
+  setupRoutineFilters();
+  setupWorkoutGoalAndEstimate();
+  setupSaveWorkoutToAccount();
+  document.getElementById('clearWorkoutBtn')?.addEventListener('click', () => {
+    saveWorkoutBuilder([], { clearRoutineHint: true });
+    renderWorkoutBuilderList();
+  });
+
+  document.getElementById('startWorkoutBtn')?.addEventListener('click', () => {
+    startWorkoutSession();
+  });
 
   if (window.location.hash === '#prebuilt-routines') {
     requestAnimationFrame(() => {
@@ -731,10 +774,24 @@ function updateWorkoutEstimate() {
     el.textContent = '-';
     return;
   }
-  if (workoutIdsMatchStoredRoutineMeta(ids)) {
-    const meta = loadWorkoutRoutineMeta();
-    el.textContent = `~${meta.minutes} min`;
+  const sig = workoutMultisetSignature(ids);
+  const hint = getWorkoutBuilderRoutineHint();
+  if (hint && sig === hint.multisetSignature) {
+    el.textContent = `~${hint.minutes} min`;
     return;
+  }
+  // Prefer planned routine duration when the builder matches a loaded prebuilt/auto routine
+  // (catalog can drift; localStorage multiset may not match until this pass).
+  const routines = Array.isArray(window.moveoRoutines) ? window.moveoRoutines : [];
+  for (const r of routines) {
+    const flat = [];
+    (r?.blocks || []).forEach((b) => (b?.items || []).forEach((id) => flat.push(id)));
+    if (!flat.length) continue;
+    if (sig === workoutMultisetSignature(flat)) {
+      const m = Math.max(1, Math.round(Number(r.minutes) || 1));
+      el.textContent = `~${m} min`;
+      return;
+    }
   }
   const goal = getWorkoutGoal();
   const seconds = ids.reduce((sum, id) => sum + estimateExerciseSecondsForId(id, goal), 0);
@@ -1301,13 +1358,16 @@ function renderDailyWorkout() {
   }
   const goals = Array.isArray(r.goals) ? r.goals : [];
   const meta = `${r.minutes} min${goals.length ? ` · ${goals.join(' / ')}` : ''}`;
-  const href = getBaseUrl() + `workouts.html?routine=${encodeURIComponent(r.id)}&start=1`;
+  const base = getBaseUrl();
+  const detailHref = `${base}routine.html?id=${encodeURIComponent(r.id)}`;
+  const startHref = `${base}workouts.html?routine=${encodeURIComponent(r.id)}&start=1`;
   container.innerHTML = `
     <h2>${r.name}</h2>
     <p>${r.description || 'A daily session picked from your routine library.'}</p>
     <p class="routine-meta">${meta}</p>
     <div class="daily-actions">
-      <a href="${href}" class="btn-primary btn-link">Start workout</a>
+      <a href="${detailHref}" class="btn-secondary btn-link">View routine</a>
+      <a href="${startHref}" class="btn-primary btn-link">Start workout</a>
     </div>
   `;
 }
@@ -1338,9 +1398,10 @@ function renderRoutineGrid() {
   grid.innerHTML = view.map((r) => {
     const blocks = (r.blocks || []).map((b) => `${b.title}: ${(b.items || []).length} move(s)`).join(' · ');
     const moveTotal = (r.blocks || []).reduce((n, b) => n + (b.items?.length || 0), 0);
+    const routinePage = `${getBaseUrl()}routine.html?id=${encodeURIComponent(r.id)}`;
     return `
       <article class="routine-card" role="listitem">
-        <h3>${r.name}</h3>
+        <h3><a class="routine-card-title-link" href="${routinePage}">${r.name}</a></h3>
         <p>${r.description || ''}</p>
         <p class="routine-meta">${r.minutes} min · ${moveTotal} moves · ${(r.goals || []).join(' / ')}</p>
         <p class="routine-meta">${blocks}</p>
@@ -1352,12 +1413,13 @@ function renderRoutineGrid() {
 
 function loadRoutineToWorkout(routineId) {
   const routines = Array.isArray(window.moveoRoutines) ? window.moveoRoutines : [];
-  const r = routines.find((x) => x.id === routineId);
+  const r = routines.find(
+    (x) => String(x.id).toLowerCase() === String(routineId).toLowerCase(),
+  );
   if (!r) return;
   const ids = [];
   (r.blocks || []).forEach((b) => (b.items || []).forEach((id) => ids.push(id)));
-  saveWorkoutBuilder(ids);
-  saveWorkoutRoutineMeta(r, ids);
+  saveWorkoutBuilder(ids, { routineId: r.id, routineMinutes: r.minutes });
   renderWorkoutBuilderList();
   setWorkoutSaveMessage('Loaded routine into builder.');
   announceToScreenReader('Routine loaded into workout builder');
@@ -1480,6 +1542,63 @@ async function initExercisePage() {
   });
 }
 
+async function initRoutinePage() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const container = document.getElementById('routinePageContent');
+  if (!container) return;
+  if (!id) {
+    container.innerHTML =
+      '<p class="no-exercises">No routine selected.</p><a href="workouts.html" class="btn-secondary btn-link">← Workouts</a>';
+    return;
+  }
+  await loadExercises();
+  await loadRoutines();
+  const routines = Array.isArray(window.moveoRoutines) ? window.moveoRoutines : [];
+  const r = routines.find((x) => String(x.id).toLowerCase() === String(id).toLowerCase());
+  if (!r) {
+    container.innerHTML =
+      '<p class="no-exercises">Routine not found.</p><a href="workouts.html" class="btn-secondary btn-link">← Workouts</a>';
+    return;
+  }
+
+  const base = getBaseUrl();
+  const blocksHtml = (r.blocks || [])
+    .map((b) => {
+      const items = (b.items || [])
+        .map((exid) => {
+          const ex = exercises.find((e) => String(e.id) === String(exid)) || findExerciseByQueryId(exid);
+          const label = ex ? escapeHtmlBody(ex.name, 120) : escapeHtmlBody(String(exid), 80);
+          const href = `${base}exercise.html?id=${encodeURIComponent(exid)}`;
+          return `<li role="listitem"><a href="${href}">${label}</a></li>`;
+        })
+        .join('');
+      return `<section class="routine-block"><h3 class="routine-block-title">${escapeHtmlBody(b.title || 'Block', 120)}</h3><ul class="routine-exercise-list" role="list">${items}</ul></section>`;
+    })
+    .join('');
+
+  const startHref = `${base}workouts.html?routine=${encodeURIComponent(r.id)}&start=1`;
+  const builderHref = `${base}workouts.html?routine=${encodeURIComponent(r.id)}`;
+  const goals = Array.isArray(r.goals) ? r.goals : [];
+
+  container.innerHTML = `
+    <article class="routine-detail">
+      <p class="section-label section-label-light">Prebuilt routine</p>
+      <h1 id="routine-heading" class="section-heading">${escapeHtmlBody(r.name, 220)}</h1>
+      <p class="routine-meta">${r.minutes} min${goals.length ? ` · ${escapeHtmlBody(goals.join(' / '), 200)}` : ''}</p>
+      <p class="section-intro">${escapeHtmlBody(r.description || '', 2000)}</p>
+      ${blocksHtml}
+      <div class="routine-detail-actions">
+        <a class="btn-primary btn-link" href="${startHref}">Start workout</a>
+        <a class="btn-secondary btn-link" href="${builderHref}">Open in workout builder</a>
+        <a class="btn-secondary btn-link" href="workouts.html">Back to workouts</a>
+      </div>
+    </article>
+  `;
+  document.title = `${r.name} - Moveo`;
+  announceToScreenReader(`Routine: ${r.name}`);
+}
+
 function applyExerciseCatalogQueryParams() {
   const p = new URLSearchParams(window.location.search || '');
   const setIf = (id, val) => {
@@ -1507,18 +1626,6 @@ function applyExerciseCatalogQueryParams() {
 
   if (setIf('filterEquipment', p.get('equipment'))) appliedFilters = true;
   if (setIf('filterMuscle', p.get('muscle'))) appliedFilters = true;
-
-  const letter = (p.get('letter') || p.get('alpha') || '').trim().toUpperCase();
-  if (letter && /^[A-Z]$/.test(letter)) {
-    const el = document.getElementById('filterAlpha');
-    if (el) {
-      const hit = Array.from(el.options).find((o) => o.value === letter);
-      if (hit) {
-        el.value = letter;
-        appliedFilters = true;
-      }
-    }
-  }
 
   const allowedConstraint = new Set(
     ['knee-friendly', 'apartment/no jumping', 'wrist-safe', 'low-back friendly'].map(normalizeFilterValue),
@@ -1910,7 +2017,6 @@ function resetPagination() {
     !!f.category ||
     !!f.equipment ||
     !!f.muscle ||
-    !!f.alpha ||
     (Array.isArray(f.constraints) && f.constraints.length > 0);
 
   // When filters are active, show more upfront so changes are obvious.
@@ -2557,10 +2663,9 @@ function getActiveFilters() {
   const equipment = normalizeFilterValue(document.getElementById('filterEquipment')?.value);
   const muscle = normalizeFilterValue(document.getElementById('filterMuscle')?.value);
   const category = normalizeFilterValue(document.getElementById('filterCategory')?.value);
-  const alpha = String(document.getElementById('filterAlpha')?.value || '').trim().toUpperCase();
   const constraints = Array.from(document.querySelectorAll('.filter-constraint:checked'))
     .map((el) => normalizeFilterValue(el.value));
-  return { level, equipment, muscle, category, alpha, constraints };
+  return { level, equipment, muscle, category, constraints };
 }
 
 function exerciseMuscleBuckets(ex) {
@@ -2572,12 +2677,6 @@ function exerciseMuscleBuckets(ex) {
 
 function matchesFilters(ex, filters) {
   if (!filters) return true;
-
-  if (filters.alpha) {
-    const n = String(ex?.name || '').trim();
-    const first = n ? n[0].toUpperCase() : '';
-    if (first !== filters.alpha) return false;
-  }
 
   if (filters.level && normalizeFilterValue(ex.difficulty) !== filters.level) return false;
 
@@ -2643,7 +2742,7 @@ function setupExerciseSearch() {
 }
 
 function bindFilterControls(onChange) {
-  const ids = ['filterLevel', 'filterCategory', 'filterEquipment', 'filterMuscle', 'filterAlpha'];
+  const ids = ['filterLevel', 'filterCategory', 'filterEquipment', 'filterMuscle'];
   ids.forEach((id) => {
     const el = document.getElementById(id);
     if (!el || el.dataset.bound === 'true') return;

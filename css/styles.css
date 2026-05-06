@@ -1272,6 +1272,62 @@ button:focus-visible {
   font-size: 0.95rem;
 }
 
+.routine-card-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.routine-card-title-link:hover,
+.routine-card-title-link:focus-visible {
+  text-decoration: underline;
+}
+
+.routine-detail .section-heading {
+  margin-bottom: 0.35rem;
+}
+
+.routine-detail .routine-meta {
+  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 0.75rem;
+}
+
+.routine-detail .section-intro {
+  margin-bottom: 1.25rem;
+}
+
+.routine-block {
+  margin-bottom: 1.5rem;
+}
+
+.routine-block-title {
+  font-size: 1.05rem;
+  margin: 0 0 0.5rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.routine-exercise-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.routine-exercise-list a {
+  color: var(--accent-light, #8be8ff);
+  text-decoration: none;
+}
+
+.routine-exercise-list a:hover,
+.routine-exercise-list a:focus-visible {
+  text-decoration: underline;
+}
+
+.routine-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
 .preset-filters {
   display: flex;
   flex-wrap: wrap;
@@ -2395,7 +2451,7 @@ button:focus-visible {
   }
 
   .filter-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .workouts-layout {
