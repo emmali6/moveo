@@ -28,8 +28,6 @@
                     <ul class="nav-dropdown-menu" role="list">
                         <li role="listitem"><a href="exercises.html" class="nav-dropdown-link">All exercises</a></li>
                         <li role="listitem"><a href="exercises.html?category=strength" class="nav-dropdown-link">Strength</a></li>
-                        <li role="listitem"><a href="workouts.html?goal=hypertrophy" class="nav-dropdown-link">Hypertrophy routines</a></li>
-                        <li role="listitem"><a href="workouts.html?goal=endurance" class="nav-dropdown-link">Endurance routines</a></li>
                         <li role="listitem"><a href="exercises.html?category=mobility" class="nav-dropdown-link">Mobility</a></li>
                         <li role="listitem"><a href="exercises.html?category=rehab" class="nav-dropdown-link">Rehab</a></li>
                         <li role="listitem"><a href="exercises.html?level=beginner" class="nav-dropdown-link">Beginner</a></li>
@@ -73,14 +71,6 @@
                         <h2 class="workout-subheading">Your workout</h2>
                         <p class="workout-help">Drag to reorder. Remove items you don’t want. Your workout is saved automatically.</p>
                         <div class="workout-controls" role="group" aria-label="Workout settings">
-                            <div class="filter-field">
-                                <label for="workoutGoal" class="filter-label">Goal</label>
-                                <select id="workoutGoal" class="filter-select">
-                                    <option value="strength">Strength</option>
-                                    <option value="hypertrophy">Hypertrophy</option>
-                                    <option value="endurance">Endurance</option>
-                                </select>
-                            </div>
                             <div class="workout-estimate" aria-live="polite">
                                 <span class="filter-label">Estimated time</span>
                                 <div id="workoutEstimate" class="workout-estimate-value">-</div>
@@ -144,33 +134,7 @@
 
                     <div id="prebuilt-routines" class="workout-presets" aria-label="Prebuilt routines">
                         <h2 class="workout-subheading">Prebuilt routines</h2>
-                        <div class="preset-filters" role="group" aria-label="Filter prebuilt routines">
-                            <div class="filter-field">
-                                <label class="filter-label" for="routineMinutes">Time</label>
-                                <select id="routineMinutes" class="filter-select">
-                                    <option value="">Any</option>
-                                    <option value="15">15 min</option>
-                                    <option value="20">20 min</option>
-                                    <option value="25">25 min</option>
-                                    <option value="30">30 min</option>
-                                    <option value="35">35 min</option>
-                                    <option value="40">40 min</option>
-                                    <option value="45">45 min</option>
-                                    <option value="50">50 min</option>
-                                </select>
-                            </div>
-                            <div class="filter-field">
-                                <label class="filter-label" for="routineFocus">Focus</label>
-                                <select id="routineFocus" class="filter-select">
-                                    <option value="">Any focus</option>
-                                    <option value="full">Full body</option>
-                                    <option value="upper">Upper body</option>
-                                    <option value="lower">Lower body</option>
-                                    <option value="split">Split style</option>
-                                    <option value="mobility">Mobility / rehab</option>
-                                </select>
-                            </div>
-                        </div>
+                        <p class="workout-help">Routines pull a wide mix of moves from your full exercise library (including catalog + account data). Use “Show more” to browse the list.</p>
                         <div id="routineGrid" class="routine-grid" role="list" aria-label="Routine list">
                             <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading routines...</p>
                         </div>
@@ -191,7 +155,7 @@
     </footer>
 
     <script defer src="js/nav-dropdown.js?v=nav-dd-20260211"></script>
-    <script src="js/app.js?v=science-routines-20260219"></script>
+    <script src="js/app.js?v=workouts-simplify-20260220"></script>
 </body>
 </html>
 

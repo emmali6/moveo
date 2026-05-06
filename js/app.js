@@ -10,6 +10,9 @@ const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
 const EXERCISE_CATALOG_VERSION = '2026-02-19-science-taxonomy';
 
+/** Set from `workouts.html?goal=` (no Goal dropdown on workouts page). */
+let workoutGoalFromQuery = null;
+
 let supabaseClient = null;
 function getSupabase() {
   if (supabaseClient) return supabaseClient;
@@ -535,11 +538,10 @@ function removeFromWorkoutAt(index) {
 }
 
 function applyWorkoutsQueryParams() {
-  const p = new URLSearchParams(window.location.search || '');
-  const goal = normalizeFilterValue(p.get('goal'));
-  const sel = document.getElementById('workoutGoal');
-  if (sel && goal && ['strength', 'hypertrophy', 'endurance'].includes(goal)) {
-    sel.value = goal;
+  workoutGoalFromQuery = null;
+  const goal = normalizeFilterValue(new URLSearchParams(window.location.search || '').get('goal'));
+  if (goal && ['strength', 'hypertrophy', 'endurance'].includes(goal)) {
+    workoutGoalFromQuery = goal;
   }
 }
 
@@ -636,20 +638,11 @@ function setupSaveWorkoutToAccount() {
 }
 
 function setupWorkoutGoalAndEstimate() {
-  const sel = document.getElementById('workoutGoal');
-  if (sel && sel.dataset.bound !== 'true') {
-    sel.dataset.bound = 'true';
-    sel.addEventListener('change', () => {
-      updateWorkoutEstimate();
-      updateWorkoutAdaptationHintForBuilder();
-    });
-  }
   updateWorkoutEstimate();
 }
 
 function getWorkoutGoal() {
-  const v = document.getElementById('workoutGoal')?.value;
-  return (v || 'strength').toLowerCase();
+  return workoutGoalFromQuery || 'strength';
 }
 
 function formatMMSS(totalSeconds) {
@@ -980,13 +973,15 @@ function renderRunnerNowPlaying() {
 
 async function loadRoutines() {
   const base = getBaseUrl();
-  const url = base + 'data/routines.json?v=2026-02-19';
+  const url = base + 'data/routines.json?v=2026-02-20-catalog-mix';
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('Failed routines');
-    const baseRoutines = await res.json();
-    const autoRoutines = buildAutoRoutinesFromCatalog(exercises, baseRoutines);
-    window.moveoRoutines = baseRoutines.concat(autoRoutines);
+    const raw = await res.json();
+    const baseRoutines = Array.isArray(raw) ? raw : [];
+    const expandedBase = baseRoutines.map((r) => diversifyPrebuiltRoutineBlocks(r, exercises));
+    const autoRoutines = buildAutoRoutinesFromCatalog(exercises, expandedBase);
+    window.moveoRoutines = expandedBase.concat(autoRoutines);
   } catch (e) {
     console.warn('Moveo: routines load error', e);
     window.moveoRoutines = [];
@@ -1019,6 +1014,52 @@ function pickUnique(list, count, rand) {
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
   return pool.slice(0, Math.max(0, count));
+}
+
+/** Long exercise id list sampled from full catalog without adjacent repeats until a full reshuffle cycle. */
+function pickDiverseExerciseIdSequence(allExercises, count, seedStr) {
+  const cats = Array.isArray(allExercises) ? allExercises : [];
+  const ids = cats.map((e) => String(e?.id || '').trim()).filter(Boolean);
+  if (!ids.length || count <= 0) return [];
+
+  const rand = seededRandom(seedStr);
+  const out = [];
+
+  /** @type {string[]} */
+  let pool = [];
+
+  function refillPool() {
+    pool = [...ids];
+    for (let i = pool.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(rand() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+  }
+
+  refillPool();
+  let pi = 0;
+
+  while (out.length < count) {
+    if (pi >= pool.length) refillPool(), (pi = 0);
+    out.push(pool[pi]);
+    pi += 1;
+  }
+  return out;
+}
+
+/** Swap static routine exercise slots for a seeded mix across the full merged exercise library (keeps layout block titles/counts). */
+function diversifyPrebuiltRoutineBlocks(routine, catalog) {
+  if (!routine || routine.auto === true || !Array.isArray(routine.blocks) || !catalog?.length) return routine;
+  const totalSlots = routine.blocks.reduce((n, b) => n + (Array.isArray(b.items) ? b.items.length : 0), 0);
+  if (!totalSlots) return routine;
+
+  const seq = pickDiverseExerciseIdSequence(catalog, totalSlots, `prebuilt:${routine.id}`);
+  let i = 0;
+  const blocks = routine.blocks.map((block) => ({
+    ...block,
+    items: (Array.isArray(block.items) ? block.items : []).map(() => seq[i++]),
+  }));
+  return { ...routine, blocks };
 }
 
 function isBodyweightOnly(ex) {
@@ -1112,25 +1153,43 @@ function buildAutoRoutinesFromCatalog(allExercises, existingRoutines) {
   });
 
   const yogaLike = byNameIncludes(/\byoga\b/).concat(byNameIncludes(/\bstretch\b/)).concat(mobility);
+  const mobilityPool = mobility.concat(rehab).concat(yogaLike);
+  const mobilityPoolFilled = mobilityPool.length ? mobilityPool : ex;
+
   const calisthenicsLike = ex.filter((e) => isBodyweightOnly(e) && ['strength', 'mobility'].includes(normalizeFilterValue(e.category)));
+  const calisthenicsPool = calisthenicsLike.length ? calisthenicsLike : ex;
+
+  const conditioningPoolFull = conditioningCandidates.length ? conditioningCandidates : ex;
+
+  const upperPoolFull = upperLike.length ? ex.filter((e) => upperLike.includes(e)) : ex;
+  const lowerPoolFull = lowerLike.length ? ex.filter((e) => lowerLike.includes(e)) : ex;
 
   const templates = [
-    { id: 'auto-mobility-flow-20', name: 'Mobility Flow (20 min)', minutes: 20, focus: ['mobility'], goals: ['mobility', 'stretching'], pool: mobility.concat(rehab).concat(yogaLike), count: 7, description: 'A joint-friendly flow to loosen hips/hamstrings/shoulders and prep you for training (or unwind after).' },
-    { id: 'auto-yoga-reset-30', name: 'Yoga Reset (30 min)', minutes: 30, focus: ['mobility'], goals: ['mobility', 'stretching'], pool: yogaLike, count: 10, description: 'A longer reset session: breathing, stretches, and gentle holds to downshift and recover.' },
-    { id: 'auto-endurance-cardio-25', name: 'Cardio Endurance (25 min)', minutes: 25, focus: ['full'], goals: ['endurance', 'cardio'], pool: conditioningCandidates.length ? conditioningCandidates : strength, count: 8, description: 'Keep moving. This session favors steady pace, shorter rests, and repeatable reps to build stamina.' },
-    { id: 'auto-strength-fullbody-30', name: 'Full Body Strength (30 min)', minutes: 30, focus: ['full'], goals: ['strength', 'full body'], pool: strength, count: 8, description: 'A balanced strength session covering legs, push, pull, and core with clean, controlled reps.' },
-    { id: 'auto-hypertrophy-upper-35', name: 'Upper Body Hypertrophy (35 min)', minutes: 35, focus: ['upper'], goals: ['hypertrophy', 'upper body'], pool: strength.filter((e) => upperLike.includes(e)), count: 8, description: 'Upper body volume work for chest/back/shoulders/arms. Slow reps, solid pump, repeatable sets.' },
-    { id: 'auto-strength-lower-35', name: 'Lower Body Strength (35 min)', minutes: 35, focus: ['lower'], goals: ['strength', 'lower body'], pool: strength.filter((e) => lowerLike.includes(e)), count: 8, description: 'Lower-body focused strength: squats/lunges/hinges and glute work with longer rests.' },
-    { id: 'auto-core-builder-15', name: 'Core Builder (15 min)', minutes: 15, focus: ['full'], goals: ['strength', 'core'], pool: coreLike.length ? coreLike : strength, count: 6, description: 'Quick core session to build bracing and control. Great as a finisher or a stand-alone mini-workout.' },
-    { id: 'auto-calisthenics-30', name: 'Calisthenics Circuit (30 min)', minutes: 30, focus: ['full'], goals: ['strength', 'endurance', 'calisthenics'], pool: calisthenicsLike, count: 9, description: 'Bodyweight circuit that blends strength + conditioning. Minimal equipment, easy to do anywhere.' },
+    { id: 'auto-mobility-flow-20', name: 'Mobility Flow (20 min)', minutes: 20, focus: ['mobility'], goals: ['mobility', 'stretching'], pool: mobilityPoolFilled, count: 14, description: 'A joint-friendly flow to loosen hips/hamstrings/shoulders and prep you for training (or unwind after).' },
+    { id: 'auto-yoga-reset-30', name: 'Yoga Reset (30 min)', minutes: 30, focus: ['mobility'], goals: ['mobility', 'stretching'], pool: mobilityPoolFilled, count: 16, description: 'A longer reset session: breathing, stretches, and gentle holds to downshift and recover.' },
+    { id: 'auto-conditioning-circuit-25', name: 'Conditioning Circuit (25 min)', minutes: 25, focus: ['full'], goals: ['endurance', 'cardio'], pool: conditioningPoolFull, count: 14, description: 'Keeps work density high across many movement patterns sampled from your whole library.' },
+    { id: 'auto-strength-fullbody-30', name: 'Full Body Strength (30 min)', minutes: 30, focus: ['full'], goals: ['strength', 'full body'], pool: ex, count: 18, description: 'Balanced sampling from your full catalog: legs, pushes, pulls, trunk, mobility, and accessories.' },
+    { id: 'auto-upper-volume-35', name: 'Upper Body Volume (35 min)', minutes: 35, focus: ['upper'], goals: ['strength', 'upper body'], pool: upperPoolFull, count: 16, description: 'Upper-body emphasis pulled from everything tagged chest/back/shoulders/arms in your library.' },
+    { id: 'auto-strength-lower-35', name: 'Lower Body Strength (35 min)', minutes: 35, focus: ['lower'], goals: ['strength', 'lower body'], pool: lowerPoolFull, count: 16, description: 'Hip and knee dominant patterns across your full lower-body inventory.' },
+    { id: 'auto-core-builder-15', name: 'Core Builder (15 min)', minutes: 15, focus: ['full'], goals: ['strength', 'core'], pool: coreLike.length ? coreLike : ex, count: 12, description: 'Trunk-focused moves drawn from wherever your catalog tags core or abdominals.' },
+    { id: 'auto-calisthenics-30', name: 'Calisthenics Circuit (30 min)', minutes: 30, focus: ['full'], goals: ['strength', 'endurance', 'calisthenics'], pool: calisthenicsPool, count: 18, description: 'Minimal-equipment circuits shuffled across the bodyweight-capable fraction of your whole library.' },
   ];
 
+  const usedAcrossAutos = new Set();
   const out = [];
   templates.forEach((t) => {
     const id = String(t.id).toLowerCase();
     if (existingIds.has(id)) return;
     const rand = seededRandom(id);
-    const items = pickUnique(t.pool, t.count, rand).map((e) => e.id);
+
+    /** @type {typeof ex} */
+    let pool = t.pool?.length ? t.pool : ex;
+    const fresh = pool.filter((e) => !usedAcrossAutos.has(e.id));
+    const sourcePool = fresh.length >= t.count ? fresh : pool;
+    const picked = pickUnique(sourcePool, t.count, rand);
+    picked.forEach((e) => usedAcrossAutos.add(e.id));
+
+    const items = picked.map((e) => e.id);
     if (items.length < Math.min(4, t.count)) return;
     out.push({
       id,
@@ -1181,40 +1240,7 @@ function renderDailyWorkout() {
   `;
 }
 
-function getRoutineFocusTags(r) {
-  const tags = [];
-  if (r?.focus) {
-    const arr = Array.isArray(r.focus) ? r.focus : [r.focus];
-    tags.push(...arr.map(normalizeFilterValue).filter(Boolean));
-  }
-  if (tags.length) return [...new Set(tags)];
-  const goals = (r.goals || []).join(' ').toLowerCase();
-  if (goals.includes('upper body') || /\bupper\b/.test(goals)) tags.push('upper');
-  if (goals.includes('lower body') || /\blower\b/.test(goals)) tags.push('lower');
-  if (goals.includes('split') || goals.includes('push-pull') || /\bppl\b/.test(goals)) tags.push('split');
-  if (goals.includes('mobility') || goals.includes('stretching') || goals.includes('rehab')) tags.push('mobility');
-  if (!tags.length) tags.push('full');
-  return [...new Set(tags)];
-}
-
-function routineMatchesFocusFilter(r, filterVal) {
-  if (!normalizeFilterValue(filterVal)) return true;
-  const want = normalizeFilterValue(filterVal);
-  return getRoutineFocusTags(r).includes(want);
-}
-
 function setupRoutineFilters() {
-  const bindReset = (el) => {
-    if (!el || el.dataset.bound === 'true') return;
-    el.dataset.bound = 'true';
-    el.addEventListener('change', () => {
-      visibleRoutinesCount = 6;
-      renderRoutineGrid();
-    });
-  };
-  bindReset(document.getElementById('routineMinutes'));
-  bindReset(document.getElementById('routineFocus'));
-
   const btn = document.getElementById('showMoreRoutinesBtn');
   if (btn && btn.dataset.bound !== 'true') {
     btn.dataset.bound = 'true';
@@ -1230,25 +1256,21 @@ function renderRoutineGrid() {
   const grid = document.getElementById('routineGrid');
   if (!grid) return;
   const routines = Array.isArray(window.moveoRoutines) ? window.moveoRoutines : [];
-  const minutes = document.getElementById('routineMinutes')?.value || '';
-  const focusSel = normalizeFilterValue(document.getElementById('routineFocus')?.value);
-  let filtered = routines;
-  if (minutes) filtered = filtered.filter((r) => String(r.minutes) === String(minutes));
-  if (focusSel) filtered = filtered.filter((r) => routineMatchesFocusFilter(r, focusSel));
-  if (!filtered.length) {
-    grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No routines match yet.</p>';
+  if (!routines.length) {
+    grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No routines loaded yet.</p>';
     updateShowMoreRoutinesVisibility(0);
     return;
   }
-  const view = filtered.slice(0, visibleRoutinesCount);
-  updateShowMoreRoutinesVisibility(filtered.length);
+  const view = routines.slice(0, visibleRoutinesCount);
+  updateShowMoreRoutinesVisibility(routines.length);
   grid.innerHTML = view.map((r) => {
     const blocks = (r.blocks || []).map((b) => `${b.title}: ${(b.items || []).length} move(s)`).join(' · ');
+    const moveTotal = (r.blocks || []).reduce((n, b) => n + (b.items?.length || 0), 0);
     return `
       <article class="routine-card" role="listitem">
         <h3>${r.name}</h3>
         <p>${r.description || ''}</p>
-        <p class="routine-meta">${r.minutes} min · Focus: ${getRoutineFocusTags(r).join(', ')} · ${(r.goals || []).join(' / ')}</p>
+        <p class="routine-meta">${r.minutes} min · ${moveTotal} moves · ${(r.goals || []).join(' / ')}</p>
         <p class="routine-meta">${blocks}</p>
         <button type="button" class="btn-secondary btn-link routine-load" onclick="loadRoutineToWorkout('${r.id}')">Load into builder</button>
       </article>
