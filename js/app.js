@@ -539,7 +539,7 @@ function migrateLegacyRoutineMetaIntoStorage() {
     }
     if (!o?.idsMultisetSignature || !Number.isFinite(Number(o.minutes))) return;
     if (workoutMultisetSignature(ids) !== o.idsMultisetSignature) return;
-    localStorage.setItem(
+      localStorage.setItem(
       WORKOUT_STORAGE_KEY,
       JSON.stringify({
         ids,
@@ -547,6 +547,7 @@ function migrateLegacyRoutineMetaIntoStorage() {
           minutes: Math.max(1, Math.round(Number(o.minutes))),
           routineId: String(o.routineId || ''),
           multisetSignature: String(o.idsMultisetSignature),
+          routineName: '',
         },
       }),
     );
@@ -568,6 +569,7 @@ function parseWorkoutStorage() {
           minutes: Math.max(1, Math.round(Number(h.minutes))),
           routineId: String(h.routineId || ''),
           multisetSignature: String(h.multisetSignature),
+          routineName: h.routineName != null ? String(h.routineName).trim() : '',
         };
       }
     }
@@ -587,7 +589,7 @@ function loadWorkoutBuilder() {
 
 /**
  * @param {string[]} ids
- * @param {{ clearRoutineHint?: boolean, routineId?: string, routineMinutes?: number }} [options]
+ * @param {{ clearRoutineHint?: boolean, routineId?: string, routineMinutes?: number, routineName?: string }} [options]
  */
 function saveWorkoutBuilder(ids, options) {
   const ida = Array.isArray(ids) ? ids : [];
@@ -601,6 +603,7 @@ function saveWorkoutBuilder(ids, options) {
       minutes: Math.max(1, Math.round(Number(opt.routineMinutes))),
       routineId: String(opt.routineId),
       multisetSignature: workoutMultisetSignature(ida),
+      routineName: opt.routineName != null ? String(opt.routineName).trim() : '',
     };
   } else {
     const prev = parseWorkoutStorage();
@@ -1419,10 +1422,14 @@ function loadRoutineToWorkout(routineId) {
   if (!r) return;
   const ids = [];
   (r.blocks || []).forEach((b) => (b.items || []).forEach((id) => ids.push(id)));
-  saveWorkoutBuilder(ids, { routineId: r.id, routineMinutes: r.minutes });
+  saveWorkoutBuilder(ids, {
+    routineId: r.id,
+    routineMinutes: r.minutes,
+    routineName: r.name || '',
+  });
   renderWorkoutBuilderList();
-  setWorkoutSaveMessage('Loaded routine into builder.');
-  announceToScreenReader('Routine loaded into workout builder');
+  setWorkoutSaveMessage(`Loaded “${(r.name || 'routine').replace(/"/g, '')}” into builder.`);
+  announceToScreenReader(`Routine ${r.name || ''} loaded into workout builder`);
 }
 window.loadRoutineToWorkout = loadRoutineToWorkout;
 
@@ -1434,6 +1441,7 @@ function renderWorkoutBuilderList() {
     list.innerHTML = '<p class="loading-message">No exercises yet. Add from the Exercises tab.</p>';
     updateWorkoutEstimate();
     updateWorkoutAdaptationHintForBuilder();
+    updateWorkoutRoutineBanner();
     return;
   }
   list.innerHTML = ids.map((id, idx) => {
@@ -1457,6 +1465,36 @@ function renderWorkoutBuilderList() {
   setupWorkoutDragAndDrop(list);
   updateWorkoutEstimate();
   updateWorkoutAdaptationHintForBuilder();
+  updateWorkoutRoutineBanner();
+}
+
+function resolveWorkoutRoutineLabel() {
+  const ids = loadWorkoutBuilder();
+  const hint = getWorkoutBuilderRoutineHint();
+  if (!hint || workoutMultisetSignature(ids) !== hint.multisetSignature) return '';
+  let name = (hint.routineName || '').trim();
+  if (!name && hint.routineId) {
+    const routines = Array.isArray(window.moveoRoutines) ? window.moveoRoutines : [];
+    const r = routines.find(
+      (x) => String(x.id).toLowerCase() === String(hint.routineId).toLowerCase(),
+    );
+    if (r?.name) name = String(r.name).trim();
+  }
+  return name;
+}
+
+function updateWorkoutRoutineBanner() {
+  const wrap = document.getElementById('workoutRoutineBanner');
+  const nameEl = document.getElementById('workoutRoutineName');
+  if (!wrap || !nameEl) return;
+  const label = resolveWorkoutRoutineLabel();
+  if (label) {
+    nameEl.textContent = label;
+    wrap.classList.remove('hidden');
+  } else {
+    nameEl.textContent = '';
+    wrap.classList.add('hidden');
+  }
 }
 
 function removeWorkoutIndex(idx) {
@@ -1586,7 +1624,9 @@ async function initRoutinePage() {
       <p class="section-label section-label-light">Prebuilt routine</p>
       <h1 id="routine-heading" class="section-heading">${escapeHtmlBody(r.name, 220)}</h1>
       <p class="routine-meta">${r.minutes} min${goals.length ? ` · ${escapeHtmlBody(goals.join(' / '), 200)}` : ''}</p>
-      <p class="section-intro">${escapeHtmlBody(r.description || '', 2000)}</p>
+      <div class="routine-detail-description-bleed">
+        <p class="routine-detail-description">${escapeHtmlBody(r.description || '', 2000)}</p>
+      </div>
       ${blocksHtml}
       <div class="routine-detail-actions">
         <a class="btn-primary btn-link" href="${startHref}">Start workout</a>

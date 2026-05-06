@@ -597,6 +597,11 @@ button:focus-visible {
   padding: 0 1rem;
 }
 
+/* Prevent horizontal scroll from full-bleed routine description */
+.gallery-section.routine-page-section {
+  overflow-x: clip;
+}
+
 /* Exercise search */
 .exercise-search-wrap {
   margin-bottom: 1.75rem;
@@ -811,6 +816,38 @@ button:focus-visible {
 .workout-help {
   color: rgba(255, 255, 255, 0.85);
   margin-bottom: 0.75rem;
+}
+
+.workout-routine-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  margin: 0.25rem 0 0.9rem;
+  padding: 0.65rem 0.95rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.workout-routine-banner-label {
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.workout-routine-banner-name {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  flex: 1 1 12rem;
+  min-width: 0;
 }
 
 .workout-list {
@@ -1291,14 +1328,25 @@ button:focus-visible {
   margin-bottom: 0.75rem;
 }
 
-.routine-detail .section-intro {
-  margin-bottom: 1.25rem;
-  /* Full width of .container (global .section-intro caps at 42em) */
+/* Full-bleed description: spans viewport width (breaks out of .container) */
+.routine-detail-description-bleed {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-left: max(1.25rem, env(safe-area-inset-left));
+  padding-right: max(1.25rem, env(safe-area-inset-right));
+  box-sizing: border-box;
+}
+
+.routine-detail .routine-detail-description {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(1rem, 0.45vw + 0.9rem, 1.14rem);
+  line-height: clamp(1.52, 0.5vw + 1.42, 1.72);
+  margin: 0 0 1.35rem;
   max-width: none;
   width: 100%;
   box-sizing: border-box;
-  font-size: clamp(1rem, 0.35vw + 0.92rem, 1.12rem);
-  line-height: clamp(1.5, 0.4vw + 1.45, 1.7);
 }
 
 .routine-block {
