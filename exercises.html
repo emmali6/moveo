@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=exercise-page-unified-20260216">
+    <link rel="stylesheet" href="css/styles.css?v=science-routines-20260219">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme" data-page="exercises">
@@ -30,8 +30,8 @@
                     <ul class="nav-dropdown-menu" role="list">
                         <li role="listitem"><a href="exercises.html" class="nav-dropdown-link">All exercises</a></li>
                         <li role="listitem"><a href="exercises.html?category=strength" class="nav-dropdown-link">Strength</a></li>
-                        <li role="listitem"><a href="exercises.html?category=hypertrophy" class="nav-dropdown-link">Hypertrophy</a></li>
-                        <li role="listitem"><a href="exercises.html?category=endurance" class="nav-dropdown-link">Endurance</a></li>
+                        <li role="listitem"><a href="workouts.html?goal=hypertrophy" class="nav-dropdown-link">Hypertrophy routines</a></li>
+                        <li role="listitem"><a href="workouts.html?goal=endurance" class="nav-dropdown-link">Endurance routines</a></li>
                         <li role="listitem"><a href="exercises.html?category=mobility" class="nav-dropdown-link">Mobility</a></li>
                         <li role="listitem"><a href="exercises.html?category=rehab" class="nav-dropdown-link">Rehab</a></li>
                         <li role="listitem"><a href="exercises.html?level=beginner" class="nav-dropdown-link">Beginner</a></li>
@@ -87,11 +87,9 @@
                             <label for="filterCategory" class="filter-label">Exercise type</label>
                             <select id="filterCategory" class="filter-select">
                                 <option value="">All</option>
-                                <option value="strength">Strength</option>
-                                <option value="hypertrophy">Hypertrophy</option>
-                                <option value="endurance">Endurance</option>
+                                <option value="strength">Strength (resisted movement)</option>
                                 <option value="mobility">Mobility</option>
-                                <option value="rehab">Rehab</option>
+                                <option value="rehab">Rehabilitation / corrective</option>
                             </select>
                         </div>
                         <div class="filter-field">
@@ -168,6 +166,6 @@
     </footer>
 
     <script defer src="js/nav-dropdown.js?v=nav-dd-20260211"></script>
-    <script src="js/app.js?v=exercise-page-unified-20260216"></script>
+    <script src="js/app.js?v=science-routines-20260219"></script>
 </body>
 </html>

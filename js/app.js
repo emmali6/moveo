@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_ZQkm5aQmwJdRkwseoJUvag_bKRNLVQG';
 
 const STORAGE_BUCKET = 'exercise-videos';
 // Bump this when the local exercise catalog changes (helps GitHub Pages caching).
-const EXERCISE_CATALOG_VERSION = '2026-02-16-no-emdash';
+const EXERCISE_CATALOG_VERSION = '2026-02-19-science-taxonomy';
 
 let supabaseClient = null;
 function getSupabase() {
@@ -980,7 +980,7 @@ function renderRunnerNowPlaying() {
 
 async function loadRoutines() {
   const base = getBaseUrl();
-  const url = base + 'data/routines.json?v=2026-04-24';
+  const url = base + 'data/routines.json?v=2026-02-19';
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('Failed routines');
@@ -1044,9 +1044,7 @@ function generateExerciseDescription(ex) {
 
   if (category === 'mobility') return `${base} Use it to open up range of motion and feel looser before or after training.`;
   if (category === 'rehab') return `${base} Keep reps controlled and pain-free: think stability, control, and joint-friendly range.`;
-  if (category === 'endurance') return `${base} Keep breathing steady and aim for smooth reps to build stamina and conditioning.`;
-  if (category === 'hypertrophy') return `${base} Slow the tempo and chase a solid pump, great for muscle-building sets.`;
-  return `${base} A strong pick for building strength with ${equipment}.`;
+  return `${base} Use load, tempo, or volume appropriately for strength and muscle development with ${equipment}.`;
 }
 
 function shouldRegenerateDescription(desc) {
@@ -1068,38 +1066,63 @@ function buildAutoRoutinesFromCatalog(allExercises, existingRoutines) {
   const byNameIncludes = (re) => ex.filter((e) => re.test(String(e?.name || '').toLowerCase()));
 
   const strength = byCategory('strength');
-  const hypertrophy = byCategory('hypertrophy').length ? byCategory('hypertrophy') : strength;
-  const endurance = byCategory('endurance');
   const mobility = byCategory('mobility');
   const rehab = byCategory('rehab');
 
+  const conditioningCandidates = strength.filter((e) => {
+    const id = normalizeFilterValue(e.id || '');
+    return /squat|lunge|push|crunch|bicycle|bodyweight/i.test(`${e.name || ''} ${id}`);
+  });
+
   const coreLike = ex.filter((e) => {
     const mg = (e.muscleGroups || []).map(normalizeFilterValue);
-    return mg.includes('abdominals') || mg.includes('core');
+    const prim = (e.primaryMuscles || []).map(normalizeFilterValue);
+    const sec = (e.secondaryMuscles || []).map(normalizeFilterValue);
+    return mg.includes('abdominals') || mg.includes('core') || prim.includes('core') || sec.includes('obliques');
   });
 
   const upperLike = ex.filter((e) => {
     const mg = (e.muscleGroups || []).map(normalizeFilterValue);
-    return mg.includes('chest') || mg.includes('back') || mg.includes('shoulders') || mg.includes('arms');
+    const prim = (e.primaryMuscles || []).map(normalizeFilterValue);
+    const sec = (e.secondaryMuscles || []).map(normalizeFilterValue);
+    const all = [...mg, ...prim, ...sec];
+    return (
+      all.includes('chest') ||
+      all.includes('back') ||
+      all.includes('lats') ||
+      all.includes('shoulders') ||
+      all.includes('arms') ||
+      all.includes('biceps') ||
+      all.includes('triceps')
+    );
   });
 
   const lowerLike = ex.filter((e) => {
     const mg = (e.muscleGroups || []).map(normalizeFilterValue);
-    return mg.includes('quadriceps') || mg.includes('glutes') || mg.includes('hamstrings') || mg.includes('hips');
+    const prim = (e.primaryMuscles || []).map(normalizeFilterValue);
+    const sec = (e.secondaryMuscles || []).map(normalizeFilterValue);
+    const all = [...mg, ...prim, ...sec];
+    return (
+      all.includes('quadriceps') ||
+      all.includes('glutes') ||
+      all.includes('hamstrings') ||
+      all.includes('hips') ||
+      all.includes('hip abductors')
+    );
   });
 
   const yogaLike = byNameIncludes(/\byoga\b/).concat(byNameIncludes(/\bstretch\b/)).concat(mobility);
-  const calisthenicsLike = ex.filter((e) => isBodyweightOnly(e) && ['strength', 'endurance', 'mobility'].includes(normalizeFilterValue(e.category)));
+  const calisthenicsLike = ex.filter((e) => isBodyweightOnly(e) && ['strength', 'mobility'].includes(normalizeFilterValue(e.category)));
 
   const templates = [
-    { id: 'auto-mobility-flow-20', name: 'Mobility Flow (20 min)', minutes: 20, goals: ['mobility', 'stretching'], pool: mobility.concat(rehab).concat(yogaLike), count: 7, description: 'A joint-friendly flow to loosen hips/hamstrings/shoulders and prep you for training (or unwind after).' },
-    { id: 'auto-yoga-reset-30', name: 'Yoga Reset (30 min)', minutes: 30, goals: ['mobility', 'stretching'], pool: yogaLike, count: 10, description: 'A longer reset session: breathing, stretches, and gentle holds to downshift and recover.' },
-    { id: 'auto-endurance-cardio-25', name: 'Cardio Endurance (25 min)', minutes: 25, goals: ['endurance', 'cardio'], pool: endurance.length ? endurance : ex, count: 8, description: 'Keep moving. This session favors steady pace, shorter rests, and repeatable reps to build stamina.' },
-    { id: 'auto-strength-fullbody-30', name: 'Full Body Strength (30 min)', minutes: 30, goals: ['strength', 'full body'], pool: strength, count: 8, description: 'A balanced strength session covering legs, push, pull, and core with clean, controlled reps.' },
-    { id: 'auto-hypertrophy-upper-35', name: 'Upper Body Hypertrophy (35 min)', minutes: 35, goals: ['hypertrophy', 'upper body'], pool: hypertrophy.filter((e) => upperLike.includes(e)), count: 8, description: 'Upper body volume work for chest/back/shoulders/arms. Slow reps, solid pump, repeatable sets.' },
-    { id: 'auto-strength-lower-35', name: 'Lower Body Strength (35 min)', minutes: 35, goals: ['strength', 'lower body'], pool: strength.filter((e) => lowerLike.includes(e)), count: 8, description: 'Lower-body focused strength: squats/lunges/hinges and glute work with longer rests.' },
-    { id: 'auto-core-builder-15', name: 'Core Builder (15 min)', minutes: 15, goals: ['strength', 'core'], pool: coreLike.length ? coreLike : strength, count: 6, description: 'Quick core session to build bracing and control. Great as a finisher or a stand-alone mini-workout.' },
-    { id: 'auto-calisthenics-30', name: 'Calisthenics Circuit (30 min)', minutes: 30, goals: ['strength', 'endurance', 'calisthenics'], pool: calisthenicsLike, count: 9, description: 'Bodyweight circuit that blends strength + conditioning. Minimal equipment, easy to do anywhere.' },
+    { id: 'auto-mobility-flow-20', name: 'Mobility Flow (20 min)', minutes: 20, focus: ['mobility'], goals: ['mobility', 'stretching'], pool: mobility.concat(rehab).concat(yogaLike), count: 7, description: 'A joint-friendly flow to loosen hips/hamstrings/shoulders and prep you for training (or unwind after).' },
+    { id: 'auto-yoga-reset-30', name: 'Yoga Reset (30 min)', minutes: 30, focus: ['mobility'], goals: ['mobility', 'stretching'], pool: yogaLike, count: 10, description: 'A longer reset session: breathing, stretches, and gentle holds to downshift and recover.' },
+    { id: 'auto-endurance-cardio-25', name: 'Cardio Endurance (25 min)', minutes: 25, focus: ['full'], goals: ['endurance', 'cardio'], pool: conditioningCandidates.length ? conditioningCandidates : strength, count: 8, description: 'Keep moving. This session favors steady pace, shorter rests, and repeatable reps to build stamina.' },
+    { id: 'auto-strength-fullbody-30', name: 'Full Body Strength (30 min)', minutes: 30, focus: ['full'], goals: ['strength', 'full body'], pool: strength, count: 8, description: 'A balanced strength session covering legs, push, pull, and core with clean, controlled reps.' },
+    { id: 'auto-hypertrophy-upper-35', name: 'Upper Body Hypertrophy (35 min)', minutes: 35, focus: ['upper'], goals: ['hypertrophy', 'upper body'], pool: strength.filter((e) => upperLike.includes(e)), count: 8, description: 'Upper body volume work for chest/back/shoulders/arms. Slow reps, solid pump, repeatable sets.' },
+    { id: 'auto-strength-lower-35', name: 'Lower Body Strength (35 min)', minutes: 35, focus: ['lower'], goals: ['strength', 'lower body'], pool: strength.filter((e) => lowerLike.includes(e)), count: 8, description: 'Lower-body focused strength: squats/lunges/hinges and glute work with longer rests.' },
+    { id: 'auto-core-builder-15', name: 'Core Builder (15 min)', minutes: 15, focus: ['full'], goals: ['strength', 'core'], pool: coreLike.length ? coreLike : strength, count: 6, description: 'Quick core session to build bracing and control. Great as a finisher or a stand-alone mini-workout.' },
+    { id: 'auto-calisthenics-30', name: 'Calisthenics Circuit (30 min)', minutes: 30, focus: ['full'], goals: ['strength', 'endurance', 'calisthenics'], pool: calisthenicsLike, count: 9, description: 'Bodyweight circuit that blends strength + conditioning. Minimal equipment, easy to do anywhere.' },
   ];
 
   const out = [];
@@ -1113,6 +1136,7 @@ function buildAutoRoutinesFromCatalog(allExercises, existingRoutines) {
       id,
       name: t.name,
       minutes: t.minutes,
+      focus: Array.isArray(t.focus) ? t.focus : [],
       goals: t.goals,
       equipment: ['none'],
       constraints: ['apartment/no jumping'],
@@ -1157,14 +1181,39 @@ function renderDailyWorkout() {
   `;
 }
 
+function getRoutineFocusTags(r) {
+  const tags = [];
+  if (r?.focus) {
+    const arr = Array.isArray(r.focus) ? r.focus : [r.focus];
+    tags.push(...arr.map(normalizeFilterValue).filter(Boolean));
+  }
+  if (tags.length) return [...new Set(tags)];
+  const goals = (r.goals || []).join(' ').toLowerCase();
+  if (goals.includes('upper body') || /\bupper\b/.test(goals)) tags.push('upper');
+  if (goals.includes('lower body') || /\blower\b/.test(goals)) tags.push('lower');
+  if (goals.includes('split') || goals.includes('push-pull') || /\bppl\b/.test(goals)) tags.push('split');
+  if (goals.includes('mobility') || goals.includes('stretching') || goals.includes('rehab')) tags.push('mobility');
+  if (!tags.length) tags.push('full');
+  return [...new Set(tags)];
+}
+
+function routineMatchesFocusFilter(r, filterVal) {
+  if (!normalizeFilterValue(filterVal)) return true;
+  const want = normalizeFilterValue(filterVal);
+  return getRoutineFocusTags(r).includes(want);
+}
+
 function setupRoutineFilters() {
-  const sel = document.getElementById('routineMinutes');
-  if (!sel || sel.dataset.bound === 'true') return;
-  sel.dataset.bound = 'true';
-  sel.addEventListener('change', () => {
-    visibleRoutinesCount = 6;
-    renderRoutineGrid();
-  });
+  const bindReset = (el) => {
+    if (!el || el.dataset.bound === 'true') return;
+    el.dataset.bound = 'true';
+    el.addEventListener('change', () => {
+      visibleRoutinesCount = 6;
+      renderRoutineGrid();
+    });
+  };
+  bindReset(document.getElementById('routineMinutes'));
+  bindReset(document.getElementById('routineFocus'));
 
   const btn = document.getElementById('showMoreRoutinesBtn');
   if (btn && btn.dataset.bound !== 'true') {
@@ -1182,7 +1231,10 @@ function renderRoutineGrid() {
   if (!grid) return;
   const routines = Array.isArray(window.moveoRoutines) ? window.moveoRoutines : [];
   const minutes = document.getElementById('routineMinutes')?.value || '';
-  const filtered = minutes ? routines.filter((r) => String(r.minutes) === String(minutes)) : routines;
+  const focusSel = normalizeFilterValue(document.getElementById('routineFocus')?.value);
+  let filtered = routines;
+  if (minutes) filtered = filtered.filter((r) => String(r.minutes) === String(minutes));
+  if (focusSel) filtered = filtered.filter((r) => routineMatchesFocusFilter(r, focusSel));
   if (!filtered.length) {
     grid.innerHTML = '<p class="no-exercises" style="color: rgba(255,255,255,0.9);">No routines match yet.</p>';
     updateShowMoreRoutinesVisibility(0);
@@ -1196,7 +1248,7 @@ function renderRoutineGrid() {
       <article class="routine-card" role="listitem">
         <h3>${r.name}</h3>
         <p>${r.description || ''}</p>
-        <p class="routine-meta">${r.minutes} min · ${(r.goals || []).join(' / ')}</p>
+        <p class="routine-meta">${r.minutes} min · Focus: ${getRoutineFocusTags(r).join(', ')} · ${(r.goals || []).join(' / ')}</p>
         <p class="routine-meta">${blocks}</p>
         <button type="button" class="btn-secondary btn-link routine-load" onclick="loadRoutineToWorkout('${r.id}')">Load into builder</button>
       </article>
@@ -1345,7 +1397,10 @@ function applyExerciseCatalogQueryParams() {
     if (match) el.value = match.value;
   };
   setIf('filterLevel', p.get('level'));
-  setIf('filterCategory', p.get('category') || p.get('type'));
+  const catParam = normalizeFilterValue(p.get('category') || p.get('type'));
+  if (catParam && !['hypertrophy', 'endurance'].includes(catParam)) {
+    setIf('filterCategory', catParam);
+  }
   setIf('filterEquipment', p.get('equipment'));
   setIf('filterMuscle', p.get('muscle'));
   const letter = (p.get('letter') || p.get('alpha') || '').trim().toUpperCase();
@@ -2127,11 +2182,14 @@ async function loadExercises() {
         console.warn('Moveo: Supabase exercises table error (check RLS allows SELECT for anon):', error.message, error);
       } else if (rows?.length) {
         exercises = mergeSupabaseVideosIntoExercises(mergedLocal, rows, sb).map((ex) => {
-          const hasExplicit = Array.isArray(ex?.constraints) && ex.constraints.length > 0;
+          const coerced = { ...ex, category: normalizeExerciseMovementCategory(ex?.category) };
+          const hasExplicit = Array.isArray(coerced?.constraints) && coerced.constraints.length > 0;
           return {
-            ...ex,
-            inferredConstraints: hasExplicit ? [] : inferConstraintsForExercise(ex),
-            description: shouldRegenerateDescription(ex?.description) ? generateExerciseDescription(ex) : (ex?.description || ''),
+            ...coerced,
+            inferredConstraints: hasExplicit ? [] : inferConstraintsForExercise(coerced),
+            description: shouldRegenerateDescription(coerced?.description)
+              ? generateExerciseDescription(coerced)
+              : (coerced?.description || ''),
           };
         });
         const withVideo = exercises.filter((e) => e.previewVideo && /^https?:\/\//i.test(e.previewVideo)).length;
@@ -2149,11 +2207,14 @@ async function loadExercises() {
   }
 
   exercises = mergedLocal.map((ex) => {
-    const hasExplicit = Array.isArray(ex?.constraints) && ex.constraints.length > 0;
+    const coerced = { ...ex, category: normalizeExerciseMovementCategory(ex?.category) };
+    const hasExplicit = Array.isArray(coerced?.constraints) && coerced.constraints.length > 0;
     return {
-      ...ex,
-      inferredConstraints: hasExplicit ? [] : inferConstraintsForExercise(ex),
-      description: shouldRegenerateDescription(ex?.description) ? generateExerciseDescription(ex) : (ex?.description || ''),
+      ...coerced,
+      inferredConstraints: hasExplicit ? [] : inferConstraintsForExercise(coerced),
+      description: shouldRegenerateDescription(coerced?.description)
+        ? generateExerciseDescription(coerced)
+        : (coerced?.description || ''),
     };
   });
   logExerciseVideoMix();
@@ -2268,6 +2329,17 @@ function getFilteredExercises() {
 
 function normalizeFilterValue(v) {
   return String(v || '').trim().toLowerCase();
+}
+
+/**
+ * Collapse legacy buckets into Moveo taxonomy: hypertrophy/endurance are workout/program goals,
+ * not exercise-type filters. Unknown values default to strength.
+ */
+function normalizeExerciseMovementCategory(cat) {
+  const c = normalizeFilterValue(cat);
+  if (c === 'hypertrophy' || c === 'endurance') return 'strength';
+  if (c === 'mobility' || c === 'rehab' || c === 'strength') return c;
+  return c || 'strength';
 }
 
 function getExerciseConstraintTags(ex) {

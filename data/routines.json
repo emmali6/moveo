@@ -1,71 +1,150 @@
 [
   {
-    "id": "yoga-calisthenics-45",
-    "name": "Yoga + Calisthenics (45 min)",
+    "id": "mobility-strength-flow-45",
+    "name": "Mobility warmup + Strength & Core (45 min)",
     "minutes": 45,
-    "goals": ["mobility", "strength", "endurance"],
+    "focus": ["full"],
+    "goals": ["mobility", "strength", "general fitness"],
     "equipment": ["none"],
-    "constraints": ["apartment/no jumping"],
-    "description": "A balanced session: mobility flow to warm up, then simple bodyweight strength and core.",
+    "constraints": ["apartment/no jumping", "low-back friendly"],
+    "description": "Warm up with hip and glute activation, then move into compound squat and lunge patterns with a pressing movement, matched to common strength-and-conditioning sequencing (movement prep → primary patterns → accessory). Finish with spine-safe core volume.",
     "blocks": [
-      { "title": "Warm-up (10 min)", "items": ["inchworm", "90-90-hamstring", "all-fours-quad-stretch"] },
-      { "title": "Strength (25 min)", "items": ["push-up", "bodyweight-walking-lunge", "glute-bridge"] },
-      { "title": "Core finisher (10 min)", "items": ["plank", "3-4-sit-up"] }
+      { "title": "Warm-up: hips & glutes (10 min)", "items": ["side-lying-leg-raise", "glute-bridge", "bodyweight-squat"] },
+      { "title": "Main strength (28 min)", "items": ["lunge", "push-up", "bodyweight-squat"] },
+      { "title": "Core finish (7 min)", "items": ["bicycle-crunch", "crunch"] }
     ]
   },
   {
     "id": "calisthenics-basics-30",
     "name": "Calisthenics Basics (30 min)",
     "minutes": 30,
+    "focus": ["full"],
     "goals": ["strength", "endurance"],
     "equipment": ["none"],
     "constraints": ["apartment/no jumping"],
-    "description": "Beginner-friendly full-body calisthenics with simple progressions.",
+    "description": "Bodyweight fundamentals emphasizing movement quality before intensity: squat hinge pattern, horizontal push, unilateral stance work, posterior-chain hip extension, and short core blocks.",
     "blocks": [
-      { "title": "Warm-up (5 min)", "items": ["inchworm"] },
-      { "title": "Main work (20 min)", "items": ["push-up", "bodyweight-squat", "bodyweight-walking-lunge"] },
-      { "title": "Core (5 min)", "items": ["plank"] }
+      { "title": "Prep (6 min)", "items": ["glute-bridge", "bodyweight-squat"] },
+      { "title": "Main work (21 min)", "items": ["push-up", "lunge", "bodyweight-squat"] },
+      { "title": "Core (3 min)", "items": ["crunch"] }
     ]
   },
   {
     "id": "mobility-rehab-20",
     "name": "Mobility + Rehab (20 min)",
     "minutes": 20,
+    "focus": ["mobility"],
     "goals": ["mobility", "rehab"],
     "equipment": ["none"],
     "constraints": ["knee-friendly", "low-back friendly", "apartment/no jumping"],
-    "description": "Low-intensity routine focused on control, stability, and joint-friendly movement.",
+    "description": "Low-load session prioritizing neuromuscular control, lateral hip stability, and pain-free hip extension before light total-body patterns. Appropriate as return-to-training or recovery day work.",
     "blocks": [
-      { "title": "Activation (10 min)", "items": ["90-90-hamstring", "glute-bridge", "all-fours-quad-stretch"] },
-      { "title": "Core control (10 min)", "items": ["dead-bug"] }
+      { "title": "Activation & control (12 min)", "items": ["side-lying-leg-raise", "glute-bridge", "bodyweight-squat"] },
+      { "title": "Trunk endurance (8 min)", "items": ["crunch", "bicycle-crunch"] }
     ]
   },
   {
-    "id": "full-body-burner-25",
-    "name": "Full Body Burner (25 min)",
+    "id": "full-body-conditioning-25",
+    "name": "Full-body conditioning (25 min)",
     "minutes": 25,
+    "focus": ["full"],
     "goals": ["endurance", "strength"],
     "equipment": ["none"],
     "constraints": ["apartment/no jumping"],
-    "description": "A short, punchy full-body circuit using moves from the full exercise library.",
+    "description": "Short circuit emphasizing repeated squat, lunge, push, and trunk work with minimal rest—more glycolytic muscular endurance than max strength. Adjustable by slowing tempo or widening rest if form slips.",
     "blocks": [
-      { "title": "Warm-up (5 min)", "items": ["inchworm"] },
-      { "title": "Circuit (15 min)", "items": ["chair-squat", "mountain-climbers", "plank"] },
-      { "title": "Core finisher (5 min)", "items": ["3-4-sit-up"] }
+      { "title": "Warm-up (5 min)", "items": ["bodyweight-squat", "glute-bridge"] },
+      { "title": "Circuit rounds (17 min)", "items": ["lunge", "push-up", "bicycle-crunch", "crunch"] },
+      { "title": "Easy cooldown (3 min)", "items": ["side-lying-leg-raise", "glute-bridge"] }
     ]
   },
   {
     "id": "core-mobility-reset-15",
     "name": "Core + Mobility Reset (15 min)",
     "minutes": 15,
+    "focus": ["mobility"],
     "goals": ["mobility", "strength"],
     "equipment": ["none"],
     "constraints": ["low-back friendly", "apartment/no jumping"],
-    "description": "Decompress your hips/hamstrings, then lock in core control with slow, clean reps.",
+    "description": "Lateral hip and gentle trunk work with modest spinal flexion and rotation drills. Fits between heavy days when you want low mechanical stress but still stimulus for trunk muscles.",
     "blocks": [
-      { "title": "Mobility (8 min)", "items": ["90-90-hamstring", "all-fours-quad-stretch"] },
-      { "title": "Core control (7 min)", "items": ["dead-bug", "plank"] }
+      { "title": "Hips & pelvis stability (8 min)", "items": ["side-lying-leg-raise", "glute-bridge"] },
+      { "title": "Core endurance (7 min)", "items": ["crunch", "bicycle-crunch"] }
+    ]
+  },
+  {
+    "id": "upper-strength-35",
+    "name": "Upper Strength: Push/Pull/Core (35 min)",
+    "minutes": 35,
+    "focus": ["upper"],
+    "goals": ["strength", "hypertrophy"],
+    "equipment": ["none", "gym machines"],
+    "constraints": [],
+    "description": "Vertical pull, horizontal push, and elbow-flexion accessory with core support. Mirrors common upper-body hypertrophy prescriptions (multiple sets across planes) while allowing bodyweight regressions.",
+    "blocks": [
+      { "title": "Warm-up: hips & light core (8 min)", "items": ["glute-bridge", "crunch"] },
+      { "title": "Primary pressing & pulling (22 min)", "items": ["pull-up", "push-up", "pull-up"] },
+      { "title": "Accessory: arms & trunk (5 min)", "items": ["bicep-curl", "bicycle-crunch"] }
+    ]
+  },
+  {
+    "id": "lower-strength-40",
+    "name": "Lower-body Strength & Stability (40 min)",
+    "minutes": 40,
+    "focus": ["lower"],
+    "goals": ["strength", "hypertrophy"],
+    "equipment": ["none"],
+    "constraints": ["knee-friendly"],
+    "description": "Bilateral squat, split-stance lunging, and hip extension staples with lateral hip preconditioning—aligned with lower-body hypertrophy splits that prioritize compound knee and hip extensor volume.",
+    "blocks": [
+      { "title": "Pre-fatigue hips (10 min)", "items": ["side-lying-leg-raise", "glute-bridge"] },
+      { "title": "Squat & lunge volume (26 min)", "items": ["bodyweight-squat", "lunge", "glute-bridge"] },
+      { "title": "Core brace (4 min)", "items": ["crunch"] }
+    ]
+  },
+  {
+    "id": "upper-lower-split-50",
+    "name": "Upper / Lower Split (50 min)",
+    "minutes": 50,
+    "focus": ["split"],
+    "goals": ["strength", "hypertrophy"],
+    "equipment": ["none", "gym machines", "dumbbells"],
+    "constraints": [],
+    "description": "Classic two-block split: horizontal and vertical upper-body patterns plus accessories, then knee- and hip-dominant lower work. Evidence-based splits often separate upper and lower to manage fatigue while maintaining weekly frequency.",
+    "blocks": [
+      { "title": "Upper pull & push A (22 min)", "items": ["pull-up", "push-up", "bicep-curl"] },
+      { "title": "Lower squat & hinge pattern (26 min)", "items": ["bodyweight-squat", "lunge", "glute-bridge"] },
+      { "title": "Trunk finish (2 min)", "items": ["bicycle-crunch"] }
+    ]
+  },
+  {
+    "id": "push-pull-legs-mini-35",
+    "name": "Push-Pull-Legs Mini Split (35 min)",
+    "minutes": 35,
+    "focus": ["split"],
+    "goals": ["strength", "hypertrophy"],
+    "equipment": ["none", "gym machines"],
+    "constraints": [],
+    "description": "Condensed push (horizontal press plus arm flexion), vertical pull emphasis, then basic knee and hip extension—all common movement buckets in hypertrophy-focused PPL layouts when time is tight.",
+    "blocks": [
+      { "title": "Push segment (11 min)", "items": ["push-up", "bicep-curl"] },
+      { "title": "Pull segment (11 min)", "items": ["pull-up", "bicep-curl"] },
+      { "title": "Legs segment (13 min)", "items": ["bodyweight-squat", "lunge", "glute-bridge"] }
+    ]
+  },
+  {
+    "id": "hinge-barbell-lower-35",
+    "name": "Hinge + Squat Strength (35 min)",
+    "minutes": 35,
+    "focus": ["lower"],
+    "goals": ["strength", "hypertrophy"],
+    "equipment": ["gym machines"],
+    "constraints": [],
+    "description": "Hip-dominant pull from the floor or blocks plus squat-pattern volume and bridging. Built for trainees with barbell access; hinge work should stay within a load and range you can brace through without pain (scale to your tolerance).",
+    "blocks": [
+      { "title": "Prep (8 min)", "items": ["glute-bridge", "bodyweight-squat"] },
+      { "title": "Heavy pattern + squat volume (23 min)", "items": ["deadlift", "lunge"] },
+      { "title": "Hip accessory (4 min)", "items": ["glute-bridge"] }
     ]
   }
 ]
-

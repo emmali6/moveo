@@ -1254,7 +1254,16 @@ button:focus-visible {
 }
 
 .preset-filters {
-  max-width: 16rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem 1.25rem;
+  max-width: 32rem;
+}
+
+.preset-filters .filter-field,
+.preset-filters .filter-label {
+  display: block;
 }
 
 /* Daily Exercise Card - fitness card style */

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=exercise-page-unified-20260216">
+    <link rel="stylesheet" href="css/styles.css?v=science-routines-20260219">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="fitness-theme" data-page="workouts">
@@ -28,8 +28,8 @@
                     <ul class="nav-dropdown-menu" role="list">
                         <li role="listitem"><a href="exercises.html" class="nav-dropdown-link">All exercises</a></li>
                         <li role="listitem"><a href="exercises.html?category=strength" class="nav-dropdown-link">Strength</a></li>
-                        <li role="listitem"><a href="exercises.html?category=hypertrophy" class="nav-dropdown-link">Hypertrophy</a></li>
-                        <li role="listitem"><a href="exercises.html?category=endurance" class="nav-dropdown-link">Endurance</a></li>
+                        <li role="listitem"><a href="workouts.html?goal=hypertrophy" class="nav-dropdown-link">Hypertrophy routines</a></li>
+                        <li role="listitem"><a href="workouts.html?goal=endurance" class="nav-dropdown-link">Endurance routines</a></li>
                         <li role="listitem"><a href="exercises.html?category=mobility" class="nav-dropdown-link">Mobility</a></li>
                         <li role="listitem"><a href="exercises.html?category=rehab" class="nav-dropdown-link">Rehab</a></li>
                         <li role="listitem"><a href="exercises.html?level=beginner" class="nav-dropdown-link">Beginner</a></li>
@@ -144,14 +144,32 @@
 
                     <div id="prebuilt-routines" class="workout-presets" aria-label="Prebuilt routines">
                         <h2 class="workout-subheading">Prebuilt routines</h2>
-                        <div class="preset-filters">
-                            <label class="filter-label" for="routineMinutes">Time</label>
-                            <select id="routineMinutes" class="filter-select">
-                                <option value="">Any</option>
-                                <option value="20">20 min</option>
-                                <option value="30">30 min</option>
-                                <option value="45">45 min</option>
-                            </select>
+                        <div class="preset-filters" role="group" aria-label="Filter prebuilt routines">
+                            <div class="filter-field">
+                                <label class="filter-label" for="routineMinutes">Time</label>
+                                <select id="routineMinutes" class="filter-select">
+                                    <option value="">Any</option>
+                                    <option value="15">15 min</option>
+                                    <option value="20">20 min</option>
+                                    <option value="25">25 min</option>
+                                    <option value="30">30 min</option>
+                                    <option value="35">35 min</option>
+                                    <option value="40">40 min</option>
+                                    <option value="45">45 min</option>
+                                    <option value="50">50 min</option>
+                                </select>
+                            </div>
+                            <div class="filter-field">
+                                <label class="filter-label" for="routineFocus">Focus</label>
+                                <select id="routineFocus" class="filter-select">
+                                    <option value="">Any focus</option>
+                                    <option value="full">Full body</option>
+                                    <option value="upper">Upper body</option>
+                                    <option value="lower">Lower body</option>
+                                    <option value="split">Split style</option>
+                                    <option value="mobility">Mobility / rehab</option>
+                                </select>
+                            </div>
                         </div>
                         <div id="routineGrid" class="routine-grid" role="list" aria-label="Routine list">
                             <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading routines...</p>
@@ -173,7 +191,7 @@
     </footer>
 
     <script defer src="js/nav-dropdown.js?v=nav-dd-20260211"></script>
-    <script src="js/app.js?v=exercise-page-unified-20260216"></script>
+    <script src="js/app.js?v=science-routines-20260219"></script>
 </body>
 </html>
 

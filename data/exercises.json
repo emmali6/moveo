@@ -157,7 +157,7 @@
       "core",
       "shoulders"
     ],
-    "category": "endurance",
+    "category": "strength",
     "equipment": [
       "none"
     ],
@@ -224,7 +224,7 @@
     "secondaryMuscles": [
       "forearms"
     ],
-    "category": "hypertrophy",
+    "category": "strength",
     "equipment": [
       "dumbbells",
       "resistance bands"
@@ -378,7 +378,7 @@
       "core",
       "hips"
     ],
-    "category": "mobility",
+    "category": "strength",
     "equipment": [
       "none",
       "dumbbells"
@@ -446,7 +446,7 @@
       "hamstrings",
       "core"
     ],
-    "category": "rehab",
+    "category": "strength",
     "equipment": [
       "none",
       "resistance bands"
@@ -519,7 +519,7 @@
     "secondaryMuscles": [
       "hip flexors"
     ],
-    "category": "endurance",
+    "category": "strength",
     "equipment": [
       "none"
     ],
@@ -679,7 +679,7 @@
     "secondaryMuscles": [
       "obliques"
     ],
-    "category": "endurance",
+    "category": "strength",
     "equipment": [
       "none"
     ],
