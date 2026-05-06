@@ -1444,6 +1444,7 @@ function renderWorkoutBuilderList() {
     updateWorkoutEstimate();
     updateWorkoutAdaptationHintForBuilder();
     updateWorkoutRoutineBanner();
+    updateTopClearWorkoutVisibility();
     return;
   }
   list.innerHTML = ids.map((id, idx) => {
@@ -1468,6 +1469,21 @@ function renderWorkoutBuilderList() {
   updateWorkoutEstimate();
   updateWorkoutAdaptationHintForBuilder();
   updateWorkoutRoutineBanner();
+  updateTopClearWorkoutVisibility();
+}
+
+function updateTopClearWorkoutVisibility() {
+  const wrap = document.getElementById('workoutTopClearWrap');
+  if (!wrap) return;
+  const ids = loadWorkoutBuilder();
+  const hasItems = Array.isArray(ids) && ids.length > 0;
+  if (hasItems) {
+    wrap.classList.remove('hidden');
+    wrap.setAttribute('aria-hidden', 'false');
+  } else {
+    wrap.classList.add('hidden');
+    wrap.setAttribute('aria-hidden', 'true');
+  }
 }
 
 function resolveWorkoutRoutineLabel() {
