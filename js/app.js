@@ -1410,33 +1410,80 @@ async function initExercisePage() {
 function applyExerciseCatalogQueryParams() {
   const p = new URLSearchParams(window.location.search || '');
   const setIf = (id, val) => {
-    if (val == null || String(val).trim() === '') return;
+    if (val == null || String(val).trim() === '') return false;
     const el = document.getElementById(id);
-    if (!el) return;
+    if (!el) return false;
     const want = normalizeFilterValue(val);
     const opts = Array.from(el.options || []);
     const match = opts.find((o) => normalizeFilterValue(o.value) === want);
-    if (match) el.value = match.value;
+    if (match) {
+      el.value = match.value;
+      return true;
+    }
+    return false;
   };
-  setIf('filterLevel', p.get('level'));
+
+  let appliedFilters = false;
+
+  if (setIf('filterLevel', p.get('level'))) appliedFilters = true;
+
   const catParam = normalizeFilterValue(p.get('category') || p.get('type'));
   if (catParam && !['hypertrophy', 'endurance'].includes(catParam)) {
-    setIf('filterCategory', catParam);
+    if (setIf('filterCategory', catParam)) appliedFilters = true;
   }
-  setIf('filterEquipment', p.get('equipment'));
-  setIf('filterMuscle', p.get('muscle'));
+
+  if (setIf('filterEquipment', p.get('equipment'))) appliedFilters = true;
+  if (setIf('filterMuscle', p.get('muscle'))) appliedFilters = true;
+
   const letter = (p.get('letter') || p.get('alpha') || '').trim().toUpperCase();
   if (letter && /^[A-Z]$/.test(letter)) {
     const el = document.getElementById('filterAlpha');
     if (el) {
       const hit = Array.from(el.options).find((o) => o.value === letter);
-      if (hit) el.value = letter;
+      if (hit) {
+        el.value = letter;
+        appliedFilters = true;
+      }
     }
   }
+
+  const allowedConstraint = new Set(
+    ['knee-friendly', 'apartment/no jumping', 'wrist-safe', 'low-back friendly'].map(normalizeFilterValue),
+  );
+  const constraintSet = new Set();
+  p.getAll('constraint').forEach((v) => {
+    const t = normalizeFilterValue(String(v || '').trim());
+    if (t && allowedConstraint.has(t)) constraintSet.add(t);
+  });
+  const cBlob = p.get('constraints');
+  if (cBlob) {
+    String(cBlob)
+      .split(/[,;]/)
+      .map((s) => normalizeFilterValue(s.trim()))
+      .filter((t) => t && allowedConstraint.has(t))
+      .forEach((t) => constraintSet.add(t));
+  }
+  const uniqueConstraints = [...constraintSet];
+  if (uniqueConstraints.length) {
+    document.querySelectorAll('.filter-constraint').forEach((cb) => {
+      const v = normalizeFilterValue(cb.value);
+      cb.checked = uniqueConstraints.includes(v);
+    });
+    appliedFilters = true;
+  }
+
   const q = p.get('q') || p.get('search');
   if (q) {
     const input = document.getElementById('exerciseSearch');
-    if (input) input.value = q;
+    if (input) {
+      input.value = q;
+      appliedFilters = true;
+    }
+  }
+
+  const panel = document.getElementById('exerciseFilters');
+  if (panel && panel.tagName === 'DETAILS' && appliedFilters) {
+    panel.open = true;
   }
 }
 
