@@ -254,6 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const WORKOUT_STORAGE_KEY = 'moveoWorkoutBuilder';
+const WORKOUT_ROUTINE_META_KEY = 'moveoWorkoutBuilderRoutineMeta';
 const WORKOUT_NOTES_KEY = 'moveoWorkoutNotes';
 const LOAD_PROFILE_KEY = 'moveoExerciseLoadProfile';
 const LOAD_PROFILE_VERSION = 1;
@@ -523,7 +524,59 @@ function saveWorkoutBuilder(ids) {
   localStorage.setItem(WORKOUT_STORAGE_KEY, JSON.stringify(ids || []));
 }
 
+function clearWorkoutRoutineMeta() {
+  try {
+    localStorage.removeItem(WORKOUT_ROUTINE_META_KEY);
+  } catch (_) {}
+}
+
+/** Multiset signature (order-insensitive) for matching builder to last loaded routine. */
+function workoutMultisetSignature(ids) {
+  if (!Array.isArray(ids)) return '';
+  return [...ids].map(String).sort().join('|');
+}
+
+function loadWorkoutRoutineMeta() {
+  try {
+    const raw = localStorage.getItem(WORKOUT_ROUTINE_META_KEY);
+    if (!raw) return null;
+    const o = JSON.parse(raw);
+    if (!o || typeof o.idsMultisetSignature !== 'string' || !Number.isFinite(Number(o.minutes))) return null;
+    return o;
+  } catch {
+    return null;
+  }
+}
+
+function saveWorkoutRoutineMeta(routine, ids) {
+  if (!routine || !Array.isArray(ids) || !ids.length) {
+    clearWorkoutRoutineMeta();
+    return;
+  }
+  const minutes = Math.max(1, Math.round(Number(routine.minutes) || 30));
+  try {
+    localStorage.setItem(
+      WORKOUT_ROUTINE_META_KEY,
+      JSON.stringify({
+        routineId: routine.id,
+        minutes,
+        name: String(routine.name || ''),
+        idsMultisetSignature: workoutMultisetSignature(ids),
+      }),
+    );
+  } catch (_) {
+    clearWorkoutRoutineMeta();
+  }
+}
+
+function workoutIdsMatchStoredRoutineMeta(ids) {
+  const meta = loadWorkoutRoutineMeta();
+  if (!meta) return false;
+  return workoutMultisetSignature(ids) === meta.idsMultisetSignature;
+}
+
 function addToWorkout(exerciseId) {
+  clearWorkoutRoutineMeta();
   const ids = loadWorkoutBuilder();
   ids.push(exerciseId);
   saveWorkoutBuilder(ids);
@@ -532,6 +585,7 @@ function addToWorkout(exerciseId) {
 window.addToWorkout = addToWorkout;
 
 function removeFromWorkoutAt(index) {
+  clearWorkoutRoutineMeta();
   const ids = loadWorkoutBuilder();
   ids.splice(index, 1);
   saveWorkoutBuilder(ids);
@@ -564,6 +618,7 @@ async function initWorkoutsPage() {
   setupWorkoutGoalAndEstimate();
   setupSaveWorkoutToAccount();
   document.getElementById('clearWorkoutBtn')?.addEventListener('click', () => {
+    clearWorkoutRoutineMeta();
     saveWorkoutBuilder([]);
     renderWorkoutBuilderList();
   });
@@ -674,6 +729,11 @@ function updateWorkoutEstimate() {
   const ids = loadWorkoutBuilder();
   if (!ids.length) {
     el.textContent = '-';
+    return;
+  }
+  if (workoutIdsMatchStoredRoutineMeta(ids)) {
+    const meta = loadWorkoutRoutineMeta();
+    el.textContent = `~${meta.minutes} min`;
     return;
   }
   const goal = getWorkoutGoal();
@@ -973,7 +1033,7 @@ function renderRunnerNowPlaying() {
 
 async function loadRoutines() {
   const base = getBaseUrl();
-  const url = base + 'data/routines.json?v=2026-02-20-catalog-mix';
+  const url = base + 'data/routines.json?v=2026-02-22-routine-minutes';
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('Failed routines');
@@ -1047,19 +1107,30 @@ function pickDiverseExerciseIdSequence(allExercises, count, seedStr) {
   return out;
 }
 
-/** Swap static routine exercise slots for a seeded mix across the full merged exercise library (keeps layout block titles/counts). */
+/**
+ * Number of stations/movements for a timed session title (circuit-style rotation),
+ * not “full strength session per exercise,” so counts scale with `minutes`.
+ */
+function slotsFromRoutineMinutes(minutes) {
+  const m = Math.max(8, Math.min(Number(minutes) || 30, 90));
+  const n = Math.ceil(m / 2.4);
+  return Math.max(4, Math.min(n, 18));
+}
+
+/** Swap static routine exercise slots for a seeded mix across the full merged exercise library. */
 function diversifyPrebuiltRoutineBlocks(routine, catalog) {
   if (!routine || routine.auto === true || !Array.isArray(routine.blocks) || !catalog?.length) return routine;
-  const totalSlots = routine.blocks.reduce((n, b) => n + (Array.isArray(b.items) ? b.items.length : 0), 0);
-  if (!totalSlots) return routine;
+  if (!routine.blocks.some((b) => b && Array.isArray(b.items) && b.items.length)) return routine;
 
-  const seq = pickDiverseExerciseIdSequence(catalog, totalSlots, `prebuilt:${routine.id}`);
-  let i = 0;
-  const blocks = routine.blocks.map((block) => ({
-    ...block,
-    items: (Array.isArray(block.items) ? block.items : []).map(() => seq[i++]),
-  }));
-  return { ...routine, blocks };
+  const minutes = Number(routine.minutes) || 30;
+  const targetCount = slotsFromRoutineMinutes(minutes);
+  const seq = pickDiverseExerciseIdSequence(catalog, targetCount, `prebuilt:${routine.id}`);
+  if (!seq.length) return routine;
+
+  return {
+    ...routine,
+    blocks: [{ title: `Session (~${minutes} min)`, items: seq }],
+  };
 }
 
 function isBodyweightOnly(ex) {
@@ -1165,14 +1236,14 @@ function buildAutoRoutinesFromCatalog(allExercises, existingRoutines) {
   const lowerPoolFull = lowerLike.length ? ex.filter((e) => lowerLike.includes(e)) : ex;
 
   const templates = [
-    { id: 'auto-mobility-flow-20', name: 'Mobility Flow (20 min)', minutes: 20, focus: ['mobility'], goals: ['mobility', 'stretching'], pool: mobilityPoolFilled, count: 14, description: 'A joint-friendly flow to loosen hips/hamstrings/shoulders and prep you for training (or unwind after).' },
-    { id: 'auto-yoga-reset-30', name: 'Yoga Reset (30 min)', minutes: 30, focus: ['mobility'], goals: ['mobility', 'stretching'], pool: mobilityPoolFilled, count: 16, description: 'A longer reset session: breathing, stretches, and gentle holds to downshift and recover.' },
-    { id: 'auto-conditioning-circuit-25', name: 'Conditioning Circuit (25 min)', minutes: 25, focus: ['full'], goals: ['endurance', 'cardio'], pool: conditioningPoolFull, count: 14, description: 'Keeps work density high across many movement patterns sampled from your whole library.' },
-    { id: 'auto-strength-fullbody-30', name: 'Full Body Strength (30 min)', minutes: 30, focus: ['full'], goals: ['strength', 'full body'], pool: ex, count: 18, description: 'Balanced sampling from your full catalog: legs, pushes, pulls, trunk, mobility, and accessories.' },
-    { id: 'auto-upper-volume-35', name: 'Upper Body Volume (35 min)', minutes: 35, focus: ['upper'], goals: ['strength', 'upper body'], pool: upperPoolFull, count: 16, description: 'Upper-body emphasis pulled from everything tagged chest/back/shoulders/arms in your library.' },
-    { id: 'auto-strength-lower-35', name: 'Lower Body Strength (35 min)', minutes: 35, focus: ['lower'], goals: ['strength', 'lower body'], pool: lowerPoolFull, count: 16, description: 'Hip and knee dominant patterns across your full lower-body inventory.' },
-    { id: 'auto-core-builder-15', name: 'Core Builder (15 min)', minutes: 15, focus: ['full'], goals: ['strength', 'core'], pool: coreLike.length ? coreLike : ex, count: 12, description: 'Trunk-focused moves drawn from wherever your catalog tags core or abdominals.' },
-    { id: 'auto-calisthenics-30', name: 'Calisthenics Circuit (30 min)', minutes: 30, focus: ['full'], goals: ['strength', 'endurance', 'calisthenics'], pool: calisthenicsPool, count: 18, description: 'Minimal-equipment circuits shuffled across the bodyweight-capable fraction of your whole library.' },
+    { id: 'auto-mobility-flow-20', name: 'Mobility Flow (20 min)', minutes: 20, focus: ['mobility'], goals: ['mobility', 'stretching'], pool: mobilityPoolFilled, description: 'A joint-friendly flow to loosen hips/hamstrings/shoulders and prep you for training (or unwind after).' },
+    { id: 'auto-yoga-reset-30', name: 'Yoga Reset (30 min)', minutes: 30, focus: ['mobility'], goals: ['mobility', 'stretching'], pool: mobilityPoolFilled, description: 'A longer reset session: breathing, stretches, and gentle holds to downshift and recover.' },
+    { id: 'auto-conditioning-circuit-25', name: 'Conditioning Circuit (25 min)', minutes: 25, focus: ['full'], goals: ['endurance', 'cardio'], pool: conditioningPoolFull, description: 'Keeps work density high across many movement patterns sampled from your whole library.' },
+    { id: 'auto-strength-fullbody-30', name: 'Full Body Strength (30 min)', minutes: 30, focus: ['full'], goals: ['strength', 'full body'], pool: ex, description: 'Balanced sampling from your full catalog: legs, pushes, pulls, trunk, mobility, and accessories.' },
+    { id: 'auto-upper-volume-35', name: 'Upper Body Volume (35 min)', minutes: 35, focus: ['upper'], goals: ['strength', 'upper body'], pool: upperPoolFull, description: 'Upper-body emphasis pulled from everything tagged chest/back/shoulders/arms in your library.' },
+    { id: 'auto-strength-lower-35', name: 'Lower Body Strength (35 min)', minutes: 35, focus: ['lower'], goals: ['strength', 'lower body'], pool: lowerPoolFull, description: 'Hip and knee dominant patterns across your full lower-body inventory.' },
+    { id: 'auto-core-builder-15', name: 'Core Builder (15 min)', minutes: 15, focus: ['full'], goals: ['strength', 'core'], pool: coreLike.length ? coreLike : ex, description: 'Trunk-focused moves drawn from wherever your catalog tags core or abdominals.' },
+    { id: 'auto-calisthenics-30', name: 'Calisthenics Circuit (30 min)', minutes: 30, focus: ['full'], goals: ['strength', 'endurance', 'calisthenics'], pool: calisthenicsPool, description: 'Minimal-equipment circuits shuffled across the bodyweight-capable fraction of your whole library.' },
   ];
 
   const usedAcrossAutos = new Set();
@@ -1181,16 +1252,17 @@ function buildAutoRoutinesFromCatalog(allExercises, existingRoutines) {
     const id = String(t.id).toLowerCase();
     if (existingIds.has(id)) return;
     const rand = seededRandom(id);
+    const count = slotsFromRoutineMinutes(t.minutes);
 
     /** @type {typeof ex} */
     let pool = t.pool?.length ? t.pool : ex;
     const fresh = pool.filter((e) => !usedAcrossAutos.has(e.id));
-    const sourcePool = fresh.length >= t.count ? fresh : pool;
-    const picked = pickUnique(sourcePool, t.count, rand);
+    const sourcePool = fresh.length >= count ? fresh : pool;
+    const picked = pickUnique(sourcePool, count, rand);
     picked.forEach((e) => usedAcrossAutos.add(e.id));
 
     const items = picked.map((e) => e.id);
-    if (items.length < Math.min(4, t.count)) return;
+    if (items.length < Math.min(4, count)) return;
     out.push({
       id,
       name: t.name,
@@ -1285,6 +1357,7 @@ function loadRoutineToWorkout(routineId) {
   const ids = [];
   (r.blocks || []).forEach((b) => (b.items || []).forEach((id) => ids.push(id)));
   saveWorkoutBuilder(ids);
+  saveWorkoutRoutineMeta(r, ids);
   renderWorkoutBuilderList();
   setWorkoutSaveMessage('Loaded routine into builder.');
   announceToScreenReader('Routine loaded into workout builder');
