@@ -1355,6 +1355,7 @@ button:focus-visible {
   font-size: clamp(1rem, 0.45vw + 0.9rem, 1.14rem);
   line-height: clamp(1.52, 0.5vw + 1.42, 1.72);
   margin: 0 0 1.35rem;
+  padding-left: var(--routine-list-indent, 1.25rem);
   max-width: none;
   width: 100%;
   box-sizing: border-box;
@@ -1372,7 +1373,7 @@ button:focus-visible {
 
 .routine-exercise-list {
   margin: 0;
-  padding-left: 1.25rem;
+  padding-left: var(--routine-list-indent, 1.25rem);
   color: rgba(255, 255, 255, 0.9);
 }
 
