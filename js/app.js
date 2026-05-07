@@ -1367,7 +1367,7 @@ function renderDailyWorkout() {
   const detailHref = `${base}routine.html?id=${encodeURIComponent(r.id)}`;
   const startHref = `${base}workouts.html?routine=${encodeURIComponent(r.id)}&start=1`;
   container.innerHTML = `
-    <h2>${r.name}</h2>
+    <h2><a class="daily-exercise-link" href="${detailHref}">${r.name}</a></h2>
     <p>${r.description || 'A daily session picked from your routine library.'}</p>
     <p class="routine-meta">${meta}</p>
     <div class="daily-actions">
@@ -3586,9 +3586,13 @@ function backToGallery() {
 
 // Get daily exercise
 function getDailyExercise() {
-  if (exercises.length === 0) return null;
-  const dayIndex = new Date().getDate() % exercises.length;
-  return exercises[dayIndex];
+  if (!Array.isArray(exercises) || exercises.length === 0) return null;
+  const d = new Date();
+  const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  // Seeded pick across the full merged catalog (with or without video).
+  const rand = seededRandom(`daily-exercise:${key}`);
+  const idx = Math.floor(rand() * exercises.length);
+  return exercises[idx] || exercises[0];
 }
 
 // Set daily exercise on homepage
