@@ -349,15 +349,43 @@ function getRepAdjustmentForExercise(exerciseId, goal, baseReps) {
   return { baseReps: br, targetReps: target, delta: target - br, samplesUsed: samples.length, reason };
 }
 
-function estimateExerciseSecondsForId(exerciseId, goal) {
-  const presets = {
-    strength: { sets: 4, reps: 5, rest: 150 },
-    hypertrophy: { sets: 3, reps: 10, rest: 75 },
-    endurance: { sets: 3, reps: 15, rest: 45 },
+/**
+ * True when catalog marks the move as mobility (ROM / stretching–style, not resisted strength sets).
+ */
+function exerciseHasMobilityCategory(exerciseId) {
+  const ex = exercises.find((e) => e.id === exerciseId);
+  return normalizeFilterValue(ex?.category) === 'mobility';
+}
+
+/**
+ * Runner volume presets by training goal. Mobility overrides use ranges consistent with
+ * ACSM / clinical flexibility guidance (short holds or slow reps through ROM, brief transitions).
+ */
+function getRunnerVolumePreset(exerciseId, goal) {
+  const g = ['strength', 'hypertrophy', 'endurance'].includes(goal) ? goal : 'strength';
+  const defaults = {
+    strength: { sets: 4, reps: 5, rest: 150, repSeconds: 4 },
+    hypertrophy: { sets: 3, reps: 10, rest: 75, repSeconds: 4 },
+    endurance: { sets: 3, reps: 15, rest: 45, repSeconds: 4 },
   };
-  const p = presets[goal] || presets.strength;
+  const base = { ...defaults[g] };
+  if (!exerciseHasMobilityCategory(exerciseId)) return base;
+  // Mobility: fewer heavy sets, reps = slow passes or segment counts; rest = short active recovery.
+  const mobility = {
+    // ~3 × ~30 s quality work (e.g. 6 reps × ~5 s) + modest rest — static/stretch literature often 15–60 s holds × 2–4.
+    strength: { sets: 3, reps: 6, rest: 45, repSeconds: 5 },
+    // Dynamic ROM / movement-prep style: 2–3 sets × ~8–12 controlled reps common in warm-up prescriptions.
+    hypertrophy: { sets: 3, reps: 10, rest: 30, repSeconds: 4 },
+    // Lighter density, continuous feel.
+    endurance: { sets: 2, reps: 12, rest: 20, repSeconds: 3 },
+  };
+  return { ...base, ...mobility[g] };
+}
+
+function estimateExerciseSecondsForId(exerciseId, goal) {
+  const p = getRunnerVolumePreset(exerciseId, goal);
   const adj = getRepAdjustmentForExercise(exerciseId, goal, p.reps);
-  const repSeconds = 4;
+  const repSeconds = p.repSeconds ?? 4;
   const setWork = p.sets * (adj.targetReps * repSeconds);
   const totalRest = (p.sets - 1) * p.rest;
   return setWork + totalRest + 30;
@@ -756,14 +784,9 @@ function formatMMSS(totalSeconds) {
 }
 
 function estimateExerciseSeconds(ex, goal) {
-  // Heuristic defaults (keeps it simple + beginner-friendly).
-  const presets = {
-    strength: { sets: 4, reps: 5, rest: 150 },
-    hypertrophy: { sets: 3, reps: 10, rest: 75 },
-    endurance: { sets: 3, reps: 15, rest: 45 },
-  };
-  const p = presets[goal] || presets.strength;
-  const repSeconds = 4; // controlled tempo
+  const id = ex?.id;
+  const p = id ? getRunnerVolumePreset(id, goal) : getRunnerVolumePreset('', goal);
+  const repSeconds = p.repSeconds ?? 4;
   const setWork = p.reps * repSeconds;
   const totalWork = p.sets * setWork;
   const totalRest = (p.sets - 1) * p.rest;
@@ -816,12 +839,6 @@ function startWorkoutSession() {
   }
 
   const goal = getWorkoutGoal();
-  const presets = {
-    strength: { sets: 4, reps: 5, rest: 150 },
-    hypertrophy: { sets: 3, reps: 10, rest: 75 },
-    endurance: { sets: 3, reps: 15, rest: 45 },
-  };
-  const p = presets[goal] || presets.strength;
 
   runnerState = {
     goal,
@@ -835,16 +852,17 @@ function startWorkoutSession() {
     setFeedback: [],
     exercises: ids.map((id) => {
       const ex = exercises.find((e) => e.id === id) || { id, name: id };
-      const adj = getRepAdjustmentForExercise(id, goal, p.reps);
+      const vol = getRunnerVolumePreset(id, goal);
+      const adj = getRepAdjustmentForExercise(id, goal, vol.reps);
       return {
         id,
         name: ex.name || id,
-        sets: p.sets,
+        sets: vol.sets,
         reps: adj.targetReps,
         baseReps: adj.baseReps,
         repDelta: adj.targetReps - adj.baseReps,
         adaptationHint: adj.reason || '',
-        rest: p.rest,
+        rest: vol.rest,
         completedSets: 0,
       };
     }),
@@ -3083,6 +3101,14 @@ function defaultSetsRepsBlock(exercise) {
                 <li><strong>Endurance:</strong> 2-4 x 15+ or timed intervals</li>
               </ul>
               <p class="cue-fallback">Starting points; adjust for your level and program.</p>`;
+  if (cat === 'mobility')
+    return `
+              <ul class="cue-list">
+                <li><strong>Mobility / flexibility (ACSM-style):</strong> 2–4 rounds of slow, pain-free range; or 2–4 holds of <strong>15–60 s</strong> per position—never into sharp pain.</li>
+                <li><strong>Dynamic prep:</strong> Often <strong>8–12 controlled reps</strong> per side across <strong>2–3 sets</strong>, with short transitions (movement quality &gt; load).</li>
+                <li><strong>Strength / hypertrophy days:</strong> Use lighter “sets” as movement prep or active recovery between heavier patterns.</li>
+              </ul>
+              <p class="cue-fallback">Evidence-based starting ranges; adjust for stiffness level and session goal.</p>`;
   if (cat === 'hypertrophy')
     return `
               <ul class="cue-list">
