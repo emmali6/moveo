@@ -2752,3 +2752,58 @@ body[data-page="workouts"] .workout-notes-input {
 body[data-page="workouts"] .workout-notes-input::placeholder {
   color: rgba(26, 29, 40, 0.55);
 }
+/* Workouts runner contrast overrides */
+body[data-page="workouts"] .runner-hint {
+  color: rgba(26, 29, 40, 0.72);
+}
+
+body[data-page="workouts"] .runner-hint strong {
+  color: var(--dark);
+}
+
+body[data-page="workouts"] .runner-feedback-fieldset {
+  background: rgba(26, 29, 40, 0.04);
+  border-color: rgba(26, 29, 40, 0.16);
+}
+
+body[data-page="workouts"] .runner-feedback-legend,
+body[data-page="workouts"] .runner-feedback-fieldset label {
+  color: var(--dark);
+}
+
+body[data-page="workouts"] .runner-reps-input {
+  background: white;
+  color: var(--dark);
+  border-color: rgba(26, 29, 40, 0.22);
+}
+
+body[data-page="workouts"] .runner-now-playing {
+  background: rgba(26, 29, 40, 0.03);
+  border-color: rgba(26, 29, 40, 0.12);
+}
+
+body[data-page="workouts"] .runner-now-kicker {
+  color: rgba(26, 29, 40, 0.7);
+}
+
+body[data-page="workouts"] .runner-now-title {
+  color: var(--dark);
+}
+
+body[data-page="workouts"] .runner-now-hint {
+  color: rgba(26, 29, 40, 0.65);
+}
+
+body[data-page="workouts"] .runner-now-meta {
+  color: rgba(26, 29, 40, 0.78);
+}
+
+body[data-page="workouts"] .runner-meta-hint {
+  color: rgba(26, 29, 40, 0.65);
+}
+
+body[data-page="workouts"] .runner-now-placeholder {
+  border-color: rgba(26, 29, 40, 0.22);
+  background: rgba(255, 255, 255, 0.9);
+  color: rgba(26, 29, 40, 0.82);
+}
