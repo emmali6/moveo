@@ -793,6 +793,71 @@ button:focus-visible {
 }
 
 /* Workouts page */
+
+/* Cohesive card layout (match exercise pages) */
+body[data-page="workouts"] .workout-builder,
+body[data-page="workouts"] .workout-presets {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border-left: 4px solid var(--primary);
+}
+
+body[data-page="workouts"] .workout-subheading {
+  color: var(--dark);
+}
+
+body[data-page="workouts"] .workout-help {
+  color: var(--text-secondary);
+}
+
+body[data-page="workouts"] .workout-builder .daily-exercise {
+  background: var(--light);
+  border-left-color: var(--accent);
+}
+
+body[data-page="workouts"] .workout-builder .daily-exercise h2,
+body[data-page="workouts"] .workout-builder .daily-exercise p,
+body[data-page="workouts"] .workout-builder .daily-exercise a,
+body[data-page="workouts"] .workout-builder .daily-exercise .section-label {
+  color: var(--dark);
+}
+
+body[data-page="workouts"] .workout-routine-banner {
+  background: rgba(247, 250, 252, 0.95);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+body[data-page="workouts"] .workout-routine-banner-label {
+  color: rgba(26, 29, 40, 0.6);
+}
+
+/* Routine detail page: render the routine block like an exercise card */
+body[data-page="routine"] .routine-detail {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border-left: 4px solid var(--primary);
+}
+
+body[data-page="routine"] .routine-detail .section-label,
+body[data-page="routine"] .routine-detail .section-heading,
+body[data-page="routine"] .routine-detail .routine-meta,
+body[data-page="routine"] .routine-detail .routine-detail-description,
+body[data-page="routine"] .routine-detail .routine-block-title,
+body[data-page="routine"] .routine-detail .routine-exercise-list {
+  color: var(--dark);
+}
+
+body[data-page="routine"] .routine-detail .routine-meta {
+  color: var(--text-secondary);
+}
+
+body[data-page="routine"] .routine-detail .routine-exercise-list a {
+  color: #1a56db;
+}
 .workouts-layout {
   display: grid;
   grid-template-columns: 1fr;

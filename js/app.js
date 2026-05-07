@@ -1702,29 +1702,8 @@ function applyExerciseCatalogQueryParams() {
 
   if (setIf('filterEquipment', p.get('equipment'))) appliedFilters = true;
   if (setIf('filterMuscle', p.get('muscle'))) appliedFilters = true;
-
-  const allowedConstraint = new Set(
-    ['knee-friendly', 'apartment/no jumping', 'wrist-safe', 'low-back friendly'].map(normalizeFilterValue),
-  );
-  const constraintSet = new Set();
-  p.getAll('constraint').forEach((v) => {
-    const t = normalizeFilterValue(String(v || '').trim());
-    if (t && allowedConstraint.has(t)) constraintSet.add(t);
-  });
-  const cBlob = p.get('constraints');
-  if (cBlob) {
-    String(cBlob)
-      .split(/[,;]/)
-      .map((s) => normalizeFilterValue(s.trim()))
-      .filter((t) => t && allowedConstraint.has(t))
-      .forEach((t) => constraintSet.add(t));
-  }
   const uniqueConstraints = [...constraintSet];
   if (uniqueConstraints.length) {
-    document.querySelectorAll('.filter-constraint').forEach((cb) => {
-      const v = normalizeFilterValue(cb.value);
-      cb.checked = uniqueConstraints.includes(v);
-    });
     appliedFilters = true;
   }
 
@@ -2739,9 +2718,7 @@ function getActiveFilters() {
   const equipment = normalizeFilterValue(document.getElementById('filterEquipment')?.value);
   const muscle = normalizeFilterValue(document.getElementById('filterMuscle')?.value);
   const category = normalizeFilterValue(document.getElementById('filterCategory')?.value);
-  const constraints = Array.from(document.querySelectorAll('.filter-constraint:checked'))
-    .map((el) => normalizeFilterValue(el.value));
-  return { level, equipment, muscle, category, constraints };
+  return { level, equipment, muscle, category };
 }
 
 function exerciseMuscleBuckets(ex) {
@@ -2768,12 +2745,6 @@ function matchesFilters(ex, filters) {
   }
 
   if (filters.category && normalizeFilterValue(ex.category) !== filters.category) return false;
-
-  if (filters.constraints?.length) {
-    const cs = getExerciseConstraintTags(ex);
-    const ok = filters.constraints.every((c) => cs.includes(c));
-    if (!ok) return false;
-  }
 
   return true;
 }
@@ -2826,12 +2797,6 @@ function bindFilterControls(onChange) {
     el.addEventListener('change', onChange);
   });
 
-  document.querySelectorAll('.filter-constraint').forEach((cb) => {
-    if (cb.dataset.bound === 'true') return;
-    cb.dataset.bound = 'true';
-    cb.addEventListener('change', onChange);
-  });
-
   const clear = document.getElementById('clearFiltersBtn');
   if (clear && clear.dataset.bound !== 'true') {
     clear.dataset.bound = 'true';
@@ -2840,7 +2805,6 @@ function bindFilterControls(onChange) {
         const el = document.getElementById(id);
         if (el) el.value = '';
       });
-      document.querySelectorAll('.filter-constraint:checked').forEach((cb) => { cb.checked = false; });
       onChange();
     });
   }
