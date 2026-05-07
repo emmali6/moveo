@@ -1702,10 +1702,6 @@ function applyExerciseCatalogQueryParams() {
 
   if (setIf('filterEquipment', p.get('equipment'))) appliedFilters = true;
   if (setIf('filterMuscle', p.get('muscle'))) appliedFilters = true;
-  const uniqueConstraints = [...constraintSet];
-  if (uniqueConstraints.length) {
-    appliedFilters = true;
-  }
 
   const q = p.get('q') || p.get('search');
   if (q) {
