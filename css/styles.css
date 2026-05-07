@@ -1340,17 +1340,16 @@ button:focus-visible {
   margin-bottom: 0.75rem;
 }
 
-/* Full-bleed description: spans viewport width (breaks out of .container) */
+/* Keep routine description aligned with `.container` gutters. */
 .routine-detail-description-bleed {
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  padding-left: max(1.25rem, env(safe-area-inset-left));
-  padding-right: max(1.25rem, env(safe-area-inset-right));
+  width: auto;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
   box-sizing: border-box;
 }
-
 .routine-detail .routine-detail-description {
   color: rgba(255, 255, 255, 0.88);
   font-size: clamp(1rem, 0.45vw + 0.9rem, 1.14rem);
