@@ -2696,3 +2696,59 @@ body[data-page="routine"] .routine-detail .routine-exercise-list a {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Workouts page accessibility overrides */
+body[data-page="workouts"] .workout-routine-banner-name {
+  /* Replace low-contrast yellow on white cards */
+  color: #1a56db;
+}
+
+body[data-page="workouts"] .workout-actions #saveWorkoutToAccountBtn {
+  background: #1a56db;
+  color: white;
+}
+
+body[data-page="workouts"] .workout-actions #saveWorkoutToAccountBtn:hover,
+body[data-page="workouts"] .workout-actions #saveWorkoutToAccountBtn:focus {
+  background: #1749b8;
+}
+
+body[data-page="workouts"] .workout-actions #clearWorkoutBtn,
+body[data-page="workouts"] .workout-top-actions #clearWorkoutBtnTop {
+  background: rgba(26, 29, 40, 0.06);
+  color: var(--dark);
+  border-color: rgba(26, 29, 40, 0.22);
+}
+
+body[data-page="workouts"] .workout-actions #clearWorkoutBtn:hover,
+body[data-page="workouts"] .workout-actions #clearWorkoutBtn:focus,
+body[data-page="workouts"] .workout-top-actions #clearWorkoutBtnTop:hover,
+body[data-page="workouts"] .workout-top-actions #clearWorkoutBtnTop:focus {
+  background: rgba(26, 29, 40, 0.12);
+  border-color: rgba(26, 29, 40, 0.32);
+}
+
+body[data-page="workouts"] .workout-estimate-value {
+  color: var(--dark);
+}
+
+body[data-page="workouts"] .workout-controls .filter-label,
+body[data-page="workouts"] .workout-notes-field .filter-label,
+body[data-page="workouts"] .runner-notes-field .filter-label {
+  color: var(--dark);
+}
+
+body[data-page="workouts"] .optional-label {
+  color: rgba(26, 29, 40, 0.72);
+  opacity: 1;
+}
+
+body[data-page="workouts"] .workout-notes-input {
+  background: white;
+  color: var(--dark);
+  border-color: rgba(26, 29, 40, 0.22);
+}
+
+body[data-page="workouts"] .workout-notes-input::placeholder {
+  color: rgba(26, 29, 40, 0.55);
+}
