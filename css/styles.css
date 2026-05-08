@@ -1,4 +1,4 @@
-/* Moveo - Movement Made Simple */
+﻿/* Moveo - Movement Made Simple */
 /* Fitness / gym aesthetic (F45, Healthworks-inspired) */
 
 /* CSS Variables */
@@ -1490,7 +1490,7 @@ body[data-page="routine"] .routine-detail .routine-exercise-list a {
   box-shadow: var(--shadow-md);
 }
 
-/* Tertiary: matches workout “Clear workout” ghost on dark panels */
+/* Tertiary: matches workout â€œClear workoutâ€ ghost on dark panels */
 .routine-detail-actions .routine-detail-back.btn-link {
   background: rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.92);
@@ -1649,7 +1649,7 @@ body[data-page="routine"] .routine-detail .routine-exercise-list a {
   margin: 0.75rem 0 1rem;
 }
 
-/* Shown when the first page lists only demos but more no-video cards exist past “Show more” */
+/* Shown when the first page lists only demos but more no-video cards exist past â€œShow moreâ€ */
 .exercise-gallery-plain-hint {
   grid-column: 1 / -1;
   margin: 0;
@@ -2070,7 +2070,7 @@ body[data-page="routine"] .routine-detail .routine-exercise-list a {
 }
 
 .tips-list li::before {
-  content: "✓";
+  content: "âœ“";
   position: absolute;
   left: 0;
   color: var(--success);
@@ -2078,7 +2078,7 @@ body[data-page="routine"] .routine-detail .routine-exercise-list a {
 }
 
 .tips-list li[style*="color: var(--error)"]::before {
-  content: "⚠";
+  content: "âš ";
   color: var(--error);
 }
 
@@ -2396,7 +2396,7 @@ body[data-page="routine"] .routine-detail .routine-exercise-list a {
   width: 100%;
 }
 
-/* Single CTA (Learn a Move only): don’t stretch one tab across the full hero width */
+/* Single CTA (Learn a Move only): donâ€™t stretch one tab across the full hero width */
 .hero-quick-tabs:has(> .auth-tab:only-of-type) {
   max-width: min(100%, 22rem);
 }
@@ -2806,4 +2806,17 @@ body[data-page="workouts"] .runner-now-placeholder {
   border-color: rgba(26, 29, 40, 0.22);
   background: rgba(255, 255, 255, 0.9);
   color: rgba(26, 29, 40, 0.82);
+}
+body[data-page="workouts"] .runner-now-actions {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+body[data-page="workouts"] .runner-open-exercise.btn-link {
+  border-radius: 999px;
+  padding: 0.65rem 1.1rem;
+  font-weight: 800;
+  border: 2px solid transparent;
 }
