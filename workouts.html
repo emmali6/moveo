@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
                 <li class="nav-dropdown">
                     <div class="nav-dropdown-head">
                         <a href="exercises.html" class="nav-link">Exercises</a>
-                        <button type="button" class="nav-dropdown-touch-toggle" aria-expanded="false" aria-label="Toggle Exercises menu"><span aria-hidden="true">â–¾</span></button>
+                        <button type="button" class="nav-dropdown-touch-toggle" aria-expanded="false" aria-label="Toggle Exercises menu"><span aria-hidden="true">▾</span></button>
                     </div>
                     <ul class="nav-dropdown-menu" role="list">
                         <li role="listitem"><a href="exercises.html" class="nav-dropdown-link">All exercises</a></li>
@@ -54,7 +54,7 @@
                 <li class="nav-dropdown">
                     <div class="nav-dropdown-head">
                         <a href="workouts.html" class="nav-link" aria-current="page">Workouts</a>
-                        <button type="button" class="nav-dropdown-touch-toggle" aria-expanded="false" aria-label="Toggle Workouts menu"><span aria-hidden="true">â–¾</span></button>
+                        <button type="button" class="nav-dropdown-touch-toggle" aria-expanded="false" aria-label="Toggle Workouts menu"><span aria-hidden="true">▾</span></button>
                     </div>
                     <ul class="nav-dropdown-menu" role="list">
                         <li role="listitem"><a href="workouts.html" class="nav-dropdown-link">Build &amp; run</a></li>
@@ -75,14 +75,14 @@
             <div class="container">
                 <p class="section-label section-label-light">Build a Session</p>
                 <h1 id="workouts-heading" class="section-heading">Workouts</h1>
-                <p class="section-intro">Build a session, then run it with the built-in timer. Tap â€œAdd to workoutâ€ from any exercise, reorder here (drag and drop), and load a prebuilt routine when you want a guided plan.</p>
+                <p class="section-intro">Build a session, then run it with the built-in timer. Tap “Add to workout” from any exercise, reorder here (drag and drop), and load a prebuilt routine when you want a guided plan.</p>
 
                 <div class="workouts-layout">
                     <div class="workout-builder" aria-label="Workout builder">
                         <div class="daily-exercise daily-workout-card">
                             <span class="section-label section-label-light" role="status" aria-live="polite">Workout of the Day</span>
                             <div id="dailyWorkoutContent" role="region" aria-label="Workout of the day">
-                                <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading todayâ€™s workoutâ€¦</p>
+                                <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading today’s workout…</p>
                             </div>
                         </div>
                         <h2 class="workout-subheading">Your workout</h2>
@@ -90,7 +90,7 @@
                             <span class="workout-routine-banner-label">Following plan</span>
                             <span id="workoutRoutineName" class="workout-routine-banner-name"></span>
                         </div>
-                        <p class="workout-help">Drag to reorder. Remove items you donâ€™t want. Your workout is saved automatically.</p>
+                        <p class="workout-help">Drag to reorder. Remove items you don’t want. Your workout is saved automatically.</p>
                         <div class="workout-top-actions hidden" id="workoutTopClearWrap" aria-hidden="true">
                             <button type="button" class="btn-secondary btn-link" id="clearWorkoutBtnTop">Clear workout</button>
                         </div>
@@ -103,7 +103,7 @@
                         <p id="workoutAdaptHint" class="workout-help workout-adapt-hint" aria-live="polite"></p>
                         <div class="workout-notes-field filter-field filter-field-wide">
                             <label for="workoutBuilderNotes" class="filter-label">Session notes <span class="optional-label">(optional)</span></label>
-                            <textarea id="workoutBuilderNotes" name="workout-notes" class="workout-notes-input" rows="4" maxlength="4000" placeholder="Warm-up ideas, equipment limits, anything your future self should rememberâ€¦ Saved on this device; signed-in users also get notes stored with completed sessions."></textarea>
+                            <textarea id="workoutBuilderNotes" name="workout-notes" class="workout-notes-input" rows="4" maxlength="4000" placeholder="Warm-up ideas, equipment limits, anything your future self should remember… Saved on this device; signed-in users also get notes stored with completed sessions."></textarea>
                             <span id="workoutNotesSaveHint" class="runner-hint" aria-live="polite"></span>
                         </div>
                         <div id="workoutList" class="workout-list" role="list" aria-label="Workout exercises"></div>
@@ -127,19 +127,19 @@
                             </div>
                             <div class="runner-actions">
                                 <button type="button" class="btn-primary btn-link" id="runnerStartPauseBtn">Start</button>
-                                <button type="button" class="btn-secondary btn-link" id="runnerNextSetBtn">Complete set â†’ Rest</button>
+                                <button type="button" class="btn-secondary btn-link" id="runnerNextSetBtn">Complete set → Rest</button>
                                 <button type="button" class="btn-secondary btn-link" id="runnerEndBtn">End session</button>
                             </div>
                             <div class="runner-notes-field filter-field filter-field-wide">
                                 <label for="runnerSessionNotes" class="filter-label">Session notes</label>
-                                <textarea id="runnerSessionNotes" class="workout-notes-input" rows="3" maxlength="4000" aria-describedby="runnerNotesSyncHint" placeholder="Editable during your sessionâ€¦"></textarea>
+                                <textarea id="runnerSessionNotes" class="workout-notes-input" rows="3" maxlength="4000" aria-describedby="runnerNotesSyncHint" placeholder="Editable during your session…"></textarea>
                                 <span id="runnerNotesSyncHint" class="runner-hint">Same notes as above; saves automatically.</span>
                             </div>
                             <fieldset class="runner-feedback-fieldset">
                                 <legend class="runner-feedback-legend">After each set (optional)</legend>
-                                <label for="runnerRepsAfterSet">How many more <strong>goodâ€‘form</strong> reps could you do?</label>
+                                <label for="runnerRepsAfterSet">How many more <strong>good‑form</strong> reps could you do?</label>
                                 <input type="number" id="runnerRepsAfterSet" name="reps-after-set" class="runner-reps-input" min="0" max="99" step="1" inputmode="numeric" autocomplete="off" aria-describedby="runnerRepsHint">
-                                <p id="runnerRepsHint" class="runner-hint">Leave blank to skip. <strong>0</strong> = maximally hard today. Higher numbers tell Moveo you had extra reps â€œin reserveâ€; future sessions may bump targets slightly for this move.</p>
+                                <p id="runnerRepsHint" class="runner-hint">Leave blank to skip. <strong>0</strong> = maximally hard today. Higher numbers tell Moveo you had extra reps “in reserve”; future sessions may bump targets slightly for this move.</p>
                             </fieldset>
                             <details id="runnerNowPlaying" class="runner-now-playing" aria-label="Current exercise video">
                                 <summary class="runner-now-summary">
@@ -158,7 +158,7 @@
 
                     <div id="prebuilt-routines" class="workout-presets" aria-label="Prebuilt routines">
                         <h2 class="workout-subheading">Prebuilt routines</h2>
-                        <p class="workout-help">Routines pull a wide mix of moves from your full exercise library (including catalog + account data). Use â€œShow moreâ€ to browse the list.</p>
+                        <p class="workout-help">Routines pull a wide mix of moves from your full exercise library (including catalog + account data). Use “Show more” to browse the list.</p>
                         <div id="routineGrid" class="routine-grid" role="list" aria-label="Routine list">
                             <p class="loading-message" style="color: rgba(255,255,255,0.9);">Loading routines...</p>
                         </div>
@@ -173,7 +173,7 @@
 
     <footer role="contentinfo" class="site-footer">
         <div class="container">
-            <p class="footer-tagline">Made with â¤ï¸ to make fitness accessible to everyone</p>
+            <p class="footer-tagline">Made with ❤️ to make fitness accessible to everyone</p>
             <p class="footer-copy">&copy; 2024 Moveo. All rights reserved.</p>
         </div>
     </footer>
