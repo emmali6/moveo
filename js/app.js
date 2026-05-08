@@ -1,4 +1,4 @@
-﻿// Moveo - Movement Made Simple
+// Moveo - Movement Made Simple
 // Main application JavaScript
 
 // Supabase: account auth (script loaded on account.html)
@@ -138,7 +138,7 @@ function buildExerciseGridMarkup(view, fullFilteredList) {
     if (plainTotal > 0) {
       parts.push(
         `<p class="exercise-gallery-plain-hint" role="status">` +
-          `<strong>${plainTotal}</strong> more exercise${plainTotal === 1 ? '' : 's'} without a demo video yet load next. Tap <strong>Show more</strong> (youâ€™ll see the separate section below the video demos).` +
+          `<strong>${plainTotal}</strong> more exercise${plainTotal === 1 ? '' : 's'} without a demo video yet load next. Tap <strong>Show more</strong> (you’ll see the separate section below the video demos).` +
           `</p>`
       );
     }
@@ -146,7 +146,7 @@ function buildExerciseGridMarkup(view, fullFilteredList) {
   return parts.join('');
 }
 
-/** Split filtered list into [with videoâ€¦][without videoâ€¦] (order preserved). */
+/** Split filtered list into [with video…][without video…] (order preserved). */
 function splitHomeListVideoPlain(list) {
   if (!Array.isArray(list)) return { withVideo: [], withoutVideo: [] };
   const i = list.findIndex((ex) => !exerciseHasPlayableVideo(ex));
@@ -265,7 +265,7 @@ const LOAD_PROFILE_VERSION = 1;
 /** Short plain-text snippet safe for injecting into HTML (not for attributes). */
 function escapeHtmlBody(s, maxLen) {
   let t = String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  if (maxLen && t.length > maxLen) t = `${t.slice(0, maxLen)}â€¦`;
+  if (maxLen && t.length > maxLen) t = `${t.slice(0, maxLen)}…`;
   return t.replace(/\n/g, '<br>');
 }
 
@@ -350,7 +350,7 @@ function getRepAdjustmentForExercise(exerciseId, goal, baseReps) {
 }
 
 /**
- * True when catalog marks the move as mobility (ROM / stretchingâ€“style, not resisted strength sets).
+ * True when catalog marks the move as mobility (ROM / stretching–style, not resisted strength sets).
  */
 function exerciseHasMobilityCategory(exerciseId) {
   const ex = exercises.find((e) => e.id === exerciseId);
@@ -372,9 +372,9 @@ function getRunnerVolumePreset(exerciseId, goal) {
   if (!exerciseHasMobilityCategory(exerciseId)) return base;
   // Mobility: fewer heavy sets, reps = slow passes or segment counts; rest = short active recovery.
   const mobility = {
-    // ~3 Ã— ~30 s quality work (e.g. 6 reps Ã— ~5 s) + modest rest â€” static/stretch literature often 15â€“60 s holds Ã— 2â€“4.
+    // ~3 × ~30 s quality work (e.g. 6 reps × ~5 s) + modest rest — static/stretch literature often 15–60 s holds × 2–4.
     strength: { sets: 3, reps: 6, rest: 45, repSeconds: 5 },
-    // Dynamic ROM / movement-prep style: 2â€“3 sets Ã— ~8â€“12 controlled reps common in warm-up prescriptions.
+    // Dynamic ROM / movement-prep style: 2–3 sets × ~8–12 controlled reps common in warm-up prescriptions.
     hypertrophy: { sets: 3, reps: 10, rest: 30, repSeconds: 4 },
     // Lighter density, continuous feel.
     endurance: { sets: 2, reps: 12, rest: 20, repSeconds: 3 },
@@ -536,8 +536,8 @@ function updateWorkoutAdaptationHintForBuilder() {
   });
   el.textContent =
     n > 0
-      ? `Rep targets adapt for ${n} exercise(s) in this list based on recent â€œextra reps leftâ€ logs (${goal}). After tough sets, enter that number in the runner. Works signed out; sign in to sync across devices.`
-      : `After tough sets, log how many more goodâ€‘form reps you could still do (runner below). Moveo adjusts future targets on this device; sign in to sync notes, history, and adaptations across devices.`;
+      ? `Rep targets adapt for ${n} exercise(s) in this list based on recent “extra reps left” logs (${goal}). After tough sets, enter that number in the runner. Works signed out; sign in to sync across devices.`
+      : `After tough sets, log how many more good‑form reps you could still do (runner below). Moveo adjusts future targets on this device; sign in to sync notes, history, and adaptations across devices.`;
 }
 
 /** Multiset signature (order-insensitive) for matching builder to last loaded routine. */
@@ -750,8 +750,8 @@ function setupSaveWorkoutToAccount() {
       return;
     }
     const goal = getWorkoutGoal();
-    const name = `Workout Â· ${goal}`;
-    setWorkoutSaveMessage('Savingâ€¦');
+    const name = `Workout · ${goal}`;
+    setWorkoutSaveMessage('Saving…');
     const payload = {
       user_id: user.id,
       name,
@@ -1038,7 +1038,7 @@ function renderRunnerExercises() {
       <div class="runner-ex" role="button" tabindex="0" data-runner-idx="${idx}" aria-label="Show video for ${ex.name}"${active}>
         <div class="runner-ex-top">
           <div class="runner-ex-name">${ex.name}</div>
-          <div class="runner-ex-prescription">${ex.sets} Ã— ${ex.reps}${ex.baseReps != null && ex.reps !== ex.baseReps ? ` <span class="runner-rep-base">(${ex.baseReps} base)</span>` : ''} Â· rest ${Math.round(ex.rest / 60)}m</div>
+          <div class="runner-ex-prescription">${ex.sets} × ${ex.reps}${ex.baseReps != null && ex.reps !== ex.baseReps ? ` <span class="runner-rep-base">(${ex.baseReps} base)</span>` : ''} · rest ${Math.round(ex.rest / 60)}m</div>
         </div>
         <div class="runner-ex-sets">${pills}</div>
       </div>
@@ -1080,12 +1080,11 @@ function renderRunnerNowPlaying() {
 
   const full = exercises.find((e) => e.id === ex.id);
   const videoUrl = full?.previewVideo || '';
-  const openHref = exercise.html?id=;
 
   const prescrip =
-    `${ex.sets} Ã— ${ex.reps}` +
+    `${ex.sets} × ${ex.reps}` +
     (ex.baseReps != null && ex.reps !== ex.baseReps ? ` (${ex.baseReps} base)` : '') +
-    ` Â· rest ${Math.round(ex.rest / 60)}m`;
+    ` · rest ${Math.round(ex.rest / 60)}m`;
   metaEl.innerHTML =
     `<span>${prescrip}</span>` +
     (ex.adaptationHint ? ` <span class="runner-meta-hint">${escapeHtmlBody(ex.adaptationHint, 160)}</span>` : '');
@@ -1104,8 +1103,8 @@ function renderRunnerNowPlaying() {
     mediaEl.innerHTML = `
       <div class="runner-now-placeholder">
         Video not available for this exercise yet.
-        <div class="runner-now-actions">
-          <a class="btn-primary btn-link runner-open-exercise" href="${openHref}">Open exercise page</a>
+        <div style="margin-top: 0.5rem;">
+          <a class="btn-secondary btn-link" href="exercise.html?id=${encodeURIComponent(ex.id)}">Open exercise page</a>
         </div>
       </div>
     `;
@@ -1190,7 +1189,7 @@ function pickDiverseExerciseIdSequence(allExercises, count, seedStr) {
 
 /**
  * Number of stations/movements for a timed session title (circuit-style rotation),
- * not â€œfull strength session per exercise,â€ so counts scale with `minutes`.
+ * not “full strength session per exercise,” so counts scale with `minutes`.
  */
 function slotsFromRoutineMinutes(minutes) {
   const m = Math.max(8, Math.min(Number(minutes) || 30, 90));
@@ -1223,7 +1222,7 @@ function listToHuman(items, max = 3) {
   const arr = (Array.isArray(items) ? items : []).map((x) => String(x || '').trim()).filter(Boolean);
   if (!arr.length) return '';
   const cut = arr.slice(0, max);
-  return cut.join(', ') + (arr.length > max ? 'â€¦' : '');
+  return cut.join(', ') + (arr.length > max ? '…' : '');
 }
 
 function generateExerciseDescription(ex) {
@@ -1381,7 +1380,7 @@ function renderDailyWorkout() {
     return;
   }
   const goals = Array.isArray(r.goals) ? r.goals : [];
-  const meta = `${r.minutes} min${goals.length ? ` Â· ${goals.join(' / ')}` : ''}`;
+  const meta = `${r.minutes} min${goals.length ? ` · ${goals.join(' / ')}` : ''}`;
   const base = getBaseUrl();
   const detailHref = `${base}routine.html?id=${encodeURIComponent(r.id)}`;
   const startHref = `${base}workouts.html?routine=${encodeURIComponent(r.id)}&start=1`;
@@ -1420,14 +1419,14 @@ function renderRoutineGrid() {
   const view = routines.slice(0, visibleRoutinesCount);
   updateShowMoreRoutinesVisibility(routines.length);
   grid.innerHTML = view.map((r) => {
-    const blocks = (r.blocks || []).map((b) => `${b.title}: ${(b.items || []).length} move(s)`).join(' Â· ');
+    const blocks = (r.blocks || []).map((b) => `${b.title}: ${(b.items || []).length} move(s)`).join(' · ');
     const moveTotal = (r.blocks || []).reduce((n, b) => n + (b.items?.length || 0), 0);
     const routinePage = `${getBaseUrl()}routine.html?id=${encodeURIComponent(r.id)}`;
     return `
       <article class="routine-card" role="listitem">
         <h3><a class="routine-card-title-link" href="${routinePage}">${r.name}</a></h3>
         <p>${r.description || ''}</p>
-        <p class="routine-meta">${r.minutes} min Â· ${moveTotal} moves Â· ${(r.goals || []).join(' / ')}</p>
+        <p class="routine-meta">${r.minutes} min · ${moveTotal} moves · ${(r.goals || []).join(' / ')}</p>
         <p class="routine-meta">${blocks}</p>
         <button type="button" class="btn-secondary btn-link routine-load" onclick="loadRoutineToWorkout('${r.id}')">Load into builder</button>
       </article>
@@ -1449,7 +1448,7 @@ function loadRoutineToWorkout(routineId) {
     routineName: r.name || '',
   });
   renderWorkoutBuilderList();
-  setWorkoutSaveMessage(`Loaded â€œ${(r.name || 'routine').replace(/"/g, '')}â€ into builder.`);
+  setWorkoutSaveMessage(`Loaded “${(r.name || 'routine').replace(/"/g, '')}” into builder.`);
   announceToScreenReader(`Routine ${r.name || ''} loaded into workout builder`);
 }
 window.loadRoutineToWorkout = loadRoutineToWorkout;
@@ -1469,7 +1468,7 @@ function renderWorkoutBuilderList() {
   list.innerHTML = ids.map((id, idx) => {
     const ex = exercises.find((e) => e.id === id);
     const name = ex?.name || id;
-    const meta = ex ? `${ex.difficulty} Â· ${ex.category}` : '';
+    const meta = ex ? `${ex.difficulty} · ${ex.category}` : '';
     return `
       <div class="workout-item" role="listitem" draggable="true" data-index="${idx}">
         <div class="workout-item-main">
@@ -1599,14 +1598,14 @@ async function initExercisePage() {
   if (!container) return;
   if (!id) {
     container.innerHTML =
-      '<p class="no-exercises">No exercise selected.</p><a href="exercises.html" class="btn-secondary btn-link">â† Back to exercise library</a>';
+      '<p class="no-exercises">No exercise selected.</p><a href="exercises.html" class="btn-secondary btn-link">← Back to exercise library</a>';
     return;
   }
   await loadExercises();
   const exercise = findExerciseByQueryId(id);
   if (!exercise) {
     container.innerHTML =
-      '<p class="no-exercises">Exercise not found.</p><a href="exercises.html" class="btn-secondary btn-link">â† Back to exercise library</a>';
+      '<p class="no-exercises">Exercise not found.</p><a href="exercises.html" class="btn-secondary btn-link">← Back to exercise library</a>';
     return;
   }
   loadBookmarks();
@@ -1624,7 +1623,7 @@ async function initRoutinePage() {
   if (!container) return;
   if (!id) {
     container.innerHTML =
-      '<p class="no-exercises">No routine selected.</p><div class="routine-detail-actions"><a href="workouts.html" class="btn-secondary btn-link">â† Workouts</a></div>';
+      '<p class="no-exercises">No routine selected.</p><div class="routine-detail-actions"><a href="workouts.html" class="btn-secondary btn-link">← Workouts</a></div>';
     return;
   }
   await loadExercises();
@@ -1633,7 +1632,7 @@ async function initRoutinePage() {
   const r = routines.find((x) => String(x.id).toLowerCase() === String(id).toLowerCase());
   if (!r) {
     container.innerHTML =
-      '<p class="no-exercises">Routine not found.</p><div class="routine-detail-actions"><a href="workouts.html" class="btn-secondary btn-link">â† Workouts</a></div>';
+      '<p class="no-exercises">Routine not found.</p><div class="routine-detail-actions"><a href="workouts.html" class="btn-secondary btn-link">← Workouts</a></div>';
     return;
   }
 
@@ -1660,7 +1659,7 @@ async function initRoutinePage() {
     <article class="routine-detail">
       <p class="section-label section-label-light">Prebuilt routine</p>
       <h1 id="routine-heading" class="section-heading">${escapeHtmlBody(r.name, 220)}</h1>
-      <p class="routine-meta">${r.minutes} min${goals.length ? ` Â· ${escapeHtmlBody(goals.join(' / '), 200)}` : ''}</p>
+      <p class="routine-meta">${r.minutes} min${goals.length ? ` · ${escapeHtmlBody(goals.join(' / '), 200)}` : ''}</p>
       <div class="routine-detail-description-bleed">
         <p class="routine-detail-description">${escapeHtmlBody(r.description || '', 2000)}</p>
       </div>
@@ -1922,7 +1921,7 @@ function renderSavedExercisesList() {
       <article class="saved-exercise-item" role="listitem">
         <a href="${base}exercise.html?id=${encodeURIComponent(ex.id)}" class="saved-exercise-link">
           <span class="saved-exercise-name">${ex.name}</span>
-          <span class="saved-exercise-meta">${ex.difficulty} Â· ${ex.duration} min</span>
+          <span class="saved-exercise-meta">${ex.difficulty} · ${ex.duration} min</span>
         </a>
         <button type="button" class="btn-remove-saved" aria-label="Remove ${ex.name} from saved" onclick="removeSavedOnAccountPage('${ex.id}')">Remove</button>
       </article>
@@ -1978,7 +1977,7 @@ async function loadSavedWorkoutsList(user) {
       <article class="saved-exercise-item" role="listitem">
         <div>
           <div class="saved-exercise-name">${w.name || 'Workout'}</div>
-          <div class="saved-exercise-meta">${count} exercise(s) Â· ${w.goal || 'mixed'}</div>
+          <div class="saved-exercise-meta">${count} exercise(s) · ${w.goal || 'mixed'}</div>
         </div>
         <div class="workout-item-actions">
           <a class="btn-secondary btn-link" href="${base}workouts.html">Open builder</a>
@@ -2019,12 +2018,12 @@ async function loadWorkoutHistory(user) {
     let noteHtml = '';
     if (note)
       noteHtml = `<div class="history-note-preview">${escapeHtmlBody(note, 180)}</div>`;
-    const fbLine = fb.length ? ` Â· ${fb.length} set log(s)` : '';
+    const fbLine = fb.length ? ` · ${fb.length} set log(s)` : '';
     return `
       <article class="saved-exercise-item workout-history-item" role="listitem">
         <div>
           <div class="saved-exercise-name">${escapeHtmlBody(s.title || 'Workout session', 120)}</div>
-          <div class="saved-exercise-meta">${when}${mins ? ` Â· ${mins} min` : ''} Â· ${escapeHtmlBody(String(s.goal || 'mixed'), 32)}${fbLine}</div>
+          <div class="saved-exercise-meta">${when}${mins ? ` · ${mins} min` : ''} · ${escapeHtmlBody(String(s.goal || 'mixed'), 32)}${fbLine}</div>
           ${noteHtml}
         </div>
       </article>
@@ -2764,7 +2763,7 @@ function setupExerciseSearch() {
     if (exact) return;
     if (lastSearchNotFoundNotice === q) return;
     lastSearchNotFoundNotice = q;
-    showError(`â€œ${raw}â€ isnâ€™t in the library yet, but it could be added soon.`);
+    showError(`“${raw}” isn’t in the library yet, but it could be added soon.`);
   };
   const refresh = () => {
     resetPagination();
@@ -2914,7 +2913,7 @@ function createExerciseCard(exercise) {
         <h3>${exercise.name}</h3>
         <p>${(exercise.description || '').substring(0, 100)}${(exercise.description || '').length > 100 ? '...' : ''}</p>
         <div class="exercise-meta">
-          <span>â±ï¸ ${exercise.duration} min</span>
+          <span>⏱️ ${exercise.duration} min</span>
           <span class="difficulty-badge ${exercise.difficulty}">${exercise.difficulty}</span>
           <span aria-label="Category">${getCategoryIcon(exercise.category)}</span>
         </div>
@@ -3065,9 +3064,9 @@ function defaultSetsRepsBlock(exercise) {
   if (cat === 'mobility')
     return `
               <ul class="cue-list">
-                <li><strong>Mobility / flexibility (ACSM-style):</strong> 2â€“4 rounds of slow, pain-free range; or 2â€“4 holds of <strong>15â€“60 s</strong> per positionâ€”never into sharp pain.</li>
-                <li><strong>Dynamic prep:</strong> Often <strong>8â€“12 controlled reps</strong> per side across <strong>2â€“3 sets</strong>, with short transitions (movement quality &gt; load).</li>
-                <li><strong>Strength / hypertrophy days:</strong> Use lighter â€œsetsâ€ as movement prep or active recovery between heavier patterns.</li>
+                <li><strong>Mobility / flexibility (ACSM-style):</strong> 2–4 rounds of slow, pain-free range; or 2–4 holds of <strong>15–60 s</strong> per position—never into sharp pain.</li>
+                <li><strong>Dynamic prep:</strong> Often <strong>8–12 controlled reps</strong> per side across <strong>2–3 sets</strong>, with short transitions (movement quality &gt; load).</li>
+                <li><strong>Strength / hypertrophy days:</strong> Use lighter “sets” as movement prep or active recovery between heavier patterns.</li>
               </ul>
               <p class="cue-fallback">Evidence-based starting ranges; adjust for stiffness level and session goal.</p>`;
   if (cat === 'hypertrophy')
@@ -3106,7 +3105,7 @@ function renderExerciseDetail(exercise, options = {}) {
   const backHref = options.backHref || 'index.html';
   const backUrl = /^https?:\/\//i.test(backHref) ? backHref : baseUrl + backHref;
   const backLabel =
-    containerId === 'exercisePageContent' ? 'â† Back to exercise library' : 'â† Back to gallery';
+    containerId === 'exercisePageContent' ? '← Back to exercise library' : '← Back to gallery';
   const backMarkup = `<a href="${backUrl}" class="btn-secondary btn-link">${backLabel}</a>`;
   
   const isBookmarked = bookmarkedExercises.includes(exercise.id);
@@ -3167,7 +3166,7 @@ function renderExerciseDetail(exercise, options = {}) {
         <p>${exercise.description}</p>
         
         <div class="exercise-meta">
-          <span>â±ï¸ Duration: ${exercise.duration} minutes</span>
+          <span>⏱️ Duration: ${exercise.duration} minutes</span>
           <span class="difficulty-badge ${exercise.difficulty}">${exercise.difficulty}</span>
           <span class="exercise-meta-category">${escapeHtmlBody(String(exercise.category || 'general'), 28)}</span>
           <span aria-label="Category">${getCategoryIcon(exercise.category)}</span>
@@ -3242,7 +3241,7 @@ function renderExerciseDetail(exercise, options = {}) {
 
         <div class="cue-block">
           <h3>Where it fits in a workout</h3>
-          <p class="cue-inline">${Array.isArray(exercise.workoutRole) && exercise.workoutRole.length ? exercise.workoutRole.join(' Â· ') : defaultWorkoutRoleLine(exercise)}</p>
+          <p class="cue-inline">${Array.isArray(exercise.workoutRole) && exercise.workoutRole.length ? exercise.workoutRole.join(' · ') : defaultWorkoutRoleLine(exercise)}</p>
         </div>
 
         <div class="cue-block">
@@ -3379,7 +3378,7 @@ function renderSuggestionRow(title, list) {
             <div class="suggest-name">${ex.name}</div>
             <div class="suggest-meta">
               <span class="difficulty-badge ${ex.difficulty}">${ex.difficulty}</span>
-              <span class="suggest-small">${(ex.primaryMuscles || ex.muscleGroups || []).slice(0, 2).join(' Â· ') || escapeHtmlBody(String(ex.category || ''), 24)}</span>
+              <span class="suggest-small">${(ex.primaryMuscles || ex.muscleGroups || []).slice(0, 2).join(' · ') || escapeHtmlBody(String(ex.category || ''), 24)}</span>
             </div>
           </a>
         `).join('')}
@@ -3455,7 +3454,7 @@ function renderSmartSuggestions(exercise) {
 
   return `
     <section class="suggestions exercise-suggestions" aria-label="Suggested exercises">
-      <h2 class="suggestions-heading">If you like this, tryâ€¦</h2>
+      <h2 class="suggestions-heading">If you like this, try…</h2>
       ${renderSuggestionRow('Similar moves', similar)}
       ${renderSuggestionRow('Make it easier', regressions)}
       ${progressions.length ? renderSuggestionRow('Level up', progressions) : ''}
@@ -3594,7 +3593,7 @@ function setDailyExercise() {
     <h2><a class="daily-exercise-link" href="${exerciseUrl}">${dailyExercise.name}</a></h2>
     <p>${dailyExercise.description}</p>
     <div class="exercise-meta">
-      <span>â±ï¸ ${dailyExercise.duration} min</span>
+      <span>⏱️ ${dailyExercise.duration} min</span>
       <span class="difficulty-badge ${dailyExercise.difficulty}">${dailyExercise.difficulty}</span>
       <span aria-label="Category">${getCategoryIcon(dailyExercise.category)}</span>
     </div>
@@ -3607,13 +3606,13 @@ function setDailyExercise() {
 // Get category icon
 function getCategoryIcon(category) {
   const icons = {
-    strength: 'ðŸ’ª',
-    hypertrophy: 'ðŸ‹ï¸',
-    endurance: 'â¤ï¸',
-    mobility: 'ðŸ§˜',
-    rehab: 'ðŸ©¹'
+    strength: '💪',
+    hypertrophy: '🏋️',
+    endurance: '❤️',
+    mobility: '🧘',
+    rehab: '🩹'
   };
-  return icons[category] || 'â­';
+  return icons[category] || '⭐';
 }
 
 // Announce to screen readers
