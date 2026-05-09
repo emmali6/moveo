@@ -2741,6 +2741,12 @@ body[data-page="workouts"] .runner-now-actions {
   margin-top: 0.5rem;
 }
 
+
+body[data-page="workouts"] .runner-open-exercise.btn-link {
+  border-radius: 999px;
+  padding: 0.65rem 1.1rem;
+  font-weight: 800;
+}
 body[data-page="workouts"] .workout-controls .filter-label,
 body[data-page="workouts"] .workout-notes-field .filter-label,
 body[data-page="workouts"] .runner-notes-field .filter-label {
