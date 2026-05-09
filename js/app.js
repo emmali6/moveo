@@ -1103,8 +1103,8 @@ function renderRunnerNowPlaying() {
     mediaEl.innerHTML = `
       <div class="runner-now-placeholder">
         Video not available for this exercise yet.
-        <div style="margin-top: 0.5rem;">
-          <a class="btn-secondary btn-link" href="exercise.html?id=${encodeURIComponent(ex.id)}">Open exercise page</a>
+        <div class="runner-now-actions">
+          <a class="btn-secondary btn-link runner-open-exercise" href="exercise.html?id=${encodeURIComponent(ex.id)}">Open exercise page</a>
         </div>
       </div>
     `;

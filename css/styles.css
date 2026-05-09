@@ -2732,6 +2732,15 @@ body[data-page="workouts"] .workout-estimate-value {
   color: var(--dark);
 }
 
+
+body[data-page="workouts"] .runner-label,
+body[data-page="workouts"] .runner-value {
+  color: var(--dark);
+}
+body[data-page="workouts"] .runner-now-actions {
+  margin-top: 0.5rem;
+}
+
 body[data-page="workouts"] .workout-controls .filter-label,
 body[data-page="workouts"] .workout-notes-field .filter-label,
 body[data-page="workouts"] .runner-notes-field .filter-label {
